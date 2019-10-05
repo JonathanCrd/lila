@@ -3,10 +3,10 @@ grammar Lila;
 
 
 programa
-    : LILA ID (vars)? (funciones)* main
+    : LILA ID (data)? (funciones)* main
     ;
 
-vars
+data
     : VAR (tipo ID (COMMA ID)* SEMICOLON)+ 
     ;
 
@@ -19,7 +19,7 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (vars)? (estatuto)+ CLOSE_CURLY
+    : FUNC (tipo | VOID) ID OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY
     ;
 
 params
@@ -30,8 +30,8 @@ estatuto
     : asignacion
     | condicion 
     | swhile 
-    | print 
-    | input 
+    | display 
+    | getinput 
     | invocacion 
     | sreturn 
     | especiales
@@ -45,8 +45,8 @@ bloque
     : OPEN_CURLY estatuto (estatuto)* CLOSE_CURLY
     ;
 
-print
-    : PRINT OPEN_PARENTHESIS (expresion | CTE_STRING) (COMMA (expresion | CTE_STRING))* CLOSE_PARENTHESIS SEMICOLON
+display
+    : DISPLAY OPEN_PARENTHESIS (expresion | CTE_STRING) (COMMA (expresion | CTE_STRING))* CLOSE_PARENTHESIS SEMICOLON
     ;
     
 asignacion
@@ -100,8 +100,8 @@ invocacion
     : ID OPEN_PARENTHESIS (expresion (COMMA expresion)*)? CLOSE_PARENTHESIS SEMICOLON
     ;
 
-input
-    : INPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
+getinput
+    : GETINPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
     ;
 
 especiales
@@ -128,7 +128,7 @@ especiales
 MAIN : 'main';
 LILA    : 'lila';
 VOID    : 'void';
-PRINT   : 'print';
+DISPLAY   : 'display';
 WHILE   : 'while';
 FUNC    : 'func';
 VAR     : 'var';
@@ -139,7 +139,7 @@ NUM     : 'num';
 TEXT    : 'text';
 BOOL    : 'bool';
 RETURN  : 'return';
-INPUT   : 'input';
+GETINPUT   : 'getinput';
 OPEN_BRACKET    : '[';
 CLOSE_BRACKET   : ']';
 OPEN_PARENTHESIS    : '(';
