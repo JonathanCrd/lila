@@ -1,0 +1,55 @@
+lila firstProgram
+
+var int miVar1, miVar2;
+    num miNum1;
+    text miText1, miText2;
+    int[1][2] arr1;
+    int[3] promedio;
+    num [2][2][2] arr2;
+    text[3] arr3, arr4;
+    bool miBool;
+
+func void mivoid()
+{
+    var int funVar;
+    funVar = 2;
+}
+
+func void funParams(int i, num a)
+{
+    i = 0;
+    a = 1.2;
+}
+
+func int funcInt()
+{
+    if 2>3
+    {
+        miNum1 = 2*6;
+    }
+    else
+    {
+        miNum1 = 3+5;
+    };
+    while a >= 10
+    {
+        print("si jala");
+    }
+    return 2;
+}
+
+func num funNum(num a, num b)
+{
+    var bool dodo;
+    a = 20.5;
+    print(2,"",a);
+    input(a,"This is a message");
+    return a;
+}
+
+main {
+    arr3 = ["hola","jona","than"];
+    funcInt();
+    funParams(2,1.5);
+    mean(promedio);
+};
