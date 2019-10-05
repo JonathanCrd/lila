@@ -190,5 +190,6 @@ NORMALDISTRIBUTION  : 'normalDistribution';
 FILLVALUE   : 'fillValue';
 REMOVEVALUE : 'removeValue';
 
-ID : [a-x]+[a-zA-Z0-9]* ;             // match lower-case identifiers
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlinesN
+ID : [a-x]+[a-zA-Z0-9]* ;
+WS : [ \t\r\n]+ -> skip ; 
+Comment : '//' ~[\r\n]* -> skip ;
