@@ -1,0 +1,194 @@
+/*
+* Jonathan Cardenas & Lizzie Canamar
+* Lila compiler and programming languaje.
+* Compilers Design course at ITESM. AD2019.
+* /
+
+// Define the grammar
+grammar Lila;
+
+
+programa
+    : LILA ID (vars)? (funciones)* main
+    ;
+
+vars
+    : VAR (tipo ID (COMMA ID)* SEMICOLON)+ 
+    ;
+
+main
+    : MAIN bloque
+    ;
+
+tipo
+    : (INT | NUM | TEXT | BOOL) (OPEN_BRACKET CTE_INT CLOSE_BRACKET)*
+    ;
+
+funciones
+    : FUNC (tipo | VOID) ID OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (vars)? (estatuto)+ CLOSE_CURLY
+    ;
+
+params
+    : tipo ID (COMMA tipo ID)*
+    ;
+
+estatuto
+    : asignacion
+    | condicion 
+    | swhile 
+    | print 
+    | input 
+    | invocacion 
+    | sreturn 
+    | especiales
+    ;
+
+condicion
+    : IF expresion bloque (ELSE bloque)? SEMICOLON
+    ;
+
+bloque
+    : OPEN_CURLY estatuto (estatuto)* CLOSE_CURLY
+    ;
+
+print
+    : PRINT OPEN_PARENTHESIS (expresion | CTE_STRING) (COMMA (expresion | CTE_STRING))* CLOSE_PARENTHESIS SEMICOLON
+    ;
+    
+asignacion
+    : ID (OPEN_BRACKET exp CLOSE_BRACKET)* EQUAL (expresion | arr) SEMICOLON
+    ;
+
+sreturn
+    : RETURN expresion SEMICOLON
+    ;
+
+arr
+    : var_cte (COMMA var_cte)*
+    | OPEN_BRACKET arr CLOSE_BRACKET (COMMA OPEN_BRACKET arr CLOSE_BRACKET)*
+    ;
+
+expresion
+    : comparacion ((AND | OR) comparacion)*
+    ;
+
+exp
+    : termino ((PLUS | MINUS) termino)*
+    ;
+
+termino
+    : factor ((MULTIPLICATION | DIVISION) factor)*
+    ;
+
+factor
+    : OPEN_PARENTHESIS expresion CLOSE_PARENTHESIS
+    | (PLUS| MINUS)? var_cte
+    ;
+
+comparacion
+    : exp (GREATER_THAN | LESS_THAN | NOTEQUAL | EQUALITY | GREATER_THAN_EQUAL | LESS_THAN_EQUAL) exp
+    | exp
+    ;
+
+var_cte
+    : ID ((OPEN_BRACKET exp CLOSE_BRACKET)* | (OPEN_PARENTHESIS exp (COMMA exp)* CLOSE_PARENTHESIS))?
+    | CTE_INT
+    | CTE_F
+    | CTE_STRING
+    | CTE_BOOL
+    ;
+
+swhile
+    : WHILE expresion bloque
+    ;
+
+invocacion
+    : ID OPEN_PARENTHESIS (expresion (COMMA expresion)*)? CLOSE_PARENTHESIS SEMICOLON
+    ;
+
+input
+    : INPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
+    ;
+
+especiales
+    :   (GETOUTLIERS 
+        | REMOVEOUTLIERS 
+        | TELLMEWHATTOUSE 
+        | PRINTMEASURES 
+        | MEAN 
+        | MEDIAN 
+        | MODE 
+        | RANGE 
+        | MIN 
+        | MAX 
+        | DESESTANDAR
+            ) OPEN_PARENTHESIS ID CLOSE_PARENTHESIS
+    | QUICKSHOW OPEN_PARENTHESIS ID (COMMA ID)? CLOSE_PARENTHESIS
+    | PEARSONCORRELATION OPEN_PARENTHESIS ID COMMA ID CLOSE_PARENTHESIS
+    | NORMALDISTRIBUTION OPEN_PARENTHESIS CTE_F COMMA CTE_F COMMA CTE_INT CLOSE_PARENTHESIS
+    | FILLVALUE OPEN_PARENTHESIS ID COMMA var_cte COMMA var_cte CLOSE_PARENTHESIS
+    | REMOVEVALUE OPEN_PARENTHESIS ID COMMA var_cte CLOSE_PARENTHESIS
+    ;
+
+//TOKENS 
+MAIN : 'main';
+LILA    : 'lila';
+VOID    : 'void';
+PRINT   : 'print';
+WHILE   : 'while';
+FUNC    : 'func';
+VAR     : 'var';
+ELSE    : 'else';
+IF      : 'if';
+INT     : 'int';
+NUM     : 'num';
+TEXT    : 'text';
+BOOL    : 'bool';
+RETURN  : 'return';
+INPUT   : 'input';
+OPEN_BRACKET    : '[';
+CLOSE_BRACKET   : ']';
+OPEN_PARENTHESIS    : '(';
+CLOSE_PARENTHESIS   : ')';
+OPEN_CURLY  : '{';
+CLOSE_CURLY : '}';
+COMMA   : ',';
+SEMICOLON : ';';
+PLUS    : '+';
+MINUS   : '-';
+MULTIPLICATION  : '*';
+DIVISION    : '/';
+LESS_THAN   : '<';
+GREATER_THAN    : '>';
+NOTEQUAL   : '!=';
+EQUALITY   : '==';
+EQUAL   : '=';
+LESS_THAN_EQUAL : '<=';
+GREATER_THAN_EQUAL  : '>=';
+AND : 'AND';
+OR  : 'OR';
+
+CTE_INT : ('0'..'9')+   ;
+CTE_STRING: ["] ( ~["\r\n\\] | '\\' ~[\r\n] )* ["]  ; 
+CTE_F: CTE_INT '.' CTE_INT  ;
+CTE_BOOL: ('TRUE' | 'FALSE') ;
+
+GETOUTLIERS : 'getOutliers';
+REMOVEOUTLIERS  : 'removeOutliers';
+TELLMEWHATTOUSE : 'tellMeWhatToUse';
+PRINTMEASURES   : 'printMeasures';
+MEAN    : 'mean';
+MEDIAN  : 'median';
+MODE    : 'mode';
+RANGE   : 'range';
+MIN     : 'min';
+MAX     : 'max';
+DESESTANDAR : 'desEstandar';
+QUICKSHOW   : 'quickShow';
+PEARSONCORRELATION  : 'pearsoneCorrelation';
+NORMALDISTRIBUTION  : 'normalDistribution';
+FILLVALUE   : 'fillValue';
+REMOVEVALUE : 'removeValue';
+
+ID : [a-x]+[a-zA-Z0-9]* ;             // match lower-case identifiers
+WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlinesN
