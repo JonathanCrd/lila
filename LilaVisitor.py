@@ -1,4 +1,4 @@
-# Generated from Lila.li by ANTLR 4.7.2
+# Generated from Lila.g4 by ANTLR 4.7.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .LilaParser import LilaParser
@@ -16,6 +16,11 @@ class LilaVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by LilaParser#data.
     def visitData(self, ctx:LilaParser.DataContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by LilaParser#data2.
+    def visitData2(self, ctx:LilaParser.Data2Context):
         return self.visitChildren(ctx)
 
 

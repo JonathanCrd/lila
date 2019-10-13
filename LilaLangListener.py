@@ -1,21 +1,18 @@
-# Generated from Lila.g4 by ANTLR 4.7.2
-from antlr4 import *
-if __name__ is not None and "." in __name__:
-    from .LilaParser import LilaParser
-else:
-    from LilaParser import LilaParser
+from LilaParser import LilaParser
+from LilaListener import LilaListener
+from Classes import Semantic, Function, Var
 
-# This class defines a complete listener for a parse tree produced by LilaParser.
-class LilaListener(ParseTreeListener):
+class LilaLangListener(LilaListener):
 
     # Enter a parse tree produced by LilaParser#programa.
     def enterPrograma(self, ctx:LilaParser.ProgramaContext):
-        pass
-
+        print("WELCOME STEVEN! Your program " + str(ctx.ID()))
+        
+            
     # Exit a parse tree produced by LilaParser#programa.
     def exitPrograma(self, ctx:LilaParser.ProgramaContext):
+        Semantic.display_test()
         pass
-
 
     # Enter a parse tree produced by LilaParser#data.
     def enterData(self, ctx:LilaParser.DataContext):
@@ -23,18 +20,22 @@ class LilaListener(ParseTreeListener):
 
     # Exit a parse tree produced by LilaParser#data.
     def exitData(self, ctx:LilaParser.DataContext):
-        pass
-
+        Semantic.isGlobal = False
 
     # Enter a parse tree produced by LilaParser#data2.
     def enterData2(self, ctx:LilaParser.Data2Context):
-        pass
+        i = 0
+        while (ctx.ID(i) != None):
+            varTemp = Var(str(ctx.ID(i)),ctx.tipo().getText(),'')
+            if ( Semantic.add_var(varTemp) == False):
+                # This means that the variable is already defined in the scope or globally
+                raise SyntaxError("Variable " + str(ctx.ID(i)) + " is already declared in the actual scope")
+            i = i+1
 
     # Exit a parse tree produced by LilaParser#data2.
     def exitData2(self, ctx:LilaParser.Data2Context):
         pass
-
-
+    
     # Enter a parse tree produced by LilaParser#main.
     def enterMain(self, ctx:LilaParser.MainContext):
         pass
@@ -47,19 +48,28 @@ class LilaListener(ParseTreeListener):
     # Enter a parse tree produced by LilaParser#tipo.
     def enterTipo(self, ctx:LilaParser.TipoContext):
         pass
-
+    
     # Exit a parse tree produced by LilaParser#tipo.
     def exitTipo(self, ctx:LilaParser.TipoContext):
         pass
 
-
     # Enter a parse tree produced by LilaParser#funciones.
     def enterFunciones(self, ctx:LilaParser.FuncionesContext):
-        pass
+        if(ctx.VOID() == None):
+            #This is not a void function
+            funcTemp = Function(str(ctx.ID()),ctx.tipo().getText())
+        else:
+            #This is a void function
+            funcTemp = Function(str(ctx.ID()),ctx.VOID())
+
+        if (Semantic.add_function(funcTemp) == False):
+             # This means that the function is already defined in the program
+            raise SyntaxError("Function " + str(ctx.ID()) + " is already defined")
+            
 
     # Exit a parse tree produced by LilaParser#funciones.
     def exitFunciones(self, ctx:LilaParser.FuncionesContext):
-        pass
+        Semantic.dump_varFunt()
 
 
     # Enter a parse tree produced by LilaParser#params.

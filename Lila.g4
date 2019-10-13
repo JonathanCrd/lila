@@ -7,7 +7,11 @@ programa
     ;
 
 data
-    : VAR (tipo ID (COMMA ID)* SEMICOLON)+ 
+    : VAR data2+
+    ;
+
+data2
+    : tipo ID (COMMA ID)* SEMICOLON
     ;
 
 main

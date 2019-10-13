@@ -17,12 +17,14 @@ func void mivoid()
 
 func void funParams(int i, num a)
 {
+    var int funVar2;
     i = 0;
     a = 1.2;
 }
 
 func int funcInt()
 {
+    var int funVar; 
     if 2>3
     {
         miNum1 = 2*6;
