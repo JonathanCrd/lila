@@ -2,6 +2,7 @@ class Function:
     def __init__(self, name, f_type):
         self.name = name
         self.f_type = f_type
+        self.num_params = 0
 
 class Var:
     def __init__(self, name, v_type, value):
@@ -24,7 +25,7 @@ class Semantic:
         '''
             
         if function.name not in Semantic.dirFunctions.keys():
-            Semantic.dirFunctions[function.name] = function.f_type
+            Semantic.dirFunctions[function.name] = function
             return True
         else:
             return False
@@ -39,14 +40,14 @@ class Semantic:
         if Semantic.isGlobal == True:
             #This is a global variable
             if var.name not in Semantic.varGlobals:
-                Semantic.varGlobals[var.name] = [var.v_type, var.value]
+                Semantic.varGlobals[var.name] = var
                 return True
             else:
                 return False
         else:
             #This variable is inside an scope (It's a local variable)
             if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
-                Semantic.varFunct[var.name] = [var.v_type, var.value]
+                Semantic.varFunct[var.name] = var
                 return True
             else:
                 return False
@@ -58,6 +59,24 @@ class Semantic:
         function is no longer needed.
         '''
         Semantic.varFunct = {}
+    
+    @staticmethod
+    def look_for_function(function):
+        #validate that the function exists
+        if function.name in Semantic.dirFunctions.keys():
+            return Semantic.dirFunctions[function.name]
+        else:
+            return None
+
+    @staticmethod
+    def look_for_variable(var):
+        if var.name in Semantic.varGlobals.keys():
+            return Semantic.varGlobals[var.name]
+        else:
+            if var.name in Semantic.varFunct.keys():
+                return Semantic.varGlobals[var.name]
+            else:
+                return None
 
     @staticmethod
     def display_test():
@@ -72,4 +91,4 @@ class Semantic:
         for x, y in Semantic.varFunct.items():
             print(x, y)
         print("=============================")
-        
+

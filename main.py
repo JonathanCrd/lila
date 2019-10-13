@@ -5,6 +5,7 @@ from LilaParser import LilaParser
 from LilaLangListener import LilaLangListener
 
 def main():
+    sys.tracebacklimit = 0
     input_stream = FileStream('/Users/lizzie/Documents/GitHub/lila/ejemplo.txt')
     lexer = LilaLexer(input_stream)
     stream = CommonTokenStream(lexer)

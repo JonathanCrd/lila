@@ -65,8 +65,17 @@ class LilaLangListener(LilaListener):
         if (Semantic.add_function(funcTemp) == False):
              # This means that the function is already defined in the program
             raise SyntaxError("Function " + str(ctx.ID()) + " is already defined")
+        
+        if ctx.params() != None:
+            #Get all the IDs and Types for each parameter in a function
+            (T,I) = self.enterParams(ctx.params())
             
-
+            for a,b in zip(I,T):
+                varTemp = Var(a.getText(),b.getText(),'')
+                if ( Semantic.add_var(varTemp) == False):
+                    # This means that the variable is already defined in the scope or globally
+                    raise SyntaxError("Variable " + str(a.getText()) + " is already declared in the actual scope")
+            
     # Exit a parse tree produced by LilaParser#funciones.
     def exitFunciones(self, ctx:LilaParser.FuncionesContext):
         Semantic.dump_varFunt()
@@ -74,7 +83,7 @@ class LilaLangListener(LilaListener):
 
     # Enter a parse tree produced by LilaParser#params.
     def enterParams(self, ctx:LilaParser.ParamsContext):
-        pass
+        return (ctx.tipo(),ctx.ID())
 
     # Exit a parse tree produced by LilaParser#params.
     def exitParams(self, ctx:LilaParser.ParamsContext):
