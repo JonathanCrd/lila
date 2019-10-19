@@ -46,6 +46,7 @@ func num funNum(num a, num b)
     a = 20.5;
     print(2,"",a);
     input(a,"This is a message");
+    a * v;
     return a;
 }
 

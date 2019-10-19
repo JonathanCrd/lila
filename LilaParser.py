@@ -6,6 +6,10 @@ from typing.io import TextIO
 import sys
 
 
+from IntermediateGenerator import *
+c = Compiler()
+
+
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3=")
@@ -356,12 +360,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitPrograma" ):
                 listener.exitPrograma(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPrograma" ):
-                return visitor.visitPrograma(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -432,12 +430,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitData" ):
                 listener.exitData(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitData" ):
-                return visitor.visitData(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -507,12 +499,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitData2" ):
                 listener.exitData2(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitData2" ):
-                return visitor.visitData2(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -573,12 +559,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitMain" ):
                 listener.exitMain(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMain" ):
-                return visitor.visitMain(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -648,12 +628,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTipo" ):
                 listener.exitTipo(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTipo" ):
-                return visitor.visitTipo(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -751,12 +725,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFunciones" ):
                 listener.exitFunciones(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFunciones" ):
-                return visitor.visitFunciones(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -867,12 +835,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitParams" ):
                 listener.exitParams(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitParams" ):
-                return visitor.visitParams(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -958,12 +920,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEstatuto" ):
                 listener.exitEstatuto(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitEstatuto" ):
-                return visitor.visitEstatuto(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1071,12 +1027,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitCondicion" ):
                 listener.exitCondicion(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCondicion" ):
-                return visitor.visitCondicion(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1143,12 +1093,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitBloque" ):
                 listener.exitBloque(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBloque" ):
-                return visitor.visitBloque(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1232,12 +1176,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDisplay" ):
                 listener.exitDisplay(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDisplay" ):
-                return visitor.visitDisplay(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1357,12 +1295,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitAsignacion" ):
                 listener.exitAsignacion(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAsignacion" ):
-                return visitor.visitAsignacion(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1443,12 +1375,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitSreturn" ):
                 listener.exitSreturn(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSreturn" ):
-                return visitor.visitSreturn(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1521,12 +1447,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArr" ):
                 listener.exitArr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitArr" ):
-                return visitor.visitArr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1630,12 +1550,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitExpresion" ):
                 listener.exitExpresion(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpresion" ):
-                return visitor.visitExpresion(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1709,12 +1623,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExp" ):
                 listener.exitExp(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExp" ):
-                return visitor.visitExp(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1790,12 +1698,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitTermino" ):
                 listener.exitTermino(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTermino" ):
-                return visitor.visitTermino(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1870,12 +1772,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFactor" ):
                 listener.exitFactor(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFactor" ):
-                return visitor.visitFactor(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1969,12 +1865,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitComparacion" ):
                 listener.exitComparacion(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitComparacion" ):
-                return visitor.visitComparacion(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2081,12 +1971,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitVar_cte" ):
                 listener.exitVar_cte(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVar_cte" ):
-                return visitor.visitVar_cte(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2205,12 +2089,6 @@ class LilaParser ( Parser ):
             if hasattr( listener, "exitSwhile" ):
                 listener.exitSwhile(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSwhile" ):
-                return visitor.visitSwhile(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -2276,12 +2154,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInvocacion" ):
                 listener.exitInvocacion(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitInvocacion" ):
-                return visitor.visitInvocacion(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2367,12 +2239,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitGetinput" ):
                 listener.exitGetinput(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGetinput" ):
-                return visitor.visitGetinput(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -2514,12 +2380,6 @@ class LilaParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEspeciales" ):
                 listener.exitEspeciales(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitEspeciales" ):
-                return visitor.visitEspeciales(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 

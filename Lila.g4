@@ -1,6 +1,10 @@
 // Define the grammar
 grammar Lila;
 
+@header{
+from IntermediateGenerator import *
+c = Compiler()
+}
 
 programa
     : LILA ID (data)? (funciones)* main
@@ -67,24 +71,24 @@ arr
     ;
 
 expresion
-    : comparacion ((AND | OR) comparacion)*
+    : comparacion ((AND {c.addOperator('AND')}| OR {c.addOperator('OR')}) comparacion)*
     ;
 
 exp
-    : termino ((PLUS | MINUS) termino)*
+    : termino ((PLUS {c.addOperator('+')} | MINUS {c.addOperator('-')}) termino)*
     ;
 
 termino
-    : factor ((MULTIPLICATION | DIVISION) factor)*
+    : factor ((MULTIPLICATION {c.addOperator('*')}| DIVISION {c.addOperator('/')}) factor)*
     ;
 
 factor
-    : OPEN_PARENTHESIS expresion CLOSE_PARENTHESIS
+    : OPEN_PARENTHESIS {c.addOperator('(')}expresion CLOSE_PARENTHESIS {c.finParentesis()}
     | (PLUS| MINUS)? var_cte
     ;
 
 comparacion
-    : exp (GREATER_THAN | LESS_THAN | NOTEQUAL | EQUALITY | GREATER_THAN_EQUAL | LESS_THAN_EQUAL) exp
+    : exp (GREATER_THAN {c.addOperator('>')}| LESS_THAN {c.addOperator('<')} | NOTEQUAL {c.addOperator('!=')}| EQUALITY {c.addOperator('==')}| GREATER_THAN_EQUAL {c.addOperator('>=')}| LESS_THAN_EQUAL {c.addOperator('<=')}) exp
     | exp
     ;
 

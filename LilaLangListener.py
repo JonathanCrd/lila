@@ -1,17 +1,16 @@
 from LilaParser import LilaParser
 from LilaListener import LilaListener
 from Classes import Semantic, Function, Var
+from IntermediateGenerator import IntermediateGenerator
 
 class LilaLangListener(LilaListener):
 
     # Enter a parse tree produced by LilaParser#programa.
     def enterPrograma(self, ctx:LilaParser.ProgramaContext):
-        print("WELCOME STEVEN! Your program " + str(ctx.ID()))
-        
+        pass        
             
     # Exit a parse tree produced by LilaParser#programa.
     def exitPrograma(self, ctx:LilaParser.ProgramaContext):
-        Semantic.display_test()
         pass
 
     # Enter a parse tree produced by LilaParser#data.
@@ -241,5 +240,4 @@ class LilaLangListener(LilaListener):
     # Exit a parse tree produced by LilaParser#especiales.
     def exitEspeciales(self, ctx:LilaParser.EspecialesContext):
         pass
-
 

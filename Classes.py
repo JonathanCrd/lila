@@ -314,3 +314,16 @@ class Semantic_Cube():
         Semantic_Cube.cube['bool']['bool']['=']='bool'
         Semantic_Cube.cube['bool']['bool']['AND']='bool'
         Semantic_Cube.cube['bool']['bool']['OR']='bool'
+
+
+class Operand:
+    def __init__(self,o_name,o_type,o_value):
+        self.name = o_name
+        self.type = o_type
+        self.value = o_value
+
+class Quadruple:
+    def __init__(self, operator, left, right):
+        self.operator = operator
+        self.left = left
+        self.right = right

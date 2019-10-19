@@ -5,6 +5,10 @@ from typing.io import TextIO
 import sys
 
 
+from IntermediateGenerator import *
+c = Compiler()
+
+
 
 def serializedATN():
     with StringIO() as buf:
