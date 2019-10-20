@@ -15,6 +15,19 @@ class Semantic:
     varGlobals = dict()
     varFunct = dict()
     isGlobal = True
+    lastFuncKey = None
+
+    @staticmethod
+    def enterFunciones(name,tipo,void):
+        if(void == None):
+           funcTemp = Function(name,tipo)
+        else:
+           funcTemp = Function(name,void)
+     
+        if (Semantic.add_function(funcTemp) == False):
+             # This means that the function is already defined in the program
+            raise SyntaxError("Function " + name + " is already defined")
+            
 
     @staticmethod
     def add_function(function):
@@ -26,6 +39,8 @@ class Semantic:
             
         if function.name not in Semantic.dirFunctions.keys():
             Semantic.dirFunctions[function.name] = function
+            Semantic.lastFuncKey = function.name
+           
             return True
         else:
             return False
@@ -34,23 +49,32 @@ class Semantic:
     def add_var(var):
         '''
         Method to add a variable into the current scope table.
-        It recieves an object Function to append, 
-        if the function already exists, it will return false.
+        It recieves an object Variable to append, 
         '''
         if Semantic.isGlobal == True:
             #This is a global variable
             if var.name not in Semantic.varGlobals:
                 Semantic.varGlobals[var.name] = var
-                return True
             else:
-                return False
+                raise SyntaxError("Variable " + var.name  + " is already declared in the global scope")
         else:
             #This variable is inside an scope (It's a local variable)
             if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
                 Semantic.varFunct[var.name] = var
-                return True
             else:
-                return False
+                raise SyntaxError("Variable " + var.name  + " is already declared in the actual scope")
+
+    @staticmethod
+    def add_param(var):
+        '''
+        Method to add a param into the current scope table.
+        It recieves an object Variable to append, and also add 1 to the number of params in the current function
+        '''
+        if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
+            Semantic.varFunct[var.name] = var
+            Semantic.dirFunctions[Semantic.lastFuncKey].num_params += 1
+        else:
+            raise SyntaxError("Variable " + var.name  + " is already declared in the actual scope")
     
     @staticmethod
     def dump_varFunt():
@@ -83,13 +107,13 @@ class Semantic:
         print("=============================")
         print("Dir de funciones: ")
         for x, y in Semantic.dirFunctions.items():
-            print(x, y)
+            print(x, y.name, y.f_type, y.num_params)
         print("\nVars Globales: ")
         for x, y in Semantic.varGlobals.items():
-            print(x, y)
+            print(x, y.name, y.v_type, y.value)
         print("\nVars Locales: ")
         for x, y in Semantic.varFunct.items():
-            print(x, y)
+            print(x, y.name, y.v_type, y.value)
         print("=============================")
 
 class Semantic_Cube():

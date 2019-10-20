@@ -24,9 +24,9 @@ def main():
     parser = LilaParser(stream)
     parser._listeners = [CustomErrorListener()]
     tree = parser.programa()
-    printer = LilaLangListener()
-    walker = ParseTreeWalker()
-    walker.walk(printer, tree)
+    #printer = LilaLangListener()
+    #walker = ParseTreeWalker()
+    #walker.walk(printer, tree)
     #print(tree.toStringTree(recog=parser))
 
 if __name__ == '__main__':

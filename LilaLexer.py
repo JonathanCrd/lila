@@ -5,8 +5,9 @@ from typing.io import TextIO
 import sys
 
 
-from IntermediateGenerator import *
-c = Compiler()
+from IntermediateGenerator import IntermediateGenerator
+from Classes import Semantic, Function, Var
+c = IntermediateGenerator()
 
 
 

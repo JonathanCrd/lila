@@ -29,7 +29,10 @@ class IntermediateGenerator:
         pass
 
 
+            #Obtener tipos de los operandos
+            #Si si             generateQuad(op,opdo_izq,opdo_der)
 
-        def finParentesis(self):
+
+    def finParentesis(self):
         # Aqui es donde va a quitar el fondo falso
         pass

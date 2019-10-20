@@ -2,8 +2,9 @@
 grammar Lila;
 
 @header{
-from IntermediateGenerator import *
-c = Compiler()
+from IntermediateGenerator import IntermediateGenerator
+from Classes import Semantic, Function, Var
+c = IntermediateGenerator()
 }
 
 programa
@@ -11,11 +12,11 @@ programa
     ;
 
 data
-    : VAR data2+
+    : VAR data2+ {Semantic.isGlobal = False}
     ;
 
 data2
-    : tipo ID (COMMA ID)* SEMICOLON
+    : tipo ID {Semantic.add_var(Var($ID.text,$tipo.text,''))} (COMMA ID {Semantic.add_var(Var($ID.text,$tipo.text,''))})* SEMICOLON
     ;
 
 main
@@ -27,11 +28,11 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY
+    : FUNC (tipo | VOID) ID {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text)} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {Semantic.dump_varFunt()}
     ;
 
 params
-    : tipo ID (COMMA tipo ID)*
+    : tipo ID {Semantic.add_param(Var($ID.text,$tipo.text,''))} (COMMA tipo ID {Semantic.add_param(Var($ID.text,$tipo.text,''))})* 
     ;
 
 estatuto
