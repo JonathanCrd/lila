@@ -72,7 +72,12 @@ arr
     ;
 
 expresion
-    : comparacion ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion)*
+    : comparacion ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion {gen.exitExpresion()})*
+    ;
+
+comparacion
+    : exp (GREATER_THAN {gen.addOperator('>')}| LESS_THAN {gen.addOperator('<')} | NOTEQUAL {gen.addOperator('!=')}| EQUALITY {gen.addOperator('==')}| GREATER_THAN_EQUAL {gen.addOperator('>=')}| LESS_THAN_EQUAL {gen.addOperator('<=')}) exp {gen.exitComparacion()}
+    | exp 
     ;
 
 exp
@@ -86,11 +91,6 @@ termino
 factor
     : OPEN_PARENTHESIS {gen.addOperator('(')}expresion CLOSE_PARENTHESIS {gen.finParentesis()}
     | (PLUS| MINUS)? var_cte
-    ;
-
-comparacion
-    : exp (GREATER_THAN {gen.addOperator('>')}| LESS_THAN {gen.addOperator('<')} | NOTEQUAL {gen.addOperator('!=')}| EQUALITY {gen.addOperator('==')}| GREATER_THAN_EQUAL {gen.addOperator('>=')}| LESS_THAN_EQUAL {gen.addOperator('<=')}) exp {gen.exitComparacion()}
-    | exp {gen.exitComparacion()}
     ;
 
 var_cte

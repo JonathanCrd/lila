@@ -1,0 +1,22 @@
+lila firstProgram
+
+var int miVar1, miVar2;
+    num miNum1, miNum2;
+    text miText1, miText2;
+    int[1][2] arr1;
+    int[3] promedio;
+    num [2][2][2] arr2;
+    text[3] arr3, arr4;
+    bool miBool,miBool2;
+
+func void ejemplomiss(int a, int b, int c, int d, int e, int f, int g,int h, int i, int j, int k)
+{
+    miVar1 = (a+b)*c/(d+e)-f*g > h*(i+j)-k;
+}
+
+main {
+    arr3 = ["hola","jona","than"];
+    funcInt();
+    funParams(2,1.5);
+    mean(promedio);
+};

@@ -148,6 +148,15 @@ class LilaListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LilaParser#comparacion.
+    def enterComparacion(self, ctx:LilaParser.ComparacionContext):
+        pass
+
+    # Exit a parse tree produced by LilaParser#comparacion.
+    def exitComparacion(self, ctx:LilaParser.ComparacionContext):
+        pass
+
+
     # Enter a parse tree produced by LilaParser#exp.
     def enterExp(self, ctx:LilaParser.ExpContext):
         pass
@@ -172,15 +181,6 @@ class LilaListener(ParseTreeListener):
 
     # Exit a parse tree produced by LilaParser#factor.
     def exitFactor(self, ctx:LilaParser.FactorContext):
-        pass
-
-
-    # Enter a parse tree produced by LilaParser#comparacion.
-    def enterComparacion(self, ctx:LilaParser.ComparacionContext):
-        pass
-
-    # Exit a parse tree produced by LilaParser#comparacion.
-    def exitComparacion(self, ctx:LilaParser.ComparacionContext):
         pass
 
 

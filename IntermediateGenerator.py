@@ -37,6 +37,22 @@ class IntermediateGenerator:
             return None
         else:
             return self.stack_variables[-1]
+
+    def exitExpresion(self):
+        if self.top_operators() == 'AND' or self.top_operators() == 'OR':
+            op = self.stack_operators.pop()
+            opnd_Der = self.stack_variables.pop()
+            opnd_Izq = self.stack_variables.pop()
+            #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
+            if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
+                # Resultado se agrega a la pila de variables
+                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                self.var_counter += 1
+                self.stack_variables.append(res)
+                # Genera cuadruplo
+                self.Quadruples.append(Quadruple(op,opnd_Izq,opnd_Der,res))
+            else:
+                raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
             
     def exitComparacion(self):
         if self.top_operators() == '>' or self.top_operators() == '<' or self.top_operators() == '!=' or self.top_operators() == '==' or self.top_operators() == '>=' or self.top_operators() == '<=':
@@ -85,16 +101,16 @@ class IntermediateGenerator:
                 self.Quadruples.append(Quadruple(op,opnd_Izq,opnd_Der,res))
             else:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
-
-    def exitFactor(self):
-        pass
  
     def iniciaParentesis(self):
-        pass
+        self.stack_operators.append('(')
 
     def finParentesis(self):
         # Aqui es donde va a quitar el fondo falso
-        pass
+        if self.top_operators() == '(':
+            self.stack_operators.pop()
+        else:
+            raise SyntaxError("Parenthesis ( not found")
 
     def test_final(self):
         print('=======')

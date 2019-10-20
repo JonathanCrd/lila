@@ -27,7 +27,7 @@ func int funcInt()
     var int funVar,a; 
     if 2>3
     {
-        miNum1 = 2*6;
+        miNum1 = 2*2;
     }
     else
     {
@@ -49,6 +49,11 @@ func num funNum(num a, num b)
     print(2,"",a);
     input(a,"This is a message");
     return a;
+}
+
+func void ejemplomiss(int a, int b, int c, int d, int e, int f, int g,int h, int i, int j, int k)
+{
+    miVar1 = (a+b)*c/(d+e)-f*g > h*(i+j)-k;
 }
 
 main {

@@ -35,14 +35,14 @@ def serializedATN():
         buf.write("\17\7\17\u00cf\n\17\f\17\16\17\u00d2\13\17\3\17\3\17\3")
         buf.write("\17\3\17\3\17\3\17\3\17\3\17\7\17\u00dc\n\17\f\17\16\17")
         buf.write("\u00df\13\17\5\17\u00e1\n\17\3\20\3\20\3\20\3\20\3\20")
-        buf.write("\5\20\u00e8\n\20\3\20\7\20\u00eb\n\20\f\20\16\20\u00ee")
-        buf.write("\13\20\3\21\3\21\3\21\3\21\3\21\5\21\u00f5\n\21\3\21\3")
-        buf.write("\21\3\21\7\21\u00fa\n\21\f\21\16\21\u00fd\13\21\3\22\3")
-        buf.write("\22\3\22\3\22\3\22\5\22\u0104\n\22\3\22\3\22\3\22\7\22")
-        buf.write("\u0109\n\22\f\22\16\22\u010c\13\22\3\23\3\23\3\23\3\23")
-        buf.write("\3\23\3\23\3\23\5\23\u0115\n\23\3\23\5\23\u0118\n\23\3")
-        buf.write("\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24")
-        buf.write("\3\24\3\24\5\24\u0127\n\24\3\24\3\24\3\24\3\24\3\24\3")
+        buf.write("\5\20\u00e8\n\20\3\20\3\20\3\20\7\20\u00ed\n\20\f\20\16")
+        buf.write("\20\u00f0\13\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21")
+        buf.write("\3\21\3\21\3\21\3\21\3\21\5\21\u00ff\n\21\3\21\3\21\3")
+        buf.write("\21\3\21\5\21\u0105\n\21\3\22\3\22\3\22\3\22\3\22\5\22")
+        buf.write("\u010c\n\22\3\22\3\22\3\22\7\22\u0111\n\22\f\22\16\22")
+        buf.write("\u0114\13\22\3\23\3\23\3\23\3\23\3\23\5\23\u011b\n\23")
+        buf.write("\3\23\3\23\3\23\7\23\u0120\n\23\f\23\16\23\u0123\13\23")
+        buf.write("\3\24\3\24\3\24\3\24\3\24\3\24\3\24\5\24\u012c\n\24\3")
         buf.write("\24\5\24\u012f\n\24\3\25\3\25\3\25\3\25\3\25\3\25\7\25")
         buf.write("\u0137\n\25\f\25\16\25\u013a\13\25\3\25\3\25\3\25\3\25")
         buf.write("\7\25\u0140\n\25\f\25\16\25\u0143\13\25\3\25\3\25\5\25")
@@ -61,7 +61,7 @@ def serializedATN():
         buf.write("X\3\2\2\2\fa\3\2\2\2\16y\3\2\2\2\20\u008e\3\2\2\2\22\u0090")
         buf.write("\3\2\2\2\24\u0099\3\2\2\2\26\u00a3\3\2\2\2\30\u00b6\3")
         buf.write("\2\2\2\32\u00c7\3\2\2\2\34\u00e0\3\2\2\2\36\u00e2\3\2")
-        buf.write("\2\2 \u00ef\3\2\2\2\"\u00fe\3\2\2\2$\u0117\3\2\2\2&\u012e")
+        buf.write("\2\2 \u0104\3\2\2\2\"\u0106\3\2\2\2$\u0115\3\2\2\2&\u012e")
         buf.write("\3\2\2\2(\u0150\3\2\2\2*\u0152\3\2\2\2,\u0156\3\2\2\2")
         buf.write(".\u0165\3\2\2\2\60\u019f\3\2\2\2\62\63\7\4\2\2\63\65\7")
         buf.write(";\2\2\64\66\5\4\3\2\65\64\3\2\2\2\65\66\3\2\2\2\66:\3")
@@ -106,8 +106,8 @@ def serializedATN():
         buf.write("\u00af\u00b2\3\2\2\2\u00b0\u00ae\3\2\2\2\u00b0\u00b1\3")
         buf.write("\2\2\2\u00b1\u00b3\3\2\2\2\u00b2\u00b0\3\2\2\2\u00b3\u00b4")
         buf.write("\7\25\2\2\u00b4\u00b5\7\31\2\2\u00b5\27\3\2\2\2\u00b6")
-        buf.write("\u00bd\7;\2\2\u00b7\u00b8\7\22\2\2\u00b8\u00b9\5 \21\2")
-        buf.write("\u00b9\u00ba\7\23\2\2\u00ba\u00bc\3\2\2\2\u00bb\u00b7")
+        buf.write("\u00bd\7;\2\2\u00b7\u00b8\7\22\2\2\u00b8\u00b9\5\"\22")
+        buf.write("\2\u00b9\u00ba\7\23\2\2\u00ba\u00bc\3\2\2\2\u00bb\u00b7")
         buf.write("\3\2\2\2\u00bc\u00bf\3\2\2\2\u00bd\u00bb\3\2\2\2\u00bd")
         buf.write("\u00be\3\2\2\2\u00be\u00c0\3\2\2\2\u00bf\u00bd\3\2\2\2")
         buf.write("\u00c0\u00c3\7\"\2\2\u00c1\u00c4\5\36\20\2\u00c2\u00c4")
@@ -124,46 +124,46 @@ def serializedATN():
         buf.write("\3\2\2\2\u00dc\u00df\3\2\2\2\u00dd\u00db\3\2\2\2\u00dd")
         buf.write("\u00de\3\2\2\2\u00de\u00e1\3\2\2\2\u00df\u00dd\3\2\2\2")
         buf.write("\u00e0\u00cb\3\2\2\2\u00e0\u00d3\3\2\2\2\u00e1\35\3\2")
-        buf.write("\2\2\u00e2\u00ec\5&\24\2\u00e3\u00e4\7%\2\2\u00e4\u00e8")
+        buf.write("\2\2\u00e2\u00ee\5 \21\2\u00e3\u00e4\7%\2\2\u00e4\u00e8")
         buf.write("\b\20\1\2\u00e5\u00e6\7&\2\2\u00e6\u00e8\b\20\1\2\u00e7")
         buf.write("\u00e3\3\2\2\2\u00e7\u00e5\3\2\2\2\u00e8\u00e9\3\2\2\2")
-        buf.write("\u00e9\u00eb\5&\24\2\u00ea\u00e7\3\2\2\2\u00eb\u00ee\3")
-        buf.write("\2\2\2\u00ec\u00ea\3\2\2\2\u00ec\u00ed\3\2\2\2\u00ed\37")
-        buf.write("\3\2\2\2\u00ee\u00ec\3\2\2\2\u00ef\u00fb\5\"\22\2\u00f0")
-        buf.write("\u00f1\7\32\2\2\u00f1\u00f5\b\21\1\2\u00f2\u00f3\7\33")
-        buf.write("\2\2\u00f3\u00f5\b\21\1\2\u00f4\u00f0\3\2\2\2\u00f4\u00f2")
-        buf.write("\3\2\2\2\u00f5\u00f6\3\2\2\2\u00f6\u00f7\5\"\22\2\u00f7")
-        buf.write("\u00f8\b\21\1\2\u00f8\u00fa\3\2\2\2\u00f9\u00f4\3\2\2")
-        buf.write("\2\u00fa\u00fd\3\2\2\2\u00fb\u00f9\3\2\2\2\u00fb\u00fc")
-        buf.write("\3\2\2\2\u00fc!\3\2\2\2\u00fd\u00fb\3\2\2\2\u00fe\u010a")
-        buf.write("\5$\23\2\u00ff\u0100\7\34\2\2\u0100\u0104\b\22\1\2\u0101")
-        buf.write("\u0102\7\35\2\2\u0102\u0104\b\22\1\2\u0103\u00ff\3\2\2")
-        buf.write("\2\u0103\u0101\3\2\2\2\u0104\u0105\3\2\2\2\u0105\u0106")
-        buf.write("\5$\23\2\u0106\u0107\b\22\1\2\u0107\u0109\3\2\2\2\u0108")
-        buf.write("\u0103\3\2\2\2\u0109\u010c\3\2\2\2\u010a\u0108\3\2\2\2")
-        buf.write("\u010a\u010b\3\2\2\2\u010b#\3\2\2\2\u010c\u010a\3\2\2")
-        buf.write("\2\u010d\u010e\7\24\2\2\u010e\u010f\b\23\1\2\u010f\u0110")
-        buf.write("\5\36\20\2\u0110\u0111\7\25\2\2\u0111\u0112\b\23\1\2\u0112")
-        buf.write("\u0118\3\2\2\2\u0113\u0115\t\3\2\2\u0114\u0113\3\2\2\2")
-        buf.write("\u0114\u0115\3\2\2\2\u0115\u0116\3\2\2\2\u0116\u0118\5")
-        buf.write("(\25\2\u0117\u010d\3\2\2\2\u0117\u0114\3\2\2\2\u0118%")
-        buf.write("\3\2\2\2\u0119\u0126\5 \21\2\u011a\u011b\7\37\2\2\u011b")
-        buf.write("\u0127\b\24\1\2\u011c\u011d\7\36\2\2\u011d\u0127\b\24")
-        buf.write("\1\2\u011e\u011f\7 \2\2\u011f\u0127\b\24\1\2\u0120\u0121")
-        buf.write("\7!\2\2\u0121\u0127\b\24\1\2\u0122\u0123\7$\2\2\u0123")
-        buf.write("\u0127\b\24\1\2\u0124\u0125\7#\2\2\u0125\u0127\b\24\1")
-        buf.write("\2\u0126\u011a\3\2\2\2\u0126\u011c\3\2\2\2\u0126\u011e")
-        buf.write("\3\2\2\2\u0126\u0120\3\2\2\2\u0126\u0122\3\2\2\2\u0126")
-        buf.write("\u0124\3\2\2\2\u0127\u0128\3\2\2\2\u0128\u0129\5 \21\2")
-        buf.write("\u0129\u012a\b\24\1\2\u012a\u012f\3\2\2\2\u012b\u012c")
-        buf.write("\5 \21\2\u012c\u012d\b\24\1\2\u012d\u012f\3\2\2\2\u012e")
-        buf.write("\u0119\3\2\2\2\u012e\u012b\3\2\2\2\u012f\'\3\2\2\2\u0130")
+        buf.write("\u00e9\u00ea\5 \21\2\u00ea\u00eb\b\20\1\2\u00eb\u00ed")
+        buf.write("\3\2\2\2\u00ec\u00e7\3\2\2\2\u00ed\u00f0\3\2\2\2\u00ee")
+        buf.write("\u00ec\3\2\2\2\u00ee\u00ef\3\2\2\2\u00ef\37\3\2\2\2\u00f0")
+        buf.write("\u00ee\3\2\2\2\u00f1\u00fe\5\"\22\2\u00f2\u00f3\7\37\2")
+        buf.write("\2\u00f3\u00ff\b\21\1\2\u00f4\u00f5\7\36\2\2\u00f5\u00ff")
+        buf.write("\b\21\1\2\u00f6\u00f7\7 \2\2\u00f7\u00ff\b\21\1\2\u00f8")
+        buf.write("\u00f9\7!\2\2\u00f9\u00ff\b\21\1\2\u00fa\u00fb\7$\2\2")
+        buf.write("\u00fb\u00ff\b\21\1\2\u00fc\u00fd\7#\2\2\u00fd\u00ff\b")
+        buf.write("\21\1\2\u00fe\u00f2\3\2\2\2\u00fe\u00f4\3\2\2\2\u00fe")
+        buf.write("\u00f6\3\2\2\2\u00fe\u00f8\3\2\2\2\u00fe\u00fa\3\2\2\2")
+        buf.write("\u00fe\u00fc\3\2\2\2\u00ff\u0100\3\2\2\2\u0100\u0101\5")
+        buf.write("\"\22\2\u0101\u0102\b\21\1\2\u0102\u0105\3\2\2\2\u0103")
+        buf.write("\u0105\5\"\22\2\u0104\u00f1\3\2\2\2\u0104\u0103\3\2\2")
+        buf.write("\2\u0105!\3\2\2\2\u0106\u0112\5$\23\2\u0107\u0108\7\32")
+        buf.write("\2\2\u0108\u010c\b\22\1\2\u0109\u010a\7\33\2\2\u010a\u010c")
+        buf.write("\b\22\1\2\u010b\u0107\3\2\2\2\u010b\u0109\3\2\2\2\u010c")
+        buf.write("\u010d\3\2\2\2\u010d\u010e\5$\23\2\u010e\u010f\b\22\1")
+        buf.write("\2\u010f\u0111\3\2\2\2\u0110\u010b\3\2\2\2\u0111\u0114")
+        buf.write("\3\2\2\2\u0112\u0110\3\2\2\2\u0112\u0113\3\2\2\2\u0113")
+        buf.write("#\3\2\2\2\u0114\u0112\3\2\2\2\u0115\u0121\5&\24\2\u0116")
+        buf.write("\u0117\7\34\2\2\u0117\u011b\b\23\1\2\u0118\u0119\7\35")
+        buf.write("\2\2\u0119\u011b\b\23\1\2\u011a\u0116\3\2\2\2\u011a\u0118")
+        buf.write("\3\2\2\2\u011b\u011c\3\2\2\2\u011c\u011d\5&\24\2\u011d")
+        buf.write("\u011e\b\23\1\2\u011e\u0120\3\2\2\2\u011f\u011a\3\2\2")
+        buf.write("\2\u0120\u0123\3\2\2\2\u0121\u011f\3\2\2\2\u0121\u0122")
+        buf.write("\3\2\2\2\u0122%\3\2\2\2\u0123\u0121\3\2\2\2\u0124\u0125")
+        buf.write("\7\24\2\2\u0125\u0126\b\24\1\2\u0126\u0127\5\36\20\2\u0127")
+        buf.write("\u0128\7\25\2\2\u0128\u0129\b\24\1\2\u0129\u012f\3\2\2")
+        buf.write("\2\u012a\u012c\t\3\2\2\u012b\u012a\3\2\2\2\u012b\u012c")
+        buf.write("\3\2\2\2\u012c\u012d\3\2\2\2\u012d\u012f\5(\25\2\u012e")
+        buf.write("\u0124\3\2\2\2\u012e\u012b\3\2\2\2\u012f\'\3\2\2\2\u0130")
         buf.write("\u0131\7;\2\2\u0131\u0146\b\25\1\2\u0132\u0133\7\22\2")
-        buf.write("\2\u0133\u0134\5 \21\2\u0134\u0135\7\23\2\2\u0135\u0137")
+        buf.write("\2\u0133\u0134\5\"\22\2\u0134\u0135\7\23\2\2\u0135\u0137")
         buf.write("\3\2\2\2\u0136\u0132\3\2\2\2\u0137\u013a\3\2\2\2\u0138")
         buf.write("\u0136\3\2\2\2\u0138\u0139\3\2\2\2\u0139\u0147\3\2\2\2")
         buf.write("\u013a\u0138\3\2\2\2\u013b\u013c\7\24\2\2\u013c\u0141")
-        buf.write("\5 \21\2\u013d\u013e\7\30\2\2\u013e\u0140\5 \21\2\u013f")
+        buf.write("\5\"\22\2\u013d\u013e\7\30\2\2\u013e\u0140\5\"\22\2\u013f")
         buf.write("\u013d\3\2\2\2\u0140\u0143\3\2\2\2\u0141\u013f\3\2\2\2")
         buf.write("\u0141\u0142\3\2\2\2\u0142\u0144\3\2\2\2\u0143\u0141\3")
         buf.write("\2\2\2\u0144\u0145\7\25\2\2\u0145\u0147\3\2\2\2\u0146")
@@ -207,8 +207,8 @@ def serializedATN():
         buf.write("\u0174\3\2\2\2\u019f\u017d\3\2\2\2\u019f\u0184\3\2\2\2")
         buf.write("\u019f\u018d\3\2\2\2\u019f\u0197\3\2\2\2\u01a0\61\3\2")
         buf.write("\2\2*\65:DP^djot\u0083\u008e\u0095\u009e\u00a7\u00ac\u00b0")
-        buf.write("\u00bd\u00c3\u00d0\u00dd\u00e0\u00e7\u00ec\u00f4\u00fb")
-        buf.write("\u0103\u010a\u0114\u0117\u0126\u012e\u0138\u0141\u0146")
+        buf.write("\u00bd\u00c3\u00d0\u00dd\u00e0\u00e7\u00ee\u00fe\u0104")
+        buf.write("\u010b\u0112\u011a\u0121\u012b\u012e\u0138\u0141\u0146")
         buf.write("\u0150\u015d\u0160\u016a\u0179\u019f")
         return buf.getvalue()
 
@@ -264,10 +264,10 @@ class LilaParser ( Parser ):
     RULE_sreturn = 12
     RULE_arr = 13
     RULE_expresion = 14
-    RULE_exp = 15
-    RULE_termino = 16
-    RULE_factor = 17
-    RULE_comparacion = 18
+    RULE_comparacion = 15
+    RULE_exp = 16
+    RULE_termino = 17
+    RULE_factor = 18
     RULE_var_cte = 19
     RULE_swhile = 20
     RULE_invocacion = 21
@@ -276,8 +276,8 @@ class LilaParser ( Parser ):
 
     ruleNames =  [ "programa", "data", "data2", "main", "tipo", "funciones", 
                    "params", "estatuto", "condicion", "bloque", "display", 
-                   "asignacion", "sreturn", "arr", "expresion", "exp", "termino", 
-                   "factor", "comparacion", "var_cte", "swhile", "invocacion", 
+                   "asignacion", "sreturn", "arr", "expresion", "comparacion", 
+                   "exp", "termino", "factor", "var_cte", "swhile", "invocacion", 
                    "getinput", "especiales" ]
 
     EOF = Token.EOF
@@ -1605,7 +1605,7 @@ class LilaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 224
             self.comparacion()
-            self.state = 234
+            self.state = 236
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==LilaParser.AND or _la==LilaParser.OR:
@@ -1627,267 +1627,10 @@ class LilaParser ( Parser ):
 
                 self.state = 231
                 self.comparacion()
-                self.state = 236
+                gen.exitExpresion()
+                self.state = 238
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class ExpContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def termino(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(LilaParser.TerminoContext)
-            else:
-                return self.getTypedRuleContext(LilaParser.TerminoContext,i)
-
-
-        def PLUS(self, i:int=None):
-            if i is None:
-                return self.getTokens(LilaParser.PLUS)
-            else:
-                return self.getToken(LilaParser.PLUS, i)
-
-        def MINUS(self, i:int=None):
-            if i is None:
-                return self.getTokens(LilaParser.MINUS)
-            else:
-                return self.getToken(LilaParser.MINUS, i)
-
-        def getRuleIndex(self):
-            return LilaParser.RULE_exp
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExp" ):
-                listener.enterExp(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExp" ):
-                listener.exitExp(self)
-
-
-
-
-    def exp(self):
-
-        localctx = LilaParser.ExpContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 30, self.RULE_exp)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 237
-            self.termino()
-            self.state = 249
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while _la==LilaParser.PLUS or _la==LilaParser.MINUS:
-                self.state = 242
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [LilaParser.PLUS]:
-                    self.state = 238
-                    self.match(LilaParser.PLUS)
-                    gen.addOperator('+')
-                    pass
-                elif token in [LilaParser.MINUS]:
-                    self.state = 240
-                    self.match(LilaParser.MINUS)
-                    gen.addOperator('-')
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
-                self.state = 244
-                self.termino()
-                gen.exitExp()
-                self.state = 251
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class TerminoContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def factor(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(LilaParser.FactorContext)
-            else:
-                return self.getTypedRuleContext(LilaParser.FactorContext,i)
-
-
-        def MULTIPLICATION(self, i:int=None):
-            if i is None:
-                return self.getTokens(LilaParser.MULTIPLICATION)
-            else:
-                return self.getToken(LilaParser.MULTIPLICATION, i)
-
-        def DIVISION(self, i:int=None):
-            if i is None:
-                return self.getTokens(LilaParser.DIVISION)
-            else:
-                return self.getToken(LilaParser.DIVISION, i)
-
-        def getRuleIndex(self):
-            return LilaParser.RULE_termino
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTermino" ):
-                listener.enterTermino(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTermino" ):
-                listener.exitTermino(self)
-
-
-
-
-    def termino(self):
-
-        localctx = LilaParser.TerminoContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 32, self.RULE_termino)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 252
-            self.factor()
-            self.state = 264
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while _la==LilaParser.MULTIPLICATION or _la==LilaParser.DIVISION:
-                self.state = 257
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [LilaParser.MULTIPLICATION]:
-                    self.state = 253
-                    self.match(LilaParser.MULTIPLICATION)
-                    gen.addOperator('*')
-                    pass
-                elif token in [LilaParser.DIVISION]:
-                    self.state = 255
-                    self.match(LilaParser.DIVISION)
-                    gen.addOperator('/')
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
-                self.state = 259
-                self.factor()
-                gen.exitTermino()
-                self.state = 266
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class FactorContext(ParserRuleContext):
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def OPEN_PARENTHESIS(self):
-            return self.getToken(LilaParser.OPEN_PARENTHESIS, 0)
-
-        def expresion(self):
-            return self.getTypedRuleContext(LilaParser.ExpresionContext,0)
-
-
-        def CLOSE_PARENTHESIS(self):
-            return self.getToken(LilaParser.CLOSE_PARENTHESIS, 0)
-
-        def var_cte(self):
-            return self.getTypedRuleContext(LilaParser.Var_cteContext,0)
-
-
-        def PLUS(self):
-            return self.getToken(LilaParser.PLUS, 0)
-
-        def MINUS(self):
-            return self.getToken(LilaParser.MINUS, 0)
-
-        def getRuleIndex(self):
-            return LilaParser.RULE_factor
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFactor" ):
-                listener.enterFactor(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFactor" ):
-                listener.exitFactor(self)
-
-
-
-
-    def factor(self):
-
-        localctx = LilaParser.FactorContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_factor)
-        self._la = 0 # Token type
-        try:
-            self.state = 277
-            self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [LilaParser.OPEN_PARENTHESIS]:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 267
-                self.match(LilaParser.OPEN_PARENTHESIS)
-                gen.addOperator('(')
-                self.state = 269
-                self.expresion()
-                self.state = 270
-                self.match(LilaParser.CLOSE_PARENTHESIS)
-                gen.finParentesis()
-                pass
-            elif token in [LilaParser.PLUS, LilaParser.MINUS, LilaParser.CTE_INT, LilaParser.CTE_STRING, LilaParser.CTE_F, LilaParser.CTE_BOOL, LilaParser.ID]:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 274
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==LilaParser.PLUS or _la==LilaParser.MINUS:
-                    self.state = 273
-                    _la = self._input.LA(1)
-                    if not(_la==LilaParser.PLUS or _la==LilaParser.MINUS):
-                        self._errHandler.recoverInline(self)
-                    else:
-                        self._errHandler.reportMatch(self)
-                        self.consume()
-
-
-                self.state = 276
-                self.var_cte()
-                pass
-            else:
-                raise NoViableAltException(self)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -1946,63 +1689,320 @@ class LilaParser ( Parser ):
     def comparacion(self):
 
         localctx = LilaParser.ComparacionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_comparacion)
+        self.enterRule(localctx, 30, self.RULE_comparacion)
         try:
-            self.state = 300
+            self.state = 258
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,30,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,24,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 279
+                self.state = 239
                 self.exp()
-                self.state = 292
+                self.state = 252
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [LilaParser.GREATER_THAN]:
-                    self.state = 280
+                    self.state = 240
                     self.match(LilaParser.GREATER_THAN)
                     gen.addOperator('>')
                     pass
                 elif token in [LilaParser.LESS_THAN]:
-                    self.state = 282
+                    self.state = 242
                     self.match(LilaParser.LESS_THAN)
                     gen.addOperator('<')
                     pass
                 elif token in [LilaParser.NOTEQUAL]:
-                    self.state = 284
+                    self.state = 244
                     self.match(LilaParser.NOTEQUAL)
                     gen.addOperator('!=')
                     pass
                 elif token in [LilaParser.EQUALITY]:
-                    self.state = 286
+                    self.state = 246
                     self.match(LilaParser.EQUALITY)
                     gen.addOperator('==')
                     pass
                 elif token in [LilaParser.GREATER_THAN_EQUAL]:
-                    self.state = 288
+                    self.state = 248
                     self.match(LilaParser.GREATER_THAN_EQUAL)
                     gen.addOperator('>=')
                     pass
                 elif token in [LilaParser.LESS_THAN_EQUAL]:
-                    self.state = 290
+                    self.state = 250
                     self.match(LilaParser.LESS_THAN_EQUAL)
                     gen.addOperator('<=')
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 294
+                self.state = 254
                 self.exp()
                 gen.exitComparacion()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 297
+                self.state = 257
                 self.exp()
-                gen.exitComparacion()
                 pass
 
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ExpContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def termino(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(LilaParser.TerminoContext)
+            else:
+                return self.getTypedRuleContext(LilaParser.TerminoContext,i)
+
+
+        def PLUS(self, i:int=None):
+            if i is None:
+                return self.getTokens(LilaParser.PLUS)
+            else:
+                return self.getToken(LilaParser.PLUS, i)
+
+        def MINUS(self, i:int=None):
+            if i is None:
+                return self.getTokens(LilaParser.MINUS)
+            else:
+                return self.getToken(LilaParser.MINUS, i)
+
+        def getRuleIndex(self):
+            return LilaParser.RULE_exp
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExp" ):
+                listener.enterExp(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExp" ):
+                listener.exitExp(self)
+
+
+
+
+    def exp(self):
+
+        localctx = LilaParser.ExpContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 32, self.RULE_exp)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 260
+            self.termino()
+            self.state = 272
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==LilaParser.PLUS or _la==LilaParser.MINUS:
+                self.state = 265
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [LilaParser.PLUS]:
+                    self.state = 261
+                    self.match(LilaParser.PLUS)
+                    gen.addOperator('+')
+                    pass
+                elif token in [LilaParser.MINUS]:
+                    self.state = 263
+                    self.match(LilaParser.MINUS)
+                    gen.addOperator('-')
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                self.state = 267
+                self.termino()
+                gen.exitExp()
+                self.state = 274
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class TerminoContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def factor(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(LilaParser.FactorContext)
+            else:
+                return self.getTypedRuleContext(LilaParser.FactorContext,i)
+
+
+        def MULTIPLICATION(self, i:int=None):
+            if i is None:
+                return self.getTokens(LilaParser.MULTIPLICATION)
+            else:
+                return self.getToken(LilaParser.MULTIPLICATION, i)
+
+        def DIVISION(self, i:int=None):
+            if i is None:
+                return self.getTokens(LilaParser.DIVISION)
+            else:
+                return self.getToken(LilaParser.DIVISION, i)
+
+        def getRuleIndex(self):
+            return LilaParser.RULE_termino
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTermino" ):
+                listener.enterTermino(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTermino" ):
+                listener.exitTermino(self)
+
+
+
+
+    def termino(self):
+
+        localctx = LilaParser.TerminoContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 34, self.RULE_termino)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 275
+            self.factor()
+            self.state = 287
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==LilaParser.MULTIPLICATION or _la==LilaParser.DIVISION:
+                self.state = 280
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [LilaParser.MULTIPLICATION]:
+                    self.state = 276
+                    self.match(LilaParser.MULTIPLICATION)
+                    gen.addOperator('*')
+                    pass
+                elif token in [LilaParser.DIVISION]:
+                    self.state = 278
+                    self.match(LilaParser.DIVISION)
+                    gen.addOperator('/')
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                self.state = 282
+                self.factor()
+                gen.exitTermino()
+                self.state = 289
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class FactorContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def OPEN_PARENTHESIS(self):
+            return self.getToken(LilaParser.OPEN_PARENTHESIS, 0)
+
+        def expresion(self):
+            return self.getTypedRuleContext(LilaParser.ExpresionContext,0)
+
+
+        def CLOSE_PARENTHESIS(self):
+            return self.getToken(LilaParser.CLOSE_PARENTHESIS, 0)
+
+        def var_cte(self):
+            return self.getTypedRuleContext(LilaParser.Var_cteContext,0)
+
+
+        def PLUS(self):
+            return self.getToken(LilaParser.PLUS, 0)
+
+        def MINUS(self):
+            return self.getToken(LilaParser.MINUS, 0)
+
+        def getRuleIndex(self):
+            return LilaParser.RULE_factor
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFactor" ):
+                listener.enterFactor(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFactor" ):
+                listener.exitFactor(self)
+
+
+
+
+    def factor(self):
+
+        localctx = LilaParser.FactorContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 36, self.RULE_factor)
+        self._la = 0 # Token type
+        try:
+            self.state = 300
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [LilaParser.OPEN_PARENTHESIS]:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 290
+                self.match(LilaParser.OPEN_PARENTHESIS)
+                gen.addOperator('(')
+                self.state = 292
+                self.expresion()
+                self.state = 293
+                self.match(LilaParser.CLOSE_PARENTHESIS)
+                gen.finParentesis()
+                pass
+            elif token in [LilaParser.PLUS, LilaParser.MINUS, LilaParser.CTE_INT, LilaParser.CTE_STRING, LilaParser.CTE_F, LilaParser.CTE_BOOL, LilaParser.ID]:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 297
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==LilaParser.PLUS or _la==LilaParser.MINUS:
+                    self.state = 296
+                    _la = self._input.LA(1)
+                    if not(_la==LilaParser.PLUS or _la==LilaParser.MINUS):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+
+
+                self.state = 299
+                self.var_cte()
+                pass
+            else:
+                raise NoViableAltException(self)
 
         except RecognitionException as re:
             localctx.exception = re
