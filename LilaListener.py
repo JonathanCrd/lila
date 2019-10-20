@@ -5,9 +5,9 @@ if __name__ is not None and "." in __name__:
 else:
     from LilaParser import LilaParser
 
-from IntermediateGenerator import IntermediateGenerator
+from IntermediateGenerator import IntermediateGenerator, Quadruple
 from Classes import Semantic, Function, Var
-c = IntermediateGenerator()
+gen = IntermediateGenerator()
 
 
 # This class defines a complete listener for a parse tree produced by LilaParser.

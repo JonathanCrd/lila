@@ -5,6 +5,7 @@ from LilaParser import LilaParser
 from LilaLangListener import LilaLangListener
 from antlr4.error.ErrorListener import ErrorListener
 
+from Classes import Semantic_Cube
 class CustomErrorListener(ErrorListener):
 
     def _init_(self):

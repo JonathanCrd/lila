@@ -93,14 +93,14 @@ class Semantic:
             return None
 
     @staticmethod
-    def look_for_variable(var):
-        if var.name in Semantic.varGlobals.keys():
-            return Semantic.varGlobals[var.name]
+    def look_for_variable(var_name:str):
+        if var_name in Semantic.varGlobals.keys():
+            return Semantic.varGlobals[var_name]
         else:
-            if var.name in Semantic.varFunct.keys():
-                return Semantic.varGlobals[var.name]
+            if var_name in Semantic.varFunct.keys():
+                return Semantic.varFunct[var_name]
             else:
-                return None
+                raise SyntaxError("Variable '" + var_name  + "' not declared.")
 
     @staticmethod
     def display_test():
@@ -339,15 +339,4 @@ class Semantic_Cube():
         Semantic_Cube.cube['bool']['bool']['AND']='bool'
         Semantic_Cube.cube['bool']['bool']['OR']='bool'
 
-
-class Operand:
-    def __init__(self,o_name,o_type,o_value):
-        self.name = o_name
-        self.type = o_type
-        self.value = o_value
-
-class Quadruple:
-    def __init__(self, operator, left, right):
-        self.operator = operator
-        self.left = left
-        self.right = right
+        

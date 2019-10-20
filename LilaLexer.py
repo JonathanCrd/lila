@@ -5,9 +5,9 @@ from typing.io import TextIO
 import sys
 
 
-from IntermediateGenerator import IntermediateGenerator
+from IntermediateGenerator import IntermediateGenerator, Quadruple
 from Classes import Semantic, Function, Var
-c = IntermediateGenerator()
+gen = IntermediateGenerator()
 
 
 

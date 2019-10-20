@@ -2,13 +2,13 @@
 grammar Lila;
 
 @header{
-from IntermediateGenerator import IntermediateGenerator
+from IntermediateGenerator import IntermediateGenerator, Quadruple
 from Classes import Semantic, Function, Var
-c = IntermediateGenerator()
+gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID (data)? (funciones)* main
+    : LILA ID (data)? (funciones)* main {gen.test_final()}
     ;
 
 data
@@ -16,7 +16,7 @@ data
     ;
 
 data2
-    : tipo ID {Semantic.add_var(Var($ID.text,$tipo.text,''))} (COMMA ID {Semantic.add_var(Var($ID.text,$tipo.text,''))})* SEMICOLON
+    : tipo ID {Semantic.add_var(Var($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Var($ID.text,$tipo.text,None))})* SEMICOLON
     ;
 
 main
@@ -72,33 +72,33 @@ arr
     ;
 
 expresion
-    : comparacion ((AND {c.addOperator('AND')}| OR {c.addOperator('OR')}) comparacion)*
+    : comparacion ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion)*
     ;
 
 exp
-    : termino ((PLUS {c.addOperator('+')} | MINUS {c.addOperator('-')}) termino)*
+    : termino ((PLUS {gen.addOperator('+')} | MINUS {gen.addOperator('-')}) termino {gen.exitExp()})*
     ;
 
 termino
-    : factor ((MULTIPLICATION {c.addOperator('*')}| DIVISION {c.addOperator('/')}) factor)*
+    : factor ((MULTIPLICATION {gen.addOperator('*')}| DIVISION {gen.addOperator('/')}) factor {gen.exitTermino()})* 
     ;
 
 factor
-    : OPEN_PARENTHESIS {c.addOperator('(')}expresion CLOSE_PARENTHESIS {c.finParentesis()}
+    : OPEN_PARENTHESIS {gen.addOperator('(')}expresion CLOSE_PARENTHESIS {gen.finParentesis()}
     | (PLUS| MINUS)? var_cte
     ;
 
 comparacion
-    : exp (GREATER_THAN {c.addOperator('>')}| LESS_THAN {c.addOperator('<')} | NOTEQUAL {c.addOperator('!=')}| EQUALITY {c.addOperator('==')}| GREATER_THAN_EQUAL {c.addOperator('>=')}| LESS_THAN_EQUAL {c.addOperator('<=')}) exp
-    | exp
+    : exp (GREATER_THAN {gen.addOperator('>')}| LESS_THAN {gen.addOperator('<')} | NOTEQUAL {gen.addOperator('!=')}| EQUALITY {gen.addOperator('==')}| GREATER_THAN_EQUAL {gen.addOperator('>=')}| LESS_THAN_EQUAL {gen.addOperator('<=')}) exp {gen.exitComparacion()}
+    | exp {gen.exitComparacion()}
     ;
 
 var_cte
-    : ID ((OPEN_BRACKET exp CLOSE_BRACKET)* | (OPEN_PARENTHESIS exp (COMMA exp)* CLOSE_PARENTHESIS))?
-    | CTE_INT
-    | CTE_F
-    | CTE_STRING
-    | CTE_BOOL
+    : ID {gen.addVar(Semantic.look_for_variable($ID.text))} ((OPEN_BRACKET exp CLOSE_BRACKET)* | (OPEN_PARENTHESIS exp (COMMA exp)* CLOSE_PARENTHESIS))?
+    | CTE_INT {gen.addVar(Var(None,'int',$CTE_INT.text))}
+    | CTE_F {gen.addVar(Var(None,'num',$CTE_F.text))}
+    | CTE_STRING {gen.addVar(Var(None,'text',$CTE_STRING.text))}
+    | CTE_BOOL {gen.addVar(Var(None,'bool',$CTE_BOOL.text))}
     ;
 
 swhile
