@@ -5,8 +5,9 @@ if __name__ is not None and "." in __name__:
 else:
     from LilaParser import LilaParser
 
-from IntermediateGenerator import *
-c = Compiler()
+from IntermediateGenerator import IntermediateGenerator, Quadruple
+from Classes import Semantic, Function, Var
+gen = IntermediateGenerator()
 
 
 # This class defines a complete listener for a parse tree produced by LilaParser.
@@ -147,6 +148,15 @@ class LilaListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LilaParser#comparacion.
+    def enterComparacion(self, ctx:LilaParser.ComparacionContext):
+        pass
+
+    # Exit a parse tree produced by LilaParser#comparacion.
+    def exitComparacion(self, ctx:LilaParser.ComparacionContext):
+        pass
+
+
     # Enter a parse tree produced by LilaParser#exp.
     def enterExp(self, ctx:LilaParser.ExpContext):
         pass
@@ -171,15 +181,6 @@ class LilaListener(ParseTreeListener):
 
     # Exit a parse tree produced by LilaParser#factor.
     def exitFactor(self, ctx:LilaParser.FactorContext):
-        pass
-
-
-    # Enter a parse tree produced by LilaParser#comparacion.
-    def enterComparacion(self, ctx:LilaParser.ComparacionContext):
-        pass
-
-    # Exit a parse tree produced by LilaParser#comparacion.
-    def exitComparacion(self, ctx:LilaParser.ComparacionContext):
         pass
 
 

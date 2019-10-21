@@ -1,13 +1,13 @@
 lila firstProgram
 
 var int miVar1, miVar2;
-    num miNum1;
+    num miNum1, miNum2;
     text miText1, miText2;
     int[1][2] arr1;
     int[3] promedio;
     num [2][2][2] arr2;
     text[3] arr3, arr4;
-    bool miBool;
+    bool miBool,miBool2;
 
 func void mivoid()
 {
@@ -24,14 +24,15 @@ func void funParams(int i, num a)
 
 func int funcInt()
 {
-    var int funVar; 
+    var int funVar,a; 
     if 2>3
     {
-        miNum1 = 2*6;
+        miNum1 = 2*2;
     }
     else
     {
         miNum1 = 3+5;
+        miNum2 = 1.5-1/2;
     };
     while a >= 10
     {
@@ -43,11 +44,16 @@ func int funcInt()
 func num funNum(num a, num b)
 {
     var bool dodo;
+    dodo = (miBool == miBool2) == dodo;
     a = 20.5;
     print(2,"",a);
     input(a,"This is a message");
-    a * v;
     return a;
+}
+
+func void ejemplomiss(int a, int b, int c, int d, int e, int f, int g,int h, int i, int j, int k)
+{
+    miVar1 = (a+b)*c/(d+e)-f*g > h*(i+j)-k;
 }
 
 main {

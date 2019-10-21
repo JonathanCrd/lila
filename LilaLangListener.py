@@ -19,7 +19,7 @@ class LilaLangListener(LilaListener):
 
     # Exit a parse tree produced by LilaParser#data.
     def exitData(self, ctx:LilaParser.DataContext):
-        Semantic.isGlobal = False
+        pass
 
     # Enter a parse tree produced by LilaParser#data2.
     def enterData2(self, ctx:LilaParser.Data2Context):
@@ -34,16 +34,12 @@ class LilaLangListener(LilaListener):
     # Exit a parse tree produced by LilaParser#data2.
     def exitData2(self, ctx:LilaParser.Data2Context):
         pass
-    
     # Enter a parse tree produced by LilaParser#main.
     def enterMain(self, ctx:LilaParser.MainContext):
         pass
-
     # Exit a parse tree produced by LilaParser#main.
     def exitMain(self, ctx:LilaParser.MainContext):
         pass
-
-
     # Enter a parse tree produced by LilaParser#tipo.
     def enterTipo(self, ctx:LilaParser.TipoContext):
         pass
@@ -74,10 +70,9 @@ class LilaLangListener(LilaListener):
                 if ( Semantic.add_var(varTemp) == False):
                     # This means that the variable is already defined in the scope or globally
                     raise SyntaxError("Variable " + str(a.getText()) + " is already declared in the actual scope")
-            
     # Exit a parse tree produced by LilaParser#funciones.
     def exitFunciones(self, ctx:LilaParser.FuncionesContext):
-        Semantic.dump_varFunt()
+        pass    
 
 
     # Enter a parse tree produced by LilaParser#params.

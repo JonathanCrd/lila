@@ -2,20 +2,21 @@
 grammar Lila;
 
 @header{
-from IntermediateGenerator import *
-c = Compiler()
+from IntermediateGenerator import IntermediateGenerator, Quadruple
+from Classes import Semantic, Function, Var
+gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID (data)? (funciones)* main
+    : LILA ID (data)? (funciones)* main {gen.test_final()}
     ;
 
 data
-    : VAR data2+
+    : VAR data2+ {Semantic.isGlobal = False}
     ;
 
 data2
-    : tipo ID (COMMA ID)* SEMICOLON
+    : tipo ID {Semantic.add_var(Var($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Var($ID.text,$tipo.text,None))})* SEMICOLON
     ;
 
 main
@@ -27,11 +28,11 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY
+    : FUNC (tipo | VOID) ID {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text)} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {Semantic.display_test()} {Semantic.dump_varFunt()}
     ;
 
 params
-    : tipo ID (COMMA tipo ID)*
+    : tipo ID {Semantic.add_param(Var($ID.text,$tipo.text,''))} (COMMA tipo ID {Semantic.add_param(Var($ID.text,$tipo.text,''))})* 
     ;
 
 estatuto
@@ -46,7 +47,7 @@ estatuto
     ;
 
 condicion
-    : IF expresion bloque (ELSE bloque)? SEMICOLON
+    : IF expresion {gen.condition()} bloque (ELSE {gen.conditionElse()} bloque)? SEMICOLON {gen.conditionEnd()}
     ;
 
 bloque
@@ -54,15 +55,15 @@ bloque
     ;
 
 display
-    : DISPLAY OPEN_PARENTHESIS (expresion | CTE_STRING) (COMMA (expresion | CTE_STRING))* CLOSE_PARENTHESIS SEMICOLON
+    : DISPLAY OPEN_PARENTHESIS expresion {gen.display()} (COMMA expresion {gen.display()})* CLOSE_PARENTHESIS SEMICOLON
     ;
     
 asignacion
-    : ID (OPEN_BRACKET exp CLOSE_BRACKET)* EQUAL (expresion | arr) SEMICOLON
+    : ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)* EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}| arr) SEMICOLON 
     ;
 
 sreturn
-    : RETURN expresion SEMICOLON
+    : RETURN {print("Checar que funcion sea del tipo que se retorna")} expresion SEMICOLON
     ;
 
 arr
@@ -71,33 +72,33 @@ arr
     ;
 
 expresion
-    : comparacion ((AND {c.addOperator('AND')}| OR {c.addOperator('OR')}) comparacion)*
-    ;
-
-exp
-    : termino ((PLUS {c.addOperator('+')} | MINUS {c.addOperator('-')}) termino)*
-    ;
-
-termino
-    : factor ((MULTIPLICATION {c.addOperator('*')}| DIVISION {c.addOperator('/')}) factor)*
-    ;
-
-factor
-    : OPEN_PARENTHESIS {c.addOperator('(')}expresion CLOSE_PARENTHESIS {c.finParentesis()}
-    | (PLUS| MINUS)? var_cte
+    : comparacion {gen.exitExpresion()} ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion {gen.exitExpresion()})* 
     ;
 
 comparacion
-    : exp (GREATER_THAN {c.addOperator('>')}| LESS_THAN {c.addOperator('<')} | NOTEQUAL {c.addOperator('!=')}| EQUALITY {c.addOperator('==')}| GREATER_THAN_EQUAL {c.addOperator('>=')}| LESS_THAN_EQUAL {c.addOperator('<=')}) exp
-    | exp
+    : exp (GREATER_THAN {gen.addOperator('>')}| LESS_THAN {gen.addOperator('<')} | NOTEQUAL {gen.addOperator('!=')}| EQUALITY {gen.addOperator('==')}| GREATER_THAN_EQUAL {gen.addOperator('>=')}| LESS_THAN_EQUAL {gen.addOperator('<=')}) exp {gen.exitComparacion()}
+    | exp 
+    ;
+
+exp
+    : termino {gen.exitExp()} ((PLUS {gen.addOperator('+')} | MINUS {gen.addOperator('-')}) termino {gen.exitExp()})*
+    ;
+
+termino
+    : factor {gen.exitTermino()} ((MULTIPLICATION {gen.addOperator('*')}| DIVISION {gen.addOperator('/')}) factor {gen.exitTermino()})* 
+    ;
+
+factor
+    : OPEN_PARENTHESIS {gen.addOperator('(')}expresion CLOSE_PARENTHESIS {gen.finParentesis()}
+    | (PLUS| MINUS)? var_cte
     ;
 
 var_cte
-    : ID ((OPEN_BRACKET exp CLOSE_BRACKET)* | (OPEN_PARENTHESIS exp (COMMA exp)* CLOSE_PARENTHESIS))?
-    | CTE_INT
-    | CTE_F
-    | CTE_STRING
-    | CTE_BOOL
+    : ID {gen.addVar(Semantic.look_for_variable($ID.text))} ((OPEN_BRACKET exp CLOSE_BRACKET)* | (OPEN_PARENTHESIS exp (COMMA exp)* CLOSE_PARENTHESIS))?
+    | CTE_INT {gen.addVar(Var(None,'int',$CTE_INT.text))}
+    | CTE_F {gen.addVar(Var(None,'num',$CTE_F.text))}
+    | CTE_STRING {gen.addVar(Var(None,'text',$CTE_STRING.text))}
+    | CTE_BOOL {gen.addVar(Var(None,'bool',$CTE_BOOL.text))}
     ;
 
 swhile
@@ -109,7 +110,7 @@ invocacion
     ;
 
 getinput
-    : GETINPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
+    : GETINPUT OPEN_PARENTHESIS ID {gen.getinput(Semantic.look_for_variable($ID.text))} (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
     ;
 
 especiales

@@ -5,6 +5,7 @@ from LilaParser import LilaParser
 from LilaLangListener import LilaLangListener
 from antlr4.error.ErrorListener import ErrorListener
 
+from Classes import Semantic_Cube
 class CustomErrorListener(ErrorListener):
 
     def _init_(self):
@@ -17,16 +18,16 @@ class CustomErrorListener(ErrorListener):
 
 def main():
     sys.tracebacklimit = 0
-    input_stream = FileStream('ejemplo.txt')
+    input_stream = FileStream('ejemplo2.txt')
     lexer = LilaLexer(input_stream)
     lexer._listeners = [CustomErrorListener()]
     stream = CommonTokenStream(lexer)
     parser = LilaParser(stream)
     parser._listeners = [CustomErrorListener()]
     tree = parser.programa()
-    printer = LilaLangListener()
-    walker = ParseTreeWalker()
-    walker.walk(printer, tree)
+    #printer = LilaLangListener()
+    #walker = ParseTreeWalker()
+    #walker.walk(printer, tree)
     #print(tree.toStringTree(recog=parser))
 
 if __name__ == '__main__':

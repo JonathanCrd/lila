@@ -1,0 +1,34 @@
+lila firstProgram
+
+var int miVar1, miVar2;
+    num miNum1, miNum2;
+    text miText1, miText2;
+    int[1][2] arr1;
+    int[3] promedio;
+    num [2][2][2] arr2;
+    text[3] arr3, arr4;
+    bool miBool,miBool2;
+    int a,b,c,d,e,f,g,h,i,j,k;
+
+func void funParams()
+{
+    var int funVar2;
+    funVar2 = 2 * 4;
+}
+
+main {
+    display((a+b)*c/(d+e)-f*g > h*(i+j)-k);
+    getinput(a);
+    if 2>3
+    {
+        miNum1 = 2*2;
+        if(a<b){
+            b=0;
+        };
+    }
+    else
+    {
+        miNum1 = 3+5;
+    };
+    display(2);
+};
