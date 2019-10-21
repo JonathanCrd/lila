@@ -37,6 +37,22 @@ class IntermediateGenerator:
             return None
         else:
             return self.stack_variables[-1]
+    
+    def display(self):
+        opnd = self.stack_variables.pop()
+        self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
+    
+    def assign(self):
+        if self.top_operators() == '=':
+            op = self.stack_operators.pop()
+            opnd_Der = self.stack_variables.pop()
+            opnd_Izq = self.stack_variables.pop()
+            #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
+            if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
+                # Genera cuadruplo
+                self.Quadruples.append(Quadruple(op,opnd_Der,None,opnd_Izq))
+            else:
+                raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"') 
 
     def exitExpresion(self):
         if self.top_operators() == 'AND' or self.top_operators() == 'OR':
@@ -112,8 +128,15 @@ class IntermediateGenerator:
         else:
             raise SyntaxError("Parenthesis ( not found")
 
+    
     def test_final(self):
         print('=======')
         for item in self.Quadruples:
-            print('[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+           try:
+               print('[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+           except:
+               try:
+                   print('[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+               except:
+                   print('[',item.operator,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
         print('=======')

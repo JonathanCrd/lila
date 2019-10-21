@@ -55,15 +55,15 @@ bloque
     ;
 
 display
-    : DISPLAY OPEN_PARENTHESIS (expresion | CTE_STRING) (COMMA (expresion | CTE_STRING))* CLOSE_PARENTHESIS SEMICOLON
+    : DISPLAY OPEN_PARENTHESIS expresion {gen.display()} (COMMA expresion {gen.display()})* CLOSE_PARENTHESIS SEMICOLON
     ;
     
 asignacion
-    : ID (OPEN_BRACKET exp CLOSE_BRACKET)* EQUAL (expresion | arr) SEMICOLON
+    : ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)* EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}| arr) SEMICOLON 
     ;
 
 sreturn
-    : RETURN expresion SEMICOLON
+    : RETURN {print("Checar que funcion sea ")} expresion SEMICOLON
     ;
 
 arr
@@ -72,7 +72,7 @@ arr
     ;
 
 expresion
-    : comparacion ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion {gen.exitExpresion()})*
+    : comparacion {gen.exitExpresion()} ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion {gen.exitExpresion()})* 
     ;
 
 comparacion
@@ -81,11 +81,11 @@ comparacion
     ;
 
 exp
-    : termino ((PLUS {gen.addOperator('+')} | MINUS {gen.addOperator('-')}) termino {gen.exitExp()})*
+    : termino {gen.exitExp()} ((PLUS {gen.addOperator('+')} | MINUS {gen.addOperator('-')}) termino {gen.exitExp()})*
     ;
 
 termino
-    : factor ((MULTIPLICATION {gen.addOperator('*')}| DIVISION {gen.addOperator('/')}) factor {gen.exitTermino()})* 
+    : factor {gen.exitTermino()} ((MULTIPLICATION {gen.addOperator('*')}| DIVISION {gen.addOperator('/')}) factor {gen.exitTermino()})* 
     ;
 
 factor
