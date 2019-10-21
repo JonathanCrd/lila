@@ -28,7 +28,7 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text)} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {Semantic.dump_varFunt()}
+    : FUNC (tipo | VOID) ID {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text)} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {Semantic.display_test()} {Semantic.dump_varFunt()}
     ;
 
 params
@@ -47,7 +47,7 @@ estatuto
     ;
 
 condicion
-    : IF expresion bloque (ELSE bloque)? SEMICOLON
+    : IF expresion {gen.condition()} bloque (ELSE {gen.conditionElse()} bloque)? SEMICOLON {gen.conditionEnd()}
     ;
 
 bloque
@@ -63,7 +63,7 @@ asignacion
     ;
 
 sreturn
-    : RETURN {print("Checar que funcion sea ")} expresion SEMICOLON
+    : RETURN {print("Checar que funcion sea del tipo que se retorna")} expresion SEMICOLON
     ;
 
 arr
@@ -110,7 +110,7 @@ invocacion
     ;
 
 getinput
-    : GETINPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
+    : GETINPUT OPEN_PARENTHESIS ID {gen.getinput(Semantic.look_for_variable($ID.text))} (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
     ;
 
 especiales

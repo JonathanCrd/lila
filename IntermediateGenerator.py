@@ -12,6 +12,7 @@ class IntermediateGenerator:
         self.Quadruples = []
         self.stack_operators = []
         self.stack_variables = []
+        self.stack_jumps = []
         self.counter = 1
         self.var_counter = 1
         self.cube = Semantic_Cube()
@@ -21,10 +22,6 @@ class IntermediateGenerator:
 
     def addOperator(self,operator:str):
         self.stack_operators.append(operator)
-
-    def removeOperator(self):
-        if(self.stack_operators != []):
-            self.stack_operators.pop()
 
     def top_operators(self):
         if self.stack_operators == []:
@@ -41,6 +38,13 @@ class IntermediateGenerator:
     def display(self):
         opnd = self.stack_variables.pop()
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
+    
+    def getinput(self,variable:Var):
+        self.Quadruples.append(Quadruple('INPUT',None,None,variable))
+
+    def func_return(self):
+        opnd = self.stack_variables.pop()
+        self.Quadruples.append(Quadruple('RETURN',resultado=opnd))
     
     def assign(self):
         if self.top_operators() == '=':
@@ -127,16 +131,45 @@ class IntermediateGenerator:
             self.stack_operators.pop()
         else:
             raise SyntaxError("Parenthesis ( not found")
-
     
+    def condition(self):
+        res = self.stack_variables.pop()
+        if(res.v_type != 'bool'):
+            raise TypeError("Condition is not boolean")
+        else:
+            self.Quadruples.append(Quadruple("GOTOF",res,None,None))
+            self.stack_jumps.append(len(self.Quadruples)-1)
+    
+    def conditionEnd(self):
+        end = self.stack_jumps.pop()
+        self.fill(end,len(self.Quadruples))
+
+    def fill(self,x,cont):
+        print("j")
+        print(x)
+
+    def conditionElse(self):
+        self.Quadruples.append(Quadruple("GOTO",None,None,None))
+        false = self.stack_jumps.pop()
+        self.stack_jumps.append(len(self.Quadruples)-1)
+        self.fill(false,len(self.Quadruples))
+
     def test_final(self):
+        i=1
         print('=======')
         for item in self.Quadruples:
            try:
-               print('[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+               i+=1
            except:
                try:
-                   print('[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                   print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                   i+=1
                except:
-                   print('[',item.operator,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                   try:
+                       print(i,'[',item.operator,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                       i+=1
+                   except:
+                       print(i,'[',item.operator,"]")
+                       i+=1
         print('=======')

@@ -10,12 +10,22 @@ var int miVar1, miVar2;
     bool miBool,miBool2;
     int a,b,c,d,e,f,g,h,i,j,k;
 
+func void funParams()
+{
+    var int funVar2;
+    funVar2 = 2 * 4;
+}
+
 main {
-    arr3 = ["hola","jona","than"];
-    funcInt();
-    funParams(2,1.5);
-    mean(promedio);
     display(2);
-    //miBool = (a+b)*c/(d+e)-f*g > h*(i+j)-k;
     display((a+b)*c/(d+e)-f*g > h*(i+j)-k);
+    getinput(a);
+    if 2>3
+    {
+        miNum1 = 2*2;
+    }
+    else
+    {
+        miNum1 = 3+5;
+    };
 };
