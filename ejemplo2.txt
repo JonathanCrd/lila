@@ -17,15 +17,18 @@ func void funParams()
 }
 
 main {
-    display(2);
     display((a+b)*c/(d+e)-f*g > h*(i+j)-k);
     getinput(a);
     if 2>3
     {
         miNum1 = 2*2;
+        if(a<b){
+            b=0;
+        };
     }
     else
     {
         miNum1 = 3+5;
     };
+    display(2);
 };

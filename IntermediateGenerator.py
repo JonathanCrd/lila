@@ -44,7 +44,7 @@ class IntermediateGenerator:
 
     def func_return(self):
         opnd = self.stack_variables.pop()
-        self.Quadruples.append(Quadruple('RETURN',resultado=opnd))
+        self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
     
     def assign(self):
         if self.top_operators() == '=':
@@ -144,9 +144,10 @@ class IntermediateGenerator:
         end = self.stack_jumps.pop()
         self.fill(end,len(self.Quadruples))
 
+    #X es el cuadruplo a rellenar, y cont es el valor de relleno
     def fill(self,x,cont):
-        print("j")
-        print(x)
+        self.Quadruples[x].resultado = Var(None,None,cont+1)
+        print(self.Quadruples[x].operator,self.Quadruples[x].left,self.Quadruples[x].right,self.Quadruples[x].resultado)
 
     def conditionElse(self):
         self.Quadruples.append(Quadruple("GOTO",None,None,None))
@@ -156,20 +157,17 @@ class IntermediateGenerator:
 
     def test_final(self):
         i=1
+        print("leng",len(self.Quadruples))
         print('=======')
         for item in self.Quadruples:
            try:
                print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
                i+=1
            except:
-               try:
-                   print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
-                   i+=1
-               except:
-                   try:
-                       print(i,'[',item.operator,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
-                       i+=1
-                   except:
-                       print(i,'[',item.operator,"]")
-                       i+=1
+                try:
+                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                    i+=1
+                except:
+                    print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                    i+=1
         print('=======')
