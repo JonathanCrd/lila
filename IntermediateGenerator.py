@@ -132,7 +132,7 @@ class IntermediateGenerator:
         else:
             raise SyntaxError("Parenthesis ( not found")
     
-    def condition(self):
+    def checkExpresion(self):
         res = self.stack_variables.pop()
         if(res.v_type != 'bool'):
             raise TypeError("Condition is not boolean")
@@ -147,13 +147,22 @@ class IntermediateGenerator:
     #X es el cuadruplo a rellenar, y cont es el valor de relleno
     def fill(self,x,cont):
         self.Quadruples[x].resultado = Var(None,None,cont+1)
-        print(self.Quadruples[x].operator,self.Quadruples[x].left,self.Quadruples[x].right,self.Quadruples[x].resultado)
+        #print(self.Quadruples[x].operator,self.Quadruples[x].left,self.Quadruples[x].right,self.Quadruples[x].resultado)
 
     def conditionElse(self):
         self.Quadruples.append(Quadruple("GOTO",None,None,None))
         false = self.stack_jumps.pop()
         self.stack_jumps.append(len(self.Quadruples)-1)
         self.fill(false,len(self.Quadruples))
+
+    def swhile(self):
+        self.stack_jumps.append(len(self.Quadruples))
+
+    def whileEnd(self):
+        end = self.stack_jumps.pop()
+        sreturn = self.stack_jumps.pop()
+        self.Quadruples.append(Quadruple("GOTO",None,None,Var(None,None,sreturn+1)))
+        self.fill(end,len(self.Quadruples))
 
     def test_final(self):
         i=1

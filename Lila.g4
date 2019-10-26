@@ -47,7 +47,7 @@ estatuto
     ;
 
 condicion
-    : IF expresion {gen.condition()} bloque (ELSE {gen.conditionElse()} bloque)? SEMICOLON {gen.conditionEnd()}
+    : IF expresion {gen.checkExpresion()} bloque (ELSE {gen.conditionElse()} bloque)? SEMICOLON {gen.conditionEnd()}
     ;
 
 bloque
@@ -102,7 +102,7 @@ var_cte
     ;
 
 swhile
-    : WHILE expresion bloque
+    : WHILE {gen.swhile()} expresion {gen.checkExpresion()} bloque {gen.whileEnd()}
     ;
 
 invocacion

@@ -1,0 +1,12 @@
+lila firstProgram
+
+var int a,b,c,d,e,f,g,h,i,j,k;
+
+main {
+    a=0;
+    while a+b*c<d
+    {
+        a = d;
+    }
+    a=b*c;
+};
