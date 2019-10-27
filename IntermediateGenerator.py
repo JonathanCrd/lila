@@ -20,6 +20,13 @@ class IntermediateGenerator:
     def addVar(self,variable:Var):
         self.stack_variables.append(variable)
 
+    '''
+    Tratar a la funcion como una variable para el caso de asignacion
+    '''
+    def addFunct(self,function:Function):
+        variable = Var(function.name,function.f_type,None)
+        self.stack_variables.append(variable)
+
     def addOperator(self,operator:str):
         self.stack_operators.append(operator)
 
@@ -44,6 +51,7 @@ class IntermediateGenerator:
 
     def func_return(self):
         opnd = self.stack_variables.pop()
+        
         self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
     
     def assign(self):
@@ -164,9 +172,17 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple("GOTO",None,None,Var(None,None,sreturn+1)))
         self.fill(end,len(self.Quadruples))
 
+    def goTo(self):
+        self.Quadruples.append(Quadruple("GOTO",None,None,None))
+        self.stack_jumps.append(len(self.Quadruples)-1)
+        
+    def goSub(self,functName):
+        index = Semantic.dirFunctions[functName].quadruple_index
+        self.Quadruples.append(Quadruple("GOSUB",None,None,Var(None,None,index+1)))
+        
     def test_final(self):
         i=1
-        print("leng",len(self.Quadruples))
+        print("Quadruples length: ",len(self.Quadruples))
         print('=======')
         for item in self.Quadruples:
            try:

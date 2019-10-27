@@ -8,7 +8,7 @@ gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID (data)? (funciones)* main {gen.test_final()}
+    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.test_final()}
     ;
 
 data
@@ -28,7 +28,7 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text)} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {Semantic.display_test()} {Semantic.dump_varFunt()}
+    : FUNC (tipo | VOID) ID {index = len(gen.Quadruples)} {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text,index)} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {Semantic.display_test()} {Semantic.dump_varFunt()}
     ;
 
 params
@@ -63,7 +63,7 @@ asignacion
     ;
 
 sreturn
-    : RETURN {print("Checar que funcion sea del tipo que se retorna")} expresion SEMICOLON
+    : RETURN expresion {Semantic.checkReturn(gen.top_variables())} {gen.func_return()} SEMICOLON
     ;
 
 arr
@@ -94,7 +94,8 @@ factor
     ;
 
 var_cte
-    : ID {gen.addVar(Semantic.look_for_variable($ID.text))} ((OPEN_BRACKET exp CLOSE_BRACKET)* | (OPEN_PARENTHESIS exp (COMMA exp)* CLOSE_PARENTHESIS))?
+    : ID OPEN_PARENTHESIS {gen.addFunct(Semantic.look_for_function($ID.text))} {gen.goSub($ID.text)}  exp? (COMMA exp)* CLOSE_PARENTHESIS
+    | ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)*
     | CTE_INT {gen.addVar(Var(None,'int',$CTE_INT.text))}
     | CTE_F {gen.addVar(Var(None,'num',$CTE_F.text))}
     | CTE_STRING {gen.addVar(Var(None,'text',$CTE_STRING.text))}
@@ -106,7 +107,7 @@ swhile
     ;
 
 invocacion
-    : ID OPEN_PARENTHESIS (expresion (COMMA expresion)*)? CLOSE_PARENTHESIS SEMICOLON
+    : ID {gen.goSub($ID.text)} OPEN_PARENTHESIS (expresion (COMMA expresion)*)? CLOSE_PARENTHESIS SEMICOLON
     ;
 
 getinput

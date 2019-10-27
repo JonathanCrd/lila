@@ -1,8 +1,9 @@
 class Function:
-    def __init__(self, name, f_type):
+    def __init__(self, name, f_type, index):
         self.name = name
         self.f_type = f_type
         self.num_params = 0
+        self.quadruple_index = index
 
 class Var:
     def __init__(self, name, v_type, value):
@@ -18,11 +19,11 @@ class Semantic:
     lastFuncKey = None
 
     @staticmethod
-    def enterFunciones(name,tipo,void):
+    def enterFunciones(name,tipo,void,index):
         if(void == None):
-           funcTemp = Function(name,tipo)
+           funcTemp = Function(name,tipo,index)
         else:
-           funcTemp = Function(name,void)
+           funcTemp = Function(name,void,index)
      
         if (Semantic.add_function(funcTemp) == False):
              # This means that the function is already defined in the program
@@ -85,12 +86,12 @@ class Semantic:
         Semantic.varFunct = {}
     
     @staticmethod
-    def look_for_function(function):
+    def look_for_function(function_name:str):
         #validate that the function exists
-        if function.name in Semantic.dirFunctions.keys():
-            return Semantic.dirFunctions[function.name]
+        if function_name in Semantic.dirFunctions.keys():
+            return Semantic.dirFunctions[function_name]
         else:
-            return None
+            raise SyntaxError("Function '" + function_name  + "' is not declared.")
 
     @staticmethod
     def look_for_variable(var_name:str):
@@ -100,18 +101,26 @@ class Semantic:
             if var_name in Semantic.varFunct.keys():
                 return Semantic.varFunct[var_name]
             else:
-                raise SyntaxError("Variable '" + var_name  + "' not declared.")
+                raise SyntaxError("Variable '" + var_name  + "' is not declared.")
+
+    @staticmethod
+    def checkReturn(last_type):
+        func_type = Semantic.dirFunctions[Semantic.lastFuncKey].f_type
+        if func_type == 'void':
+            raise SyntaxError("Function of type '"+ func_type + "' can't have a return")
+        if func_type != last_type.v_type:
+            raise SyntaxError("Function of type '"+ func_type + "' must return same type, can't return '" + last_type.v_type +"'")
 
     @staticmethod
     def display_test():
         print("=============================")
-        print("Dir de funciones: ")
+        print("DIR FUNCIONES: ")
         for x, y in Semantic.dirFunctions.items():
             print(x, y.name, y.f_type, y.num_params)
-        print("\nVars Globales: ")
+        print("\nVARS GLOBALESs: ")
         for x, y in Semantic.varGlobals.items():
             print(x, y.name, y.v_type, y.value)
-        print("\nVars Locales: ")
+        print("\nVARS LOCALES: ")
         for x, y in Semantic.varFunct.items():
             print(x, y.name, y.v_type, y.value)
         print("=============================")
