@@ -17,6 +17,12 @@ func int result()
     return 2;
 }
 
+func void miVoid(int uno, int dos, int tres)
+{
+    j = i + k;
+    k = i * j;
+}
+
 main {
     display((a+b)*c/(d+e)-f*g > h*(i+j)-k);
     getinput(a);
@@ -33,6 +39,7 @@ main {
     };
     display(2);
     miNum2 = miNum1;
-    result();
-    a = result();
+    miVoid();
+    a = b + result();
+    
 };

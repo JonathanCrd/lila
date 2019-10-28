@@ -2,8 +2,8 @@ class Function:
     def __init__(self, name, f_type, index):
         self.name = name
         self.f_type = f_type
-        self.num_params = 0
         self.quadruple_index = index
+        self.params = []
 
 class Var:
     def __init__(self, name, v_type, value):
@@ -73,7 +73,7 @@ class Semantic:
         '''
         if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
             Semantic.varFunct[var.name] = var
-            Semantic.dirFunctions[Semantic.lastFuncKey].num_params += 1
+            Semantic.dirFunctions[Semantic.lastFuncKey].params.append(var)
         else:
             raise SyntaxError("Variable " + var.name  + " is already declared in the actual scope")
     
@@ -111,19 +111,35 @@ class Semantic:
         if func_type != last_type.v_type:
             raise SyntaxError("Function of type '"+ func_type + "' must return same type, can't return '" + last_type.v_type +"'")
 
+    '''
+    Check if the  function is void and depending on it expected value will raise an exception.
+    Expected True means that the function is espected to be void.
+    != void y quiera void -> invocacion OR  != void y no quiera void -> asignacion OR 
+    '''
+    @staticmethod
+    def isVoid(funct_name:str,expected:bool):
+        f_type = Semantic.dirFunctions[funct_name].f_type
+        if f_type != 'void' and expected:
+            raise SyntaxError("Function '" + funct_name + "' must be assigned to a variable since it is not void")
+        else:
+            if f_type == 'void' and not(expected):
+                raise SyntaxError("Function '" + funct_name + "' cannot be used as operand since it is void")
+    
+
     @staticmethod
     def display_test():
-        print("=============================")
-        print("DIR FUNCIONES: ")
-        for x, y in Semantic.dirFunctions.items():
-            print(x, y.name, y.f_type, y.num_params)
-        print("\nVARS GLOBALESs: ")
-        for x, y in Semantic.varGlobals.items():
-            print(x, y.name, y.v_type, y.value)
-        print("\nVARS LOCALES: ")
-        for x, y in Semantic.varFunct.items():
-            print(x, y.name, y.v_type, y.value)
-        print("=============================")
+        # print("=============================")
+        # print("DIR FUNCIONES: ")
+        # for x, y in Semantic.dirFunctions.items():
+        #     print(x, y.name, y.f_type, len(y.params))
+        # print("\nVARS GLOBALESs: ")
+        # for x, y in Semantic.varGlobals.items():
+        #     print(x, y.name, y.v_type, y.value)
+        # print("\nVARS LOCALES: ")
+        # for x, y in Semantic.varFunct.items():
+        #     print(x, y.name, y.v_type, y.value)
+        # print("=============================")
+        pass
 
 class Semantic_Cube():
     cube = {}
