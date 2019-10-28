@@ -17,8 +17,8 @@ class CustomErrorListener(ErrorListener):
         raise SyntaxError(message)
 
 def main():
-    sys.tracebacklimit = 0
-    input_stream = FileStream('ejemplo3.txt')
+    # sys.tracebacklimit = 0
+    input_stream = FileStream('ejemplo4.txt')
     lexer = LilaLexer(input_stream)
     lexer._listeners = [CustomErrorListener()]
     stream = CommonTokenStream(lexer)

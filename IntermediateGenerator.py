@@ -15,10 +15,20 @@ class IntermediateGenerator:
         self.stack_jumps = []
         self.counter = 1
         self.var_counter = 1
+        self.param_counter = 1
         self.cube = Semantic_Cube()
 
     def addVar(self,variable:Var):
         self.stack_variables.append(variable)
+
+    '''
+    Tratar a la funcion como una variable para el caso de asignacion
+    '''
+    def addFunct(self,function:Function):
+        temp = Var('t'+str(self.var_counter),function.f_type,None)
+        self.Quadruples.append(Quadruple('=',function.name,None,temp))
+        self.var_counter += 1
+        self.addVar(temp)
 
     def addOperator(self,operator:str):
         self.stack_operators.append(operator)
@@ -44,6 +54,7 @@ class IntermediateGenerator:
 
     def func_return(self):
         opnd = self.stack_variables.pop()
+
         self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
     
     def assign(self):
@@ -57,6 +68,9 @@ class IntermediateGenerator:
                 self.Quadruples.append(Quadruple(op,opnd_Der,None,opnd_Izq))
             else:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"') 
+
+    def contextChange(self):
+        self.var_counter = 1
 
     def exitExpresion(self):
         if self.top_operators() == 'AND' or self.top_operators() == 'OR':
@@ -121,9 +135,6 @@ class IntermediateGenerator:
                 self.Quadruples.append(Quadruple(op,opnd_Izq,opnd_Der,res))
             else:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
- 
-    def iniciaParentesis(self):
-        self.stack_operators.append('(')
 
     def finParentesis(self):
         # Aqui es donde va a quitar el fondo falso
@@ -164,9 +175,30 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple("GOTO",None,None,Var(None,None,sreturn+1)))
         self.fill(end,len(self.Quadruples))
 
+    def goTo(self):
+        self.Quadruples.append(Quadruple("GOTO",None,None,None))
+        self.stack_jumps.append(len(self.Quadruples)-1)
+        
+    def goSub(self,funct_name):
+        index = Semantic.dirFunctions[funct_name].quadruple_index
+        self.Quadruples.append(Quadruple("GOSUB",None,None,Var(funct_name,None,index+1)))
+        
+    def era(self,funct_name):
+        self.Quadruples.append(Quadruple("ERA",None,None,Var(funct_name,None,None)))
+
+    def params(self):
+        var_temp = self.stack_variables.pop()
+        self.Quadruples.append(Quadruple('param',Var(var_temp.name,var_temp.v_type,var_temp.value),None,Var('param' + str(self.param_counter),None,None)))
+
+    def endProc(self):
+        self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
+
+    def end(self):
+        self.Quadruples.append(Quadruple('end',None,None,None))
+
     def test_final(self):
         i=1
-        print("leng",len(self.Quadruples))
+        print("Quadruples length: ",len(self.Quadruples))
         print('=======')
         for item in self.Quadruples:
            try:
@@ -177,6 +209,14 @@ class IntermediateGenerator:
                     print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
                     i+=1
                 except:
-                    print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
-                    i+=1
+                    try:
+                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                        i+=1
+                    except:
+                        print(i,'[',item.operator,item.left,item.right,item.resultado,']')
+                        i+=1
         print('=======')
+        
+        print("STACK DE VARIABLES")
+        for variable in self.stack_variables:
+            print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )

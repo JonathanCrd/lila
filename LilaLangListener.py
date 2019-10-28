@@ -52,10 +52,10 @@ class LilaLangListener(LilaListener):
     def enterFunciones(self, ctx:LilaParser.FuncionesContext):
         if(ctx.VOID() == None):
             #This is not a void function
-            funcTemp = Function(str(ctx.ID()),ctx.tipo().getText())
+            funcTemp = Function(str(ctx.ID()),ctx.tipo().getText(),0)
         else:
             #This is a void function
-            funcTemp = Function(str(ctx.ID()),ctx.VOID())
+            funcTemp = Function(str(ctx.ID()),ctx.VOID(),0)
 
         if (Semantic.add_function(funcTemp) == False):
              # This means that the function is already defined in the program

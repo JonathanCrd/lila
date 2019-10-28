@@ -1,0 +1,28 @@
+lila programaElda
+
+var int i,j;
+
+func void uno(int a)
+{
+    i =a*2;
+    if(i<a+4)
+    {
+        uno(a+1);
+        
+    };
+    display(i);
+}
+
+func int dos(int b)
+{
+    b=b*i+j;
+    return b*2;
+}
+
+main
+{
+    i=2;
+    j=i*2-1;
+    uno(j);
+    display(i+dos(i+j));
+}
