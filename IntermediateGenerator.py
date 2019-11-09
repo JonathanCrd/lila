@@ -18,14 +18,14 @@ class IntermediateGenerator:
         self.param_counter = 1
         self.cube = Semantic_Cube()
 
-    def addVar(self,variable:Var):
+    def addVar(self,variable:Operand):
         self.stack_variables.append(variable)
 
     '''
     Tratar a la funcion como una variable para el caso de asignacion
     '''
     def addFunct(self,function:Function):
-        temp = Var('t'+str(self.var_counter),function.f_type,None)
+        temp = Operand('t'+str(self.var_counter),function.f_type,None)
         self.Quadruples.append(Quadruple('=',function.name,None,temp))
         self.var_counter += 1
         self.addVar(temp)
@@ -49,7 +49,7 @@ class IntermediateGenerator:
         opnd = self.stack_variables.pop()
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
     
-    def getinput(self,variable:Var):
+    def getinput(self,variable:Operand):
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
     def func_return(self):
@@ -80,7 +80,7 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -96,7 +96,7 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -112,7 +112,7 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -128,7 +128,7 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -157,7 +157,7 @@ class IntermediateGenerator:
 
     #X es el cuadruplo a rellenar, y cont es el valor de relleno
     def fill(self,x,cont):
-        self.Quadruples[x].resultado = Var(None,None,cont+1)
+        self.Quadruples[x].resultado = Operand(None,None,cont+1)
         #print(self.Quadruples[x].operator,self.Quadruples[x].left,self.Quadruples[x].right,self.Quadruples[x].resultado)
 
     def conditionElse(self):
@@ -172,7 +172,7 @@ class IntermediateGenerator:
     def whileEnd(self):
         end = self.stack_jumps.pop()
         sreturn = self.stack_jumps.pop()
-        self.Quadruples.append(Quadruple("GOTO",None,None,Var(None,None,sreturn+1)))
+        self.Quadruples.append(Quadruple("GOTO",None,None,Operand(None,None,sreturn+1)))
         self.fill(end,len(self.Quadruples))
 
     def goTo(self):
@@ -181,14 +181,14 @@ class IntermediateGenerator:
         
     def goSub(self,funct_name):
         index = Semantic.dirFunctions[funct_name].quadruple_index
-        self.Quadruples.append(Quadruple("GOSUB",None,None,Var(funct_name,None,index+1)))
+        self.Quadruples.append(Quadruple("GOSUB",None,None,Operand(funct_name,None,index+1)))
         
     def era(self,funct_name):
-        self.Quadruples.append(Quadruple("ERA",None,None,Var(funct_name,None,None)))
+        self.Quadruples.append(Quadruple("ERA",None,None,Operand(funct_name,None,None)))
 
     def params(self):
         var_temp = self.stack_variables.pop()
-        self.Quadruples.append(Quadruple('param',Var(var_temp.name,var_temp.v_type,var_temp.value),None,Var('param' + str(self.param_counter),None,None)))
+        self.Quadruples.append(Quadruple('param',Operand(var_temp.name,var_temp.v_type,var_temp.value),None,Operand('param' + str(self.param_counter),None,None)))
 
     def endProc(self):
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))

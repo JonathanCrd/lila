@@ -6,7 +6,7 @@ else:
     from LilaParser import LilaParser
 
 from IntermediateGenerator import IntermediateGenerator, Quadruple
-from Classes import Semantic, Function, Var
+from Classes import Semantic, Function, Operand
 gen = IntermediateGenerator()
 
 

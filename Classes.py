@@ -5,7 +5,7 @@ class Function:
         self.quadruple_index = index
         self.params = []
 
-class Var:
+class Operand:
     def __init__(self, name, v_type, value):
         self.name = name
         self.v_type = v_type

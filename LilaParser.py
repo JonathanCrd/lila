@@ -7,7 +7,7 @@ import sys
 
 
 from IntermediateGenerator import IntermediateGenerator, Quadruple
-from Classes import Semantic, Function, Var
+from Classes import Semantic, Function, Operand
 gen = IntermediateGenerator()
 
 
@@ -565,7 +565,7 @@ class LilaParser ( Parser ):
             localctx._tipo = self.tipo()
             self.state = 74
             localctx._ID = self.match(LilaParser.ID)
-            Semantic.add_var(Var((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),None))
+            Semantic.add_var(Operand((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),None))
             self.state = 81
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -574,7 +574,7 @@ class LilaParser ( Parser ):
                 self.match(LilaParser.COMMA)
                 self.state = 77
                 localctx._ID = self.match(LilaParser.ID)
-                Semantic.add_var(Var((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),None))
+                Semantic.add_var(Operand((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),None))
                 self.state = 83
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -915,7 +915,7 @@ class LilaParser ( Parser ):
             localctx._tipo = self.tipo()
             self.state = 128
             localctx._ID = self.match(LilaParser.ID)
-            Semantic.add_param(Var((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),''))
+            Semantic.add_param(Operand((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),''))
             self.state = 137
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -926,7 +926,7 @@ class LilaParser ( Parser ):
                 localctx._tipo = self.tipo()
                 self.state = 132
                 localctx._ID = self.match(LilaParser.ID)
-                Semantic.add_param(Var((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),''))
+                Semantic.add_param(Operand((None if localctx._ID is None else localctx._ID.text),(None if localctx._tipo is None else self._input.getText((localctx._tipo.start,localctx._tipo.stop))),''))
                 self.state = 139
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -2174,28 +2174,28 @@ class LilaParser ( Parser ):
                 self.enterOuterAlt(localctx, 3)
                 self.state = 353
                 localctx._CTE_INT = self.match(LilaParser.CTE_INT)
-                gen.addVar(Var(None,'int',(None if localctx._CTE_INT is None else localctx._CTE_INT.text)))
+                gen.addVar(Operand(None,'int',(None if localctx._CTE_INT is None else localctx._CTE_INT.text)))
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 355
                 localctx._CTE_F = self.match(LilaParser.CTE_F)
-                gen.addVar(Var(None,'num',(None if localctx._CTE_F is None else localctx._CTE_F.text)))
+                gen.addVar(Operand(None,'num',(None if localctx._CTE_F is None else localctx._CTE_F.text)))
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 357
                 localctx._CTE_STRING = self.match(LilaParser.CTE_STRING)
-                gen.addVar(Var(None,'text',(None if localctx._CTE_STRING is None else localctx._CTE_STRING.text)))
+                gen.addVar(Operand(None,'text',(None if localctx._CTE_STRING is None else localctx._CTE_STRING.text)))
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 359
                 localctx._CTE_BOOL = self.match(LilaParser.CTE_BOOL)
-                gen.addVar(Var(None,'bool',(None if localctx._CTE_BOOL is None else localctx._CTE_BOOL.text)))
+                gen.addVar(Operand(None,'bool',(None if localctx._CTE_BOOL is None else localctx._CTE_BOOL.text)))
                 pass
 
 
