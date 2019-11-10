@@ -59,11 +59,11 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
     
     def getinput(self,variable:Operand):
+        ##falta crear operando pop?
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
     def func_return(self):
         opnd = self.stack_variables.pop()
-
         self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
     
     def assign(self):
@@ -90,7 +90,8 @@ class IntermediateGenerator:
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
-                
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                ##Hay que hacer validacion de si se pudo?
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -107,6 +108,7 @@ class IntermediateGenerator:
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -123,6 +125,7 @@ class IntermediateGenerator:
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -139,6 +142,7 @@ class IntermediateGenerator:
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
