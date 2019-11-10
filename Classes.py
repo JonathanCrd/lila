@@ -10,6 +10,60 @@ class Operand:
         self.name = name
         self.v_type = v_type
         self.value = value
+        self.memory = None
+
+class VirtualAddress:
+    segment_size = 2000
+    memory_declaration = {
+        'Global int'    : 5000, #4000
+        'Global num'    : 6000,
+        'Global text'   : 8000,
+        'Global bool'   : 10000,
+        'Local int'     : 9000, #20000
+        'Local num'     : 22000,
+        'Local text'    : 24000,
+        'Local bool'    : 26000,
+        'Temp int'      : 43000, #30000
+        'Temp num'      : 32000,
+        'Temp text'     : 34000,
+        'Temp bool'     : 45000, #36000
+        'Const int'     : 20000, #40000
+        'Const num'     : 42000,
+        'Const text'    : 44000,
+        'Const bool'    : 48000
+    }
+    counters = {
+        'Global int'    : 0,
+        'Global num'    : 0,
+        'Global text'   : 0,
+        'Global bool'   : 0,
+        'Local int'     : 0,
+        'Local num'     : 0,
+        'Local text'    : 0,
+        'Local bool'    : 0,
+        'Temp int'      : 0,
+        'Temp num'      : 0,
+        'Temp text'     : 0,
+        'Temp bool'     : 0,
+        'Const int'     : 0,
+        'Const num'     : 0,
+        'Const text'    : 0,
+        'Const bool'    : 0
+    }
+    constants_table = {}
+
+    @staticmethod
+    def getAddress(a_type):
+        tempAdress = VirtualAddress.memory_declaration[a_type] + VirtualAddress.counters[a_type]
+        VirtualAddress.counters[a_type] += 1
+        return tempAdress
+    
+    @staticmethod
+    def resetLocals():
+        VirtualAddress.counters['Local int'] = 0
+        VirtualAddress.counters['Local num'] = 0
+        VirtualAddress.counters['Local text'] = 0
+        VirtualAddress.counters['Local bool'] = 0
 
 class Semantic:
     dirFunctions = dict()
@@ -55,12 +109,15 @@ class Semantic:
         if Semantic.isGlobal == True:
             #This is a global variable
             if var.name not in Semantic.varGlobals:
+                #Asociar direccion virtual 
+                var.memory = VirtualAddress.getAddress('Global '+ str(var.v_type))
                 Semantic.varGlobals[var.name] = var
             else:
                 raise SyntaxError("Variable " + var.name  + " is already declared in the global scope")
         else:
             #This variable is inside an scope (It's a local variable)
             if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
+                var.memory = VirtualAddress.getAddress('Local '+ str(var.v_type))
                 Semantic.varFunct[var.name] = var
             else:
                 raise SyntaxError("Variable " + var.name  + " is already declared in the actual scope")
@@ -72,6 +129,7 @@ class Semantic:
         It recieves an object Variable to append, and also add 1 to the number of params in the current function
         '''
         if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
+            var.memory = VirtualAddress.getAddress('Local '+ str(var.v_type))
             Semantic.varFunct[var.name] = var
             Semantic.dirFunctions[Semantic.lastFuncKey].params.append(var)
         else:

@@ -21,11 +21,20 @@ class IntermediateGenerator:
     def addVar(self,variable:Operand):
         self.stack_variables.append(variable)
 
+    def addConst(self, constant:Operand):
+        ##Search if the constant already exists
+        if constant.value not in VirtualAddress.constants_table:
+            VirtualAddress.constants_table[constant.value] = VirtualAddress.getAddress('Const ' + str(constant.v_type))
+        
+        constant.memory = VirtualAddress.constants_table[constant.value]
+        self.stack_variables.append(constant)
+
     '''
     Tratar a la funcion como una variable para el caso de asignacion
     '''
     def addFunct(self,function:Function):
         temp = Operand('t'+str(self.var_counter),function.f_type,None)
+        temp.memory = VirtualAddress.getAddress('Global '+str(temp.v_type))
         self.Quadruples.append(Quadruple('=',function.name,None,temp))
         self.var_counter += 1
         self.addVar(temp)
@@ -81,6 +90,7 @@ class IntermediateGenerator:
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -202,15 +212,15 @@ class IntermediateGenerator:
         print('=======')
         for item in self.Quadruples:
            try:
-               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value, item.left.memory,')','(',item.right.name, item.right.v_type, item.right.value,item.right.memory,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                i+=1
            except:
                 try:
-                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                     i+=1
                 except:
                     try:
-                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                         i+=1
                     except:
                         print(i,'[',item.operator,item.left,item.right,item.resultado,']')
@@ -220,3 +230,6 @@ class IntermediateGenerator:
         print("STACK DE VARIABLES")
         for variable in self.stack_variables:
             print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
+
+        print("TABLA DE CONSTANTES")
+        print(VirtualAddress.constants_table)

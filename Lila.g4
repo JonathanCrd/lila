@@ -3,7 +3,7 @@ grammar Lila;
 
 @header{
 from IntermediateGenerator import IntermediateGenerator, Quadruple
-from Classes import Semantic, Function, Operand
+from Classes import Semantic, Function, Operand, VirtualAddress
 gen = IntermediateGenerator()
 }
 
@@ -12,7 +12,7 @@ programa
     ;
 
 data
-    : VAR data2+ {Semantic.isGlobal = False}
+    : VAR data2+ {Semantic.isGlobal = False} {VirtualAddress.resetLocals()}
     ;
 
 data2
@@ -32,7 +32,7 @@ funciones
     ;
 
 params
-    : tipo ID {Semantic.add_param(Operand($ID.text,$tipo.text,''))} (COMMA tipo ID {Semantic.add_param(Operand($ID.text,$tipo.text,''))})* 
+    : tipo ID {Semantic.add_param(Operand($ID.text,$tipo.text,None))} (COMMA tipo ID {Semantic.add_param(Operand($ID.text,$tipo.text,None))})* 
     ;
 
 estatuto
@@ -96,10 +96,10 @@ factor
 var_cte
     : ID OPEN_PARENTHESIS {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
     | ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)*
-    | CTE_INT {gen.addVar(Operand(None,'int',$CTE_INT.text))}
-    | CTE_F {gen.addVar(Operand(None,'num',$CTE_F.text))}
-    | CTE_STRING {gen.addVar(Operand(None,'text',$CTE_STRING.text))}
-    | CTE_BOOL {gen.addVar(Operand(None,'bool',$CTE_BOOL.text))}
+    | CTE_INT {gen.addConst(Operand(None,'int',$CTE_INT.text))}
+    | CTE_F {gen.addConst(Operand(None,'num',$CTE_F.text))}
+    | CTE_STRING {gen.addConst(Operand(None,'text',$CTE_STRING.text))}
+    | CTE_BOOL {gen.addConst(Operand(None,'bool',$CTE_BOOL.text))}
     ;
 
 swhile
