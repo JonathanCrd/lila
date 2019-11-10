@@ -12,7 +12,7 @@ programa
     ;
 
 data
-    : VAR data2+ {Semantic.isGlobal = False} {VirtualAddress.resetLocals()}
+    : VAR data2+ {Semantic.isGlobal = False}
     ;
 
 data2
@@ -28,7 +28,7 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID {index = len(gen.Quadruples)} {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text,index)} {gen.contextChange()} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {gen.endProc()} {Semantic.display_test()} {Semantic.dump_varFunt()}
+    : FUNC (tipo | VOID) ID {index = len(gen.Quadruples)} {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text,index)} {gen.contextChange()} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {gen.endProc()} {Semantic.end_function()}
     ;
 
 params

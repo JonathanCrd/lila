@@ -29,13 +29,15 @@ class IntermediateGenerator:
         constant.memory = VirtualAddress.constants_table[constant.value]
         self.stack_variables.append(constant)
 
-    '''
-    Tratar a la funcion como una variable para el caso de asignacion
-    '''
+    
     def addFunct(self,function:Function):
+        '''
+        Tratar a la funcion como una variable para el caso de asignacion
+        '''
         temp = Operand('t'+str(self.var_counter),function.f_type,None)
-        temp.memory = VirtualAddress.getAddress('Global '+str(temp.v_type))
-        self.Quadruples.append(Quadruple('=',function.name,None,temp))
+        temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+        Semantic.Era.var_counters['Temp '+str(temp.v_type)] += 1
+        self.Quadruples.append(Quadruple('=',Semantic.look_for_variable(function.name),None,temp))
         self.var_counter += 1
         self.addVar(temp)
 
@@ -79,6 +81,8 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"') 
 
     def contextChange(self):
+        # Create new ERA instance when enters the main function
+        Semantic.Era = ERA()
         self.var_counter = 1
 
     def exitExpresion(self):
@@ -91,6 +95,7 @@ class IntermediateGenerator:
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 ##Hay que hacer validacion de si se pudo?
                 self.var_counter += 1
                 self.stack_variables.append(res)
@@ -109,6 +114,7 @@ class IntermediateGenerator:
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -126,6 +132,7 @@ class IntermediateGenerator:
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -143,6 +150,7 @@ class IntermediateGenerator:
                 # Resultado se agrega a la pila de variables
                 res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
                 res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -198,17 +206,19 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple("GOSUB",None,None,Operand(funct_name,None,index+1)))
         
     def era(self,funct_name):
-        self.Quadruples.append(Quadruple("ERA",None,None,Operand(funct_name,None,None)))
+        self.Quadruples.append(Quadruple("ERA",None,None,Semantic.dirFunctions[funct_name].memory_required))
 
     def params(self):
         var_temp = self.stack_variables.pop()
-        self.Quadruples.append(Quadruple('param',Operand(var_temp.name,var_temp.v_type,var_temp.value),None,Operand('param' + str(self.param_counter),None,None)))
+        self.Quadruples.append(Quadruple('PARAM',var_temp,None,Operand('param' + str(self.param_counter),None,None)))
+
 
     def endProc(self):
+        VirtualAddress.resetLocals()
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
 
     def end(self):
-        self.Quadruples.append(Quadruple('end',None,None,None))
+        self.Quadruples.append(Quadruple('END',None,None,None))
 
     def test_final(self):
         i=1
@@ -237,3 +247,9 @@ class IntermediateGenerator:
 
         print("TABLA DE CONSTANTES")
         print(VirtualAddress.constants_table)
+
+        print("DIR DE FUNCIONES")
+        for x,y in Semantic.dirFunctions.items():
+            print(x, y.name, y.f_type, len(y.params), y.memory_required)
+            
+            

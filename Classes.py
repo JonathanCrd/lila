@@ -4,6 +4,7 @@ class Function:
         self.f_type = f_type
         self.quadruple_index = index
         self.params = []
+        self.memory_required = {}
 
 class Operand:
     def __init__(self, name, v_type, value):
@@ -51,6 +52,16 @@ class VirtualAddress:
         'Const bool'    : 0
     }
     constants_table = {}
+    var_counters = {
+        'int'     : 0,
+        'num'     : 0,
+        'text'    : 0,
+        'bool'    : 0,
+        'Temp int'      : 0,
+        'Temp num'      : 0,
+        'Temp text'     : 0,
+        'Temp bool'     : 0
+    }
 
     @staticmethod
     def getAddress(a_type):
@@ -64,6 +75,26 @@ class VirtualAddress:
         VirtualAddress.counters['Local num'] = 0
         VirtualAddress.counters['Local text'] = 0
         VirtualAddress.counters['Local bool'] = 0
+        VirtualAddress.counters['Temp int'] = 0
+        VirtualAddress.counters['Temp num'] = 0
+        VirtualAddress.counters['Temp text'] = 0
+        VirtualAddress.counters['Temp bool'] = 0
+
+class ERA:
+    '''
+    Class for keeping track of the memory needed for an specific function
+    '''
+    def __init__(self):
+        self.var_counters = {
+        'int'     : 0,
+        'num'     : 0,
+        'text'    : 0,
+        'bool'    : 0,
+        'Temp int'      : 0,
+        'Temp num'      : 0,
+        'Temp text'     : 0,
+        'Temp bool'     : 0
+    }
 
 class Semantic:
     dirFunctions = dict()
@@ -71,6 +102,7 @@ class Semantic:
     varFunct = dict()
     isGlobal = True
     lastFuncKey = None
+    Era = None
 
     @staticmethod
     def enterFunciones(name,tipo,void,index):
@@ -82,10 +114,13 @@ class Semantic:
         if (Semantic.add_function(funcTemp) == False):
              # This means that the function is already defined in the program
             raise SyntaxError("Function " + name + " is already defined")
+        
+        # Create new ERA instance for the counters of this function
+        Semantic.Era = ERA()
             
 
     @staticmethod
-    def add_function(function):
+    def add_function(function:Function):
         '''
         Method to add a function into the function directory.
         It recieves an object Function to append, 
@@ -95,7 +130,10 @@ class Semantic:
         if function.name not in Semantic.dirFunctions.keys():
             Semantic.dirFunctions[function.name] = function
             Semantic.lastFuncKey = function.name
-           
+            if function.f_type != 'void':
+                Semantic.isGlobal=True
+                Semantic.add_var(Operand(function.name,function.f_type,None))
+                Semantic.isGlobal=False
             return True
         else:
             return False
@@ -109,7 +147,7 @@ class Semantic:
         if Semantic.isGlobal == True:
             #This is a global variable
             if var.name not in Semantic.varGlobals:
-                #Asociar direccion virtual 
+                #Asociar direccion virtual global
                 var.memory = VirtualAddress.getAddress('Global '+ str(var.v_type))
                 Semantic.varGlobals[var.name] = var
             else:
@@ -117,8 +155,10 @@ class Semantic:
         else:
             #This variable is inside an scope (It's a local variable)
             if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
+                 #Asociar direccion virtual local
                 var.memory = VirtualAddress.getAddress('Local '+ str(var.v_type))
                 Semantic.varFunct[var.name] = var
+                Semantic.Era.var_counters[var.v_type] += 1
             else:
                 raise SyntaxError("Variable " + var.name  + " is already declared in the actual scope")
 
@@ -131,16 +171,18 @@ class Semantic:
         if var.name not in Semantic.varGlobals and var.name not in Semantic.varFunct:
             var.memory = VirtualAddress.getAddress('Local '+ str(var.v_type))
             Semantic.varFunct[var.name] = var
+            Semantic.Era.var_counters[var.v_type] += 1
             Semantic.dirFunctions[Semantic.lastFuncKey].params.append(var)
         else:
             raise SyntaxError("Variable " + var.name  + " is already declared in the actual scope")
     
     @staticmethod
-    def dump_varFunt():
+    def end_function():
         '''
-        Method to dump the variables of a function when 
-        function is no longer needed.
+        Method to assign the counters of the variables needed in this function to that function and
+        dump the variables table when function is no longer needed.
         '''
+        Semantic.dirFunctions[Semantic.lastFuncKey].memory_required = Semantic.Era.var_counters
         Semantic.varFunct = {}
     
     @staticmethod
@@ -186,17 +228,17 @@ class Semantic:
 
     @staticmethod
     def display_test():
-        # print("=============================")
-        # print("DIR FUNCIONES: ")
-        # for x, y in Semantic.dirFunctions.items():
-        #     print(x, y.name, y.f_type, len(y.params))
-        # print("\nVARS GLOBALESs: ")
-        # for x, y in Semantic.varGlobals.items():
-        #     print(x, y.name, y.v_type, y.value)
-        # print("\nVARS LOCALES: ")
-        # for x, y in Semantic.varFunct.items():
-        #     print(x, y.name, y.v_type, y.value)
-        # print("=============================")
+        print("=============================")
+        print("DIR FUNCIONES: ")
+        for x, y in Semantic.dirFunctions.items():
+            print(x, y.name, y.f_type, len(y.params), y.memory_required)
+        print("\nVARS GLOBALESs: ")
+        for x, y in Semantic.varGlobals.items():
+            print(x, y.name, y.v_type, y.value)
+        print("\nVARS LOCALES: ")
+        for x, y in Semantic.varFunct.items():
+            print(x, y.name, y.v_type, y.value)
+        print("=============================")
         pass
 
 class Semantic_Cube():
