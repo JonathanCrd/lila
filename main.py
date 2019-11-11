@@ -24,7 +24,8 @@ def main():
     stream = CommonTokenStream(lexer)
     parser = LilaParser(stream)
     parser._listeners = [CustomErrorListener()]
-    tree = parser.programa()
+    Obj = parser.programa()
+    print(Obj)
     #printer = LilaLangListener()
     #walker = ParseTreeWalker()
     #walker.walk(printer, tree)

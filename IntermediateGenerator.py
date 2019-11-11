@@ -220,7 +220,12 @@ class IntermediateGenerator:
     def end(self):
         self.Quadruples.append(Quadruple('END',None,None,None))
 
+    def getObj(self):
+        return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration]
+
     def test_final(self):
+        return
+
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')

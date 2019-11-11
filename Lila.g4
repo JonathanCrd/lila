@@ -8,7 +8,7 @@ gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {gen.test_final()}
+    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {gen.test_final()} {return gen.getObj()}
     ;
 
 data
