@@ -45,7 +45,6 @@ class Memory:
         '''
         Method to translate relative addresses from the quadruples to actual location within the memory
         '''
-        print(address)
         address_type = int(address / 1000)
         address_type = address_type * 1000
         address_type = self.memory_declaration[address_type]
@@ -77,12 +76,10 @@ class Memory:
         '''
         Method that returns the value inside an specific memory address given as an input.
         '''
-        # print(self.memory)
         address_type, actual_location = self.address_translation(address)
         if actual_location in self.memory[address_type]:
             return self.memory[address_type][actual_location]
         else:
-            print(address,address_type,actual_location)
             raise MemoryError("Value not declared.")
                 
         
@@ -109,7 +106,6 @@ class Memory:
         self.base_address['Temp text'].append(memory_required['Temp text'] + self.base_address['Temp text'][-1])
         self.base_address['Temp bool'].append(memory_required['Temp bool'] + self.base_address['Temp bool'][-1])
 
-        print(self.base_address)
 
     def clean_base_addresses(self):
         '''
@@ -139,7 +135,6 @@ class VirtualMachine:
         self.write_const()
 
     def write_const(self):
-        print(self.constants_table)
         for key,value in self.constants_table.items():
             if str(value[0]) == 'int':
                 self.memory.write(value[1],int(key))
@@ -158,7 +153,6 @@ class VirtualMachine:
         Calls the proper method according to the operand/code in the first position of each quadruple.
         '''
         while(self.pointer_stack[-1] < self.total_quadruples):
-            print(self.pointer_stack[-1], self.quadruples[self.pointer_stack[-1]].operator)
             quadruple = self.quadruples[self.pointer_stack[-1]]
             
             if (quadruple.operator == '+' or quadruple.operator == '-'  or quadruple.operator == '*' or quadruple.operator == '/'):
@@ -166,14 +160,13 @@ class VirtualMachine:
             elif (quadruple.operator == '='):
                 self.assign()
             elif (quadruple.operator == 'DISPLAY'):
-                pass
+                self.display()
             elif (quadruple.operator == 'INPUT'):
-                pass
+                self.op_input()
             elif (quadruple.operator == 'RETURN'):
                 pass
             elif (quadruple.operator == 'GOTOF'):
                 self.go_to_f()
-                self.pointer_stack[-1] -= 1
                 pass
             elif (quadruple.operator == 'GOTO'):
                 self.go_to()
@@ -195,7 +188,6 @@ class VirtualMachine:
             self.pointer_stack[-1] += 1
         
         print("HOLA")
-        # print(self.memory.memory)
 
 
     # MATH
@@ -205,7 +197,6 @@ class VirtualMachine:
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
         casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x)),}
         result = casting[resultType](left)
-        print("MemoriaAssign", left, resultAddress)
         self.memory.write(resultAddress,result)
 
     def arithmetic(self):
@@ -214,7 +205,6 @@ class VirtualMachine:
         right = self.memory.read(self.quadruples[self.pointer_stack[-1]].right.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
-        print("MemoriaArithmetic", left, resultAddress)
         operations = { 
                 "+": (lambda x,y: x+y), 
                 "-": (lambda x,y: x-y),
@@ -248,5 +238,33 @@ class VirtualMachine:
         b_value = self.make_bool(value)
         if(not b_value):
             self.pointer_stack[-1] = self.quadruples[self.pointer_stack[-1]].resultado.value - 1
-            
+            self.pointer_stack[-1] -= 1
 
+    def display(self):
+        index = self.pointer_stack[-1]
+        print(self.memory.read(self.quadruples[index].resultado.memory))
+
+    def op_input(self):
+        index = self.pointer_stack[-1]
+        address = self.quadruples[index].resultado.memory
+        message = self.quadruples[index].resultado.value
+        i_type = self.quadruples[index].resultado.v_type
+        if message == None:
+            value = input()
+        else:
+            value = input(message)
+        try:
+            if i_type == 'int':
+                value = int(value)
+            elif i_type == 'num':
+                value = float(value)
+            elif i_type == 'text':
+                value = str(value)
+            elif i_type == 'bool':
+                value = self.make_bool(value)
+            else:
+                raise Exception("Input not identified.")
+        except Exception as err:
+            raise err
+        
+        self.memory.write(address,value)

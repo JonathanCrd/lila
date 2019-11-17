@@ -26,7 +26,7 @@ def main():
     parser = LilaParser(stream)
     parser._listeners = [CustomErrorListener()]
     obj = parser.programa()
-    # print(obj[2])
+    print(obj[2])
     vm = VirtualMachine(obj)
     vm.quadruples_handler()
 

@@ -52,8 +52,8 @@ def serializedATN():
         buf.write("\25\u016c\n\25\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\27")
         buf.write("\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27")
         buf.write("\7\27\u0181\n\27\f\27\16\27\u0184\13\27\5\27\u0186\n\27")
-        buf.write("\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\30\3\30")
-        buf.write("\5\30\u0193\n\30\3\30\3\30\3\30\3\31\3\31\3\31\3\31\3")
+        buf.write("\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\30\5\30")
+        buf.write("\u0192\n\30\3\30\3\30\3\30\3\30\3\31\3\31\3\31\3\31\3")
         buf.write("\31\3\31\3\31\3\31\3\31\3\31\5\31\u01a2\n\31\3\31\3\31")
         buf.write("\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31")
         buf.write("\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31")
@@ -199,9 +199,9 @@ def serializedATN():
         buf.write("\u0186\u0187\3\2\2\2\u0187\u0188\b\27\1\2\u0188\u0189")
         buf.write("\7\25\2\2\u0189\u018a\b\27\1\2\u018a\u018b\7\31\2\2\u018b")
         buf.write("-\3\2\2\2\u018c\u018d\7\21\2\2\u018d\u018e\7\24\2\2\u018e")
-        buf.write("\u018f\7;\2\2\u018f\u0192\b\30\1\2\u0190\u0191\7\30\2")
-        buf.write("\2\u0191\u0193\7(\2\2\u0192\u0190\3\2\2\2\u0192\u0193")
-        buf.write("\3\2\2\2\u0193\u0194\3\2\2\2\u0194\u0195\7\25\2\2\u0195")
+        buf.write("\u0191\7;\2\2\u018f\u0190\7\30\2\2\u0190\u0192\7(\2\2")
+        buf.write("\u0191\u018f\3\2\2\2\u0191\u0192\3\2\2\2\u0192\u0193\3")
+        buf.write("\2\2\2\u0193\u0194\b\30\1\2\u0194\u0195\7\25\2\2\u0195")
         buf.write("\u0196\7\31\2\2\u0196/\3\2\2\2\u0197\u0198\t\4\2\2\u0198")
         buf.write("\u0199\7\24\2\2\u0199\u019a\7;\2\2\u019a\u019b\7\25\2")
         buf.write("\2\u019b\u01c8\7\31\2\2\u019c\u019d\7\66\2\2\u019d\u019e")
@@ -226,7 +226,7 @@ def serializedATN():
         buf.write("\2\2\2\u01c8\61\3\2\2\2(\66;HTciqv{\u008b\u0096\u009f")
         buf.write("\u00a9\u00b8\u00c6\u00cf\u00de\u00eb\u00ee\u00f6\u00fd")
         buf.write("\u010d\u0113\u011b\u0122\u012b\u0132\u013c\u013f\u014f")
-        buf.write("\u0152\u0160\u016b\u0182\u0185\u0192\u01a1\u01c7")
+        buf.write("\u0152\u0160\u016b\u0182\u0185\u0191\u01a1\u01c7")
         return buf.getvalue()
 
 
@@ -2367,6 +2367,7 @@ class LilaParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
             self._ID = None # Token
+            self._CTE_STRING = None # Token
 
         def GETINPUT(self):
             return self.getToken(LilaParser.GETINPUT, 0)
@@ -2416,17 +2417,17 @@ class LilaParser ( Parser ):
             self.match(LilaParser.OPEN_PARENTHESIS)
             self.state = 396
             localctx._ID = self.match(LilaParser.ID)
-            gen.getinput(Semantic.look_for_variable((None if localctx._ID is None else localctx._ID.text)))
-            self.state = 400
+            self.state = 399
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==LilaParser.COMMA:
-                self.state = 398
+                self.state = 397
                 self.match(LilaParser.COMMA)
-                self.state = 399
-                self.match(LilaParser.CTE_STRING)
+                self.state = 398
+                localctx._CTE_STRING = self.match(LilaParser.CTE_STRING)
 
 
+            gen.getinput(Semantic.look_for_variable((None if localctx._ID is None else localctx._ID.text)), (None if localctx._CTE_STRING is None else localctx._CTE_STRING.text))
             self.state = 402
             self.match(LilaParser.CLOSE_PARENTHESIS)
             self.state = 403

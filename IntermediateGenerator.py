@@ -60,8 +60,9 @@ class IntermediateGenerator:
         opnd = self.stack_variables.pop()
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
     
-    def getinput(self,variable:Operand):
+    def getinput(self,variable:Operand,message):
         ##falta crear operando pop?
+        variable.value = message
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
     def func_return(self):
@@ -224,7 +225,6 @@ class IntermediateGenerator:
         return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration]
 
     def test_final(self):
-        
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')
@@ -244,8 +244,6 @@ class IntermediateGenerator:
                         print(i,'[',item.operator,item.left,item.right,item.resultado,']')
                         i+=1
         print('=======')
-        
-        return
 
         print("STACK DE VARIABLES")
         for variable in self.stack_variables:

@@ -111,7 +111,7 @@ invocacion
     ;
 
 getinput
-    : GETINPUT OPEN_PARENTHESIS ID {gen.getinput(Semantic.look_for_variable($ID.text))} (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
+    : GETINPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? {gen.getinput(Semantic.look_for_variable($ID.text), $CTE_STRING.text)}CLOSE_PARENTHESIS SEMICOLON
     ;
 
 especiales
