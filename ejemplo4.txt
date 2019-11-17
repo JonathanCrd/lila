@@ -22,7 +22,6 @@ func int dos(int b)
 
 main
 {
-    i=2;
     j=i*2-1;
     uno(j);
     display(i+dos(i+j));

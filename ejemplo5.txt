@@ -1,0 +1,13 @@
+lila mecoProgram
+
+var int i,j,k,l,m;
+num a;
+
+main {
+    i = 0;
+    j = 2+2;
+    k = 3-1;
+    l = 4*1;
+    m = 4/10; 
+    a = 5*4.8/2.63+1;
+}

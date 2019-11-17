@@ -24,9 +24,9 @@ class IntermediateGenerator:
     def addConst(self, constant:Operand):
         ##Search if the constant already exists
         if constant.value not in VirtualAddress.constants_table:
-            VirtualAddress.constants_table[constant.value] = VirtualAddress.getAddress('Const ' + str(constant.v_type))
-        
-        constant.memory = VirtualAddress.constants_table[constant.value]
+            VirtualAddress.constants_table[constant.value] = [constant.v_type, VirtualAddress.getAddress('Const ' + str(constant.v_type))]
+
+        constant.memory = VirtualAddress.constants_table[constant.value][1]
         self.stack_variables.append(constant)
 
     
@@ -224,8 +224,7 @@ class IntermediateGenerator:
         return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration]
 
     def test_final(self):
-        return
-
+        
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')
@@ -246,6 +245,8 @@ class IntermediateGenerator:
                         i+=1
         print('=======')
         
+        return
+
         print("STACK DE VARIABLES")
         for variable in self.stack_variables:
             print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
