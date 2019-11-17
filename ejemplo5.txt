@@ -4,8 +4,15 @@ var int i,j,k,l,m;
 num a;
 bool mibool;
 
-func int uno(){
-    l = 10;
+func int dos(){
+    var int hola;
+    hola = 100 + 1;
+    return hola;
+}
+
+func int uno(int abelardo, int julian){
+    l = 10 + 20;
+    display(dos());
     return l;
 }
 
@@ -17,6 +24,6 @@ main {
     };
     display(i+m);
 
-    display(uno());
+    display(uno(mibool));
     
 }

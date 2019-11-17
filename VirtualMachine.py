@@ -40,6 +40,17 @@ class Memory:
             'Const text'  : [0],
             'Const bool'  : [0]
         }
+
+        self.next_base_address = {
+            'Local int'   : [0],
+            'Local num'  : [0],
+            'Local text'  : [0],
+            'Local bool'  : [0],
+            'Temp int'  : [0],
+            'Temp num'  : [0],
+            'Temp text'  : [0],
+            'Temp bool'  : [0]
+        }
   
     def address_translation(self,address):
         '''
@@ -77,6 +88,7 @@ class Memory:
         Method that returns the value inside an specific memory address given as an input.
         '''
         address_type, actual_location = self.address_translation(address)
+        actual_location = actual_location + self.base_address[address_type][-1]
         if actual_location in self.memory[address_type] and self.memory[address_type][actual_location] != None:
             return self.memory[address_type][actual_location]
         else:
@@ -90,29 +102,40 @@ class Memory:
         '''
         address_type, actual_location = self.address_translation(address)
         self.memory_bounds(address,address_type)
-
+        actual_location = actual_location + self.base_address[address_type][-1]
         self.memory[address_type][actual_location] = input
 
     def era_statement(self, memory_required):
         '''
         Method to prepare memory in a call. It receaives the memory needed for each type and add those to the pointer stack.
         '''
-        self.base_address['Local int'].append(memory_required['int'] + self.base_address['Local int'][-1])
-        self.base_address['Local num'].append(memory_required['num'] + self.base_address['Local num'][-1])
-        self.base_address['Local text'].append(memory_required['text'] + self.base_address['Local text'][-1])
-        self.base_address['Local bool'].append(memory_required['bool'] + self.base_address['Local bool'][-1])
-        self.base_address['Temp int'].append(memory_required['Temp int'] + self.base_address['Temp int'][-1])
-        self.base_address['Temp num'].append(memory_required['Temp num'] + self.base_address['Temp num'][-1])
-        self.base_address['Temp text'].append(memory_required['Temp text'] + self.base_address['Temp text'][-1])
-        self.base_address['Temp bool'].append(memory_required['Temp bool'] + self.base_address['Temp bool'][-1])
+        self.base_address['Local int'].append(self.next_base_address['Local int'][-1])
+        self.base_address['Local num'].append(self.next_base_address['Local num'][-1])
+        self.base_address['Local text'].append(self.next_base_address['Local text'][-1])
+        self.base_address['Local bool'].append(self.next_base_address['Local bool'][-1])
+        self.base_address['Temp int'].append(self.next_base_address['Temp int'][-1])
+        self.base_address['Temp num'].append(self.next_base_address['Temp num'][-1])
+        self.base_address['Temp text'].append(self.next_base_address['Temp text'][-1])
+        self.base_address['Temp bool'].append(self.next_base_address['Temp bool'][-1])
 
+        self.next_base_address['Local int'].append(memory_required['int'] + self.next_base_address['Local int'][-1])
+        self.next_base_address['Local num'].append(memory_required['num'] + self.next_base_address['Local num'][-1])
+        self.next_base_address['Local text'].append(memory_required['text'] + self.next_base_address['Local text'][-1])
+        self.next_base_address['Local bool'].append(memory_required['bool'] + self.next_base_address['Local bool'][-1])
+        self.next_base_address['Temp int'].append(memory_required['Temp int'] + self.next_base_address['Temp int'][-1])
+        self.next_base_address['Temp num'].append(memory_required['Temp num'] + self.next_base_address['Temp num'][-1])
+        self.next_base_address['Temp text'].append(memory_required['Temp text'] + self.next_base_address['Temp text'][-1])
+        self.next_base_address['Temp bool'].append(memory_required['Temp bool'] + self.next_base_address['Temp bool'][-1])
+        
 
-    def clean_base_addresses(self):
+    def dump_memory_stack(self):
         '''
-        Method to pop the last base addreses of each type.
+        Method to pop the last base addreses and next base address of each type.
         Call this method at the end of a function.
         '''
-        for key in self.base_address.items():
+        
+        for key,_ in self.next_base_address.items():
+            self.next_base_address[key].pop()
             self.base_address[key].pop()
         
         
@@ -128,15 +151,16 @@ class VirtualMachine:
         self.constants_table = obj[2]
         self.dir_functions = obj[3]
         self.global_vars = obj[4]
-        self.memory_declaration = obj[5]
-        self.memory = Memory(self.memory_declaration)
-        self.main_memory_required = obj[6]
+        memory_declaration = obj[5]
+        self.memory = Memory(memory_declaration)
+        main_memory_required = obj[6] # Useful for setting the point in which the next call to a function wil be based on memory
         
         self.pointer_stack = [0] # This will point to the quadruple to execute
         self.call_stack = [] # This saves all the function calls
 
         self.write_const()
         self.write_globals()
+        self.memory.era_statement(main_memory_required)
 
     def write_const(self):
         for key,value in self.constants_table.items():
@@ -172,24 +196,23 @@ class VirtualMachine:
             elif (quadruple.operator == 'INPUT'):
                 self.op_input()
             elif (quadruple.operator == 'RETURN'):
-                pass
+                self.op_return()
             elif (quadruple.operator == 'GOTOF'):
                 self.go_to_f()
-                pass
             elif (quadruple.operator == 'GOTO'):
                 self.go_to()
                 self.pointer_stack[-1] -= 1
             elif (quadruple.operator == 'GOSUB'):
-                # self.pointer_stack[-1] -= 1
-                pass
+                self.go_sub()
+                self.pointer_stack[-1] -= 1
             elif (quadruple.operator == 'ERA'):
-                pass
+                self.era()
             elif (quadruple.operator == 'PARAM'):
-                pass
+                self.params()
             elif (quadruple.operator == 'ENDPROC'):
-                pass
+                self.end_procedure()
             elif (quadruple.operator == 'END'):
-                pass
+                print('BYE FELICIA')
             else:
                 pass
             
@@ -285,12 +308,44 @@ class VirtualMachine:
             raise err
         
         self.memory.write(address,value)
+    
+
+    def era(self):
+        '''
+        Requests space for execution when a function is called.
+        '''
+        memory_required = self.quadruples[self.pointer_stack[-1]].resultado
+        self.memory.era_statement(memory_required)
+    
+    def go_sub(self):
+        '''
+        Adds the name of the function called to the call stack and changes the current quadruple index.
+        '''
+        aux_pointer = self.pointer_stack[-1]
+        # self.pointer_stack[-1] += 1
+        self.call_stack.append(self.quadruples[aux_pointer].resultado.name) # Append the function name to the call stack
+        self.pointer_stack.append(self.quadruples[aux_pointer].resultado.value - 1)
 
     def op_return(self):
+        '''
+        Assign the value of the return to the global variable with the name of the current function.
+        The current function must not be a void one since the return statement is not valid in void functions.
+        '''
         index = self.pointer_stack[-1]
         address = self.quadruples[index].resultado.memory
         value = self.memory.read(address)
-        #PTE
+
+        func_var = self.global_vars[self.call_stack[-1]]
+        self.memory.write(func_var.memory,value)
+        
+    def end_procedure(self):
+        self.pointer_stack.pop()
+        self.memory.dump_memory_stack()
+        self.call_stack.pop()
     
-    def era(self):
-        pass
+    def params(self):
+        index = self.pointer_stack[-1]
+        paramValue = self.memory.read(self.quadruples[index].left.memory)
+        targetParam = self.quadruples[index].resultado.name
+        function = self.call_stack[-1]
+        print(function)
