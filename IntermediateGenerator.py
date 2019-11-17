@@ -222,7 +222,7 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('END',None,None,None))
 
     def getObj(self):
-        return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration]
+        return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration,Semantic.Era.var_counters]
 
     def test_final(self):
         i=1

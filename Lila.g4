@@ -1,4 +1,4 @@
-// Define the grammar
+ // Define the grammar
 grammar Lila;
 
 @header{

@@ -2,14 +2,21 @@ lila mecoProgram
 
 var int i,j,k,l,m;
 num a;
+bool mibool;
+
+func int uno(){
+    l = 10;
+    return l;
+}
 
 main {
     i=2+2;
     getinput(m,"Pon una m");
-    getinput(a,,,);
     if(FALSE){
         k=1;
     };
     display(i+m);
-    display(a);
+
+    display(uno());
+    
 }

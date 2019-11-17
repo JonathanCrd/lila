@@ -77,7 +77,7 @@ class Memory:
         Method that returns the value inside an specific memory address given as an input.
         '''
         address_type, actual_location = self.address_translation(address)
-        if actual_location in self.memory[address_type]:
+        if actual_location in self.memory[address_type] and self.memory[address_type][actual_location] != None:
             return self.memory[address_type][actual_location]
         else:
             raise MemoryError("Value not declared.")
@@ -130,9 +130,13 @@ class VirtualMachine:
         self.global_vars = obj[4]
         self.memory_declaration = obj[5]
         self.memory = Memory(self.memory_declaration)
+        self.main_memory_required = obj[6]
+        
         self.pointer_stack = [0] # This will point to the quadruple to execute
+        self.call_stack = [] # This saves all the function calls
 
         self.write_const()
+        self.write_globals()
 
     def write_const(self):
         for key,value in self.constants_table.items():
@@ -148,6 +152,10 @@ class VirtualMachine:
                 else:
                     self.memory.write(value[1],False)
 
+    def write_globals(self):
+        for key,var in self.global_vars.items():
+            self.memory.write(var.memory,None)
+
     def quadruples_handler(self):
         '''
         Calls the proper method according to the operand/code in the first position of each quadruple.
@@ -155,7 +163,7 @@ class VirtualMachine:
         while(self.pointer_stack[-1] < self.total_quadruples):
             quadruple = self.quadruples[self.pointer_stack[-1]]
             
-            if (quadruple.operator == '+' or quadruple.operator == '-'  or quadruple.operator == '*' or quadruple.operator == '/'):
+            if (quadruple.operator == '+' or quadruple.operator == '-'  or quadruple.operator == '*' or quadruple.operator == '/' or quadruple.operator == '<' or quadruple.operator == '>'  or quadruple.operator == '<=' or quadruple.operator == '>=' or quadruple.operator == '!=' or quadruple.operator == '==' or quadruple.operator == 'AND' or quadruple.operator == 'OR'):
                 self.arithmetic()
             elif (quadruple.operator == '='):
                 self.assign()
@@ -171,8 +179,8 @@ class VirtualMachine:
             elif (quadruple.operator == 'GOTO'):
                 self.go_to()
                 self.pointer_stack[-1] -= 1
-            elif (quadruple.operator == 'GOTOSUB'):
-                self.pointer_stack[-1] -= 1
+            elif (quadruple.operator == 'GOSUB'):
+                # self.pointer_stack[-1] -= 1
                 pass
             elif (quadruple.operator == 'ERA'):
                 pass
@@ -195,7 +203,7 @@ class VirtualMachine:
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
-        casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x)),}
+        casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x))}
         result = casting[resultType](left)
         self.memory.write(resultAddress,result)
 
@@ -209,8 +217,17 @@ class VirtualMachine:
                 "+": (lambda x,y: x+y), 
                 "-": (lambda x,y: x-y),
                 "*": (lambda x,y: x*y),
-                "/": (lambda x,y: self.op_div(x,y)) 
+                "/": (lambda x,y: self.op_div(x,y)) ,
+                "<": (lambda x,y: x<y),
+                ">": (lambda x,y: x>y),
+                "!=": (lambda x,y: x != y),
+                "==": (lambda x,y: x==y),
+                "<=": (lambda x,y: x<=y),
+                ">=": (lambda x,y: x>=y),
+                "AND": (lambda x,y: x and y),
+                "OR": (lambda x,y: x or y)
               } 
+
         casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x)),}
         result = operations[op](left,right)
         result = casting[resultType](result)
@@ -268,3 +285,12 @@ class VirtualMachine:
             raise err
         
         self.memory.write(address,value)
+
+    def op_return(self):
+        index = self.pointer_stack[-1]
+        address = self.quadruples[index].resultado.memory
+        value = self.memory.read(address)
+        #PTE
+    
+    def era(self):
+        pass
