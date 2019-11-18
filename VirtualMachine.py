@@ -157,7 +157,7 @@ class VirtualMachine:
         
         self.pointer_stack = [0] # This will point to the quadruple to execute
         self.call_stack = [] # This saves all the function calls
-
+        self.params_stack=[]
         self.write_const()
         self.write_globals()
         self.memory.era_statement(main_memory_required)
@@ -212,13 +212,13 @@ class VirtualMachine:
             elif (quadruple.operator == 'ENDPROC'):
                 self.end_procedure()
             elif (quadruple.operator == 'END'):
-                print('BYE FELICIA')
+                print('END')
             else:
                 pass
             
             self.pointer_stack[-1] += 1
         
-        print("HOLA")
+        print("---------------")
 
 
     # MATH
@@ -323,8 +323,18 @@ class VirtualMachine:
         '''
         aux_pointer = self.pointer_stack[-1]
         # self.pointer_stack[-1] += 1
-        self.call_stack.append(self.quadruples[aux_pointer].resultado.name) # Append the function name to the call stack
+        funcName = self.quadruples[aux_pointer].resultado.name
+        self.call_stack.append(funcName) # Append the function name to the call stack
+        self.setParams(funcName)
         self.pointer_stack.append(self.quadruples[aux_pointer].resultado.value - 1)
+
+    def setParams(self, funcName):
+        print(funcName)
+        reversedParams = self.dir_functions[funcName].params
+        reversedParams.reverse()
+        for param in self.dir_functions[funcName].params:
+            print(param.name, self.params_stack[-1])
+            self.memory.write(param.memory, self.params_stack.pop())
 
     def op_return(self):
         '''
@@ -344,8 +354,10 @@ class VirtualMachine:
         self.call_stack.pop()
     
     def params(self):
+        '''
+        Each time a parameter is send, it will get the value and assign it to the list of parameters
+        '''
         index = self.pointer_stack[-1]
         paramValue = self.memory.read(self.quadruples[index].left.memory)
-        targetParam = self.quadruples[index].resultado.name
-        function = self.call_stack[-1]
-        print(function)
+        self.params_stack.append(paramValue)
+        

@@ -18,7 +18,7 @@ class CustomErrorListener(ErrorListener):
         raise SyntaxError(message)
 
 def main():
-    # sys.tracebacklimit = 0
+    #sys.tracebacklimit = 0
     input_stream = FileStream('ejemplo5.txt')
     lexer = LilaLexer(input_stream)
     lexer._listeners = [CustomErrorListener()]
@@ -26,7 +26,6 @@ def main():
     parser = LilaParser(stream)
     parser._listeners = [CustomErrorListener()]
     obj = parser.programa()
-    print(obj[2])
     vm = VirtualMachine(obj)
     vm.quadruples_handler()
 

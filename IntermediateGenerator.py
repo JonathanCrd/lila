@@ -16,6 +16,8 @@ class IntermediateGenerator:
         self.counter = 1
         self.var_counter = 1
         self.param_counter = 1
+        self.params_reader = []
+
         self.cube = Semantic_Cube()
 
     def addVar(self,variable:Operand):
@@ -29,7 +31,6 @@ class IntermediateGenerator:
         constant.memory = VirtualAddress.constants_table[constant.value][1]
         self.stack_variables.append(constant)
 
-    
     def addFunct(self,function:Function):
         '''
         Tratar a la funcion como una variable para el caso de asignacion
@@ -211,8 +212,28 @@ class IntermediateGenerator:
 
     def params(self):
         var_temp = self.stack_variables.pop()
+        self.params_reader[-1].append(var_temp)
         self.Quadruples.append(Quadruple('PARAM',var_temp,None,Operand('param' + str(self.param_counter),None,None)))
+        self.param_counter += 1
+        print("HELLO")
 
+    def check_params(self, funct_name):
+        '''
+        Method that verifies each param and that the number of params in the call math the function declaration.
+        '''
+        params_declared = Semantic.dirFunctions[funct_name].params
+        params_found = self.params_reader[-1]
+        if(len(params_found) == len(params_declared)):
+            for i in range(0,len(params_found)):
+                if(params_found[i].v_type != params_declared[i].v_type):
+                    raise SyntaxError("Param '" + params_found[i].name + "' should be of type " + params_declared[i].v_type)
+        else:
+            raise SyntaxError("Function '"+ funct_name + "' expects " + str(len(params_declared)) + " params, but instead got " + str(len(params_found)))
+
+        self.params_reader.pop()
+
+    def incoming_Params(self):
+        self.params_reader.append([])
 
     def endProc(self):
         VirtualAddress.resetLocals()

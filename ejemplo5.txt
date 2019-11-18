@@ -4,26 +4,21 @@ var int i,j,k,l,m;
 num a;
 bool mibool;
 
-func int dos(){
-    var int hola;
-    hola = 100 + 1;
-    return hola;
+func int dos(int b){
+    return b;
 }
 
 func int uno(int abelardo, int julian){
-    l = 10 + 20;
-    display(dos());
+    l = abelardo - julian;
     return l;
 }
 
 main {
     i=2+2;
-    getinput(m,"Pon una m");
+    m=5;
     if(FALSE){
         k=1;
     };
-    display(i+m);
-
-    display(uno(mibool));
+    display(uno(5,dos(3)));
     
 }

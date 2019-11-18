@@ -94,7 +94,7 @@ factor
     ;
 
 var_cte
-    : ID OPEN_PARENTHESIS {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
+    : ID OPEN_PARENTHESIS {gen.incoming_Params()} {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.check_params($ID.text)} {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
     | ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)*
     | CTE_INT {gen.addConst(Operand(None,'int',$CTE_INT.text))}
     | CTE_F {gen.addConst(Operand(None,'num',$CTE_F.text))}
