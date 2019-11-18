@@ -161,6 +161,7 @@ class VirtualMachine:
         self.write_const()
         self.write_globals()
         self.memory.era_statement(main_memory_required)
+        self.prepare_memory = {}
 
     def write_const(self):
         for key,value in self.constants_table.items():
@@ -211,17 +212,26 @@ class VirtualMachine:
                 self.params()
             elif (quadruple.operator == 'ENDPROC'):
                 self.end_procedure()
+            elif (quadruple.operator == 'NEGATIVE'):
+                self.makeNegative()
             elif (quadruple.operator == 'END'):
-                print('END')
+                pass
             else:
                 pass
             
             self.pointer_stack[-1] += 1
         
-        print("---------------")
 
 
     # MATH
+    def makeNegative(self):
+        left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
+        resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+        casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x))}
+        result = left*-1
+        self.memory.write(resultAddress,result)
+        
     def assign(self):
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
@@ -241,17 +251,17 @@ class VirtualMachine:
                 "-": (lambda x,y: x-y),
                 "*": (lambda x,y: x*y),
                 "/": (lambda x,y: self.op_div(x,y)) ,
-                "<": (lambda x,y: x<y),
-                ">": (lambda x,y: x>y),
-                "!=": (lambda x,y: x != y),
-                "==": (lambda x,y: x==y),
-                "<=": (lambda x,y: x<=y),
-                ">=": (lambda x,y: x>=y),
-                "AND": (lambda x,y: x and y),
-                "OR": (lambda x,y: x or y)
+                "<": (lambda x,y: True if x<y else False),
+                ">": (lambda x,y: True if x>y else False),
+                "!=": (lambda x,y: True if x!=y else False),
+                "==": (lambda x,y: True if x==y else False),
+                "<=": (lambda x,y: True if x<=y else False),
+                ">=": (lambda x,y: True if x>=y else False),
+                "AND": (lambda x,y: True if x and y else False),
+                "OR": (lambda x,y: True if x or y else False)
               } 
 
-        casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x)),}
+        casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: self.make_bool(x))}
         result = operations[op](left,right)
         result = casting[resultType](result)
         self.memory.write(resultAddress,result)
@@ -263,9 +273,9 @@ class VirtualMachine:
             return x/y
 
     def make_bool(self,x):
-        if x=="TRUE":
+        if x=="TRUE" or x is True:
             return True
-        elif x=="FALSE":
+        elif x=="FALSE" or x is False:
             return False
         else:
             raise TypeError("Booleano incorrecto")
@@ -274,9 +284,8 @@ class VirtualMachine:
         self.pointer_stack[-1] = self.quadruples[self.pointer_stack[-1]].resultado.value - 1
 
     def go_to_f(self):
-        value = self.quadruples[self.pointer_stack[-1]].left.value
-        b_value = self.make_bool(value)
-        if(not b_value):
+        value = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        if(not value):
             self.pointer_stack[-1] = self.quadruples[self.pointer_stack[-1]].resultado.value - 1
             self.pointer_stack[-1] -= 1
 
@@ -314,13 +323,15 @@ class VirtualMachine:
         '''
         Requests space for execution when a function is called.
         '''
-        memory_required = self.quadruples[self.pointer_stack[-1]].resultado
-        self.memory.era_statement(memory_required)
+        funcName = self.quadruples[self.pointer_stack[-1]].resultado
+        self.prepare_memory = self.dir_functions[funcName].memory_required
     
     def go_sub(self):
         '''
         Adds the name of the function called to the call stack and changes the current quadruple index.
         '''
+        self.memory.era_statement(self.prepare_memory)
+
         aux_pointer = self.pointer_stack[-1]
         # self.pointer_stack[-1] += 1
         funcName = self.quadruples[aux_pointer].resultado.name
@@ -329,11 +340,9 @@ class VirtualMachine:
         self.pointer_stack.append(self.quadruples[aux_pointer].resultado.value - 1)
 
     def setParams(self, funcName):
-        print(funcName)
         reversedParams = self.dir_functions[funcName].params
         reversedParams.reverse()
         for param in self.dir_functions[funcName].params:
-            print(param.name, self.params_stack[-1])
             self.memory.write(param.memory, self.params_stack.pop())
 
     def op_return(self):

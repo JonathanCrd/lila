@@ -90,7 +90,7 @@ termino
 
 factor
     : OPEN_PARENTHESIS {gen.addOperator('(')}expresion CLOSE_PARENTHESIS {gen.finParentesis()}
-    | (PLUS| MINUS)? var_cte
+    | (PLUS| MINUS {gen.isNegative()})? var_cte {gen.makeNegative($MINUS.text)}
     ;
 
 var_cte
@@ -107,7 +107,7 @@ swhile
     ;
 
 invocacion
-    : ID OPEN_PARENTHESIS {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, True)} {gen.era($ID.text)} {gen.addOperator('(')}  (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.finParentesis()} SEMICOLON
+    : ID OPEN_PARENTHESIS {gen.incoming_Params()} {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, True)} {gen.era($ID.text)} {gen.addOperator('(')}  (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.check_params($ID.text)} {gen.finParentesis()} SEMICOLON
     ;
 
 getinput

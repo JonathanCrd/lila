@@ -1,24 +1,20 @@
-lila mecoProgram
+lila factorialProg
 
-var int i,j,k,l,m;
-num a;
-bool mibool;
+var int suma;
 
-func int dos(int b){
-    return b;
-}
-
-func int uno(int abelardo, int julian){
-    l = abelardo - julian;
-    return l;
-}
-
-main {
-    i=2+2;
-    m=5;
-    if(FALSE){
-        k=1;
+func num factorial(int n){
+    var num fact;
+    if(n==0){
+        return 1.0;
+    }
+    else{
+        return n*factorial(n-1);
     };
-    display(uno(5,dos(3)));
-    
 }
+
+main{
+    suma = 10 + -1;
+    display(factorial(-1));
+}
+
+

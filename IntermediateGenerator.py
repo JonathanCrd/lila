@@ -208,14 +208,15 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple("GOSUB",None,None,Operand(funct_name,None,index+1)))
         
     def era(self,funct_name):
-        self.Quadruples.append(Quadruple("ERA",None,None,Semantic.dirFunctions[funct_name].memory_required))
+        #Semantic.dirFunctions[funct_name].memory_required)
+        self.Quadruples.append(Quadruple("ERA",None,None, funct_name))
 
     def params(self):
         var_temp = self.stack_variables.pop()
         self.params_reader[-1].append(var_temp)
         self.Quadruples.append(Quadruple('PARAM',var_temp,None,Operand('param' + str(self.param_counter),None,None)))
         self.param_counter += 1
-        print("HELLO")
+        
 
     def check_params(self, funct_name):
         '''
@@ -245,7 +246,29 @@ class IntermediateGenerator:
     def getObj(self):
         return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration,Semantic.Era.var_counters]
 
+    def isNegative(self):
+        pass
+        
+    def makeNegative(self,minus):
+        if (minus == '-'):
+            exp = self.stack_variables.pop()
+            if(exp.v_type=='int'):
+                pass
+            elif (exp.v_type=='num'):
+                pass
+            else:
+                raise TypeError("Variable "+str(exp.v_type)+" can't be negative")
+            
+            res = Operand('t'+str(self.var_counter),exp.v_type,None)
+            res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+            Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
+            self.var_counter += 1
+            self.stack_variables.append(res)
+            self.Quadruples.append(Quadruple('NEGATIVE',exp,-1,res))
+
+        
     def test_final(self):
+        
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')
