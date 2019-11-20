@@ -1,6 +1,6 @@
 from LilaParser import LilaParser
 from LilaListener import LilaListener
-from Classes import Semantic, Function, Var
+from Classes import Semantic, Function, Operand
 from IntermediateGenerator import IntermediateGenerator
 
 class LilaLangListener(LilaListener):
@@ -25,7 +25,7 @@ class LilaLangListener(LilaListener):
     def enterData2(self, ctx:LilaParser.Data2Context):
         i = 0
         while (ctx.ID(i) != None):
-            varTemp = Var(str(ctx.ID(i)),ctx.tipo().getText(),'')
+            varTemp = Operand(str(ctx.ID(i)),ctx.tipo().getText(),'')
             if ( Semantic.add_var(varTemp) == False):
                 # This means that the variable is already defined in the scope or globally
                 raise SyntaxError("Variable " + str(ctx.ID(i)) + " is already declared in the actual scope")
@@ -66,7 +66,7 @@ class LilaLangListener(LilaListener):
             (T,I) = self.enterParams(ctx.params())
             
             for a,b in zip(I,T):
-                varTemp = Var(a.getText(),b.getText(),'')
+                varTemp = Operand(a.getText(),b.getText(),'')
                 if ( Semantic.add_var(varTemp) == False):
                     # This means that the variable is already defined in the scope or globally
                     raise SyntaxError("Variable " + str(a.getText()) + " is already declared in the actual scope")

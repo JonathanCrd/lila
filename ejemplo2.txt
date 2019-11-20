@@ -3,12 +3,8 @@ lila firstProgram
 var int miVar1, miVar2;
     num miNum1, miNum2;
     text miText1, miText2;
-    int[1][2] arr1;
-    int[3] promedio;
-    num [2][2][2] arr2;
-    text[3] arr3, arr4;
     bool miBool,miBool2;
-    int a,b,c,d,e,f,g,h,i,j,k, result;
+    int a,b,c,d,e,f,g,h,i,j,k;
 
 func int result()
 {

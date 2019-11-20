@@ -1,12 +1,10 @@
 lila firstProgram
 
 var int a,b,c,d,e,f,g,h,i,j,k;
+bool miBool;
 
 main {
-    a=0;
-    while a+b*c<d
-    {
-        a = d;
-    }
-    a=b*c;
+    miBool = TRUE AND FALSE;
+    a = 0;
+    b = 0;
 };

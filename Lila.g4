@@ -1,14 +1,14 @@
-// Define the grammar
+ // Define the grammar
 grammar Lila;
 
 @header{
 from IntermediateGenerator import IntermediateGenerator, Quadruple
-from Classes import Semantic, Function, Var
+from Classes import Semantic, Function, Operand, VirtualAddress
 gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {gen.test_final()}
+    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {gen.test_final()} {return gen.getObj()}
     ;
 
 data
@@ -16,7 +16,7 @@ data
     ;
 
 data2
-    : tipo ID {Semantic.add_var(Var($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Var($ID.text,$tipo.text,None))})* SEMICOLON
+    : tipo ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* SEMICOLON
     ;
 
 main
@@ -28,11 +28,11 @@ tipo
     ;
 
 funciones
-    : FUNC (tipo | VOID) ID {index = len(gen.Quadruples)} {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text,index)} {gen.contextChange()} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {gen.endProc()} {Semantic.display_test()} {Semantic.dump_varFunt()}
+    : FUNC (tipo | VOID) ID {index = len(gen.Quadruples)} {Semantic.enterFunciones($ID.text,$tipo.text,$VOID.text,index)} {gen.contextChange()} OPEN_PARENTHESIS (params)? CLOSE_PARENTHESIS OPEN_CURLY (data)? (estatuto)+ CLOSE_CURLY {gen.endProc()} {Semantic.end_function()}
     ;
 
 params
-    : tipo ID {Semantic.add_param(Var($ID.text,$tipo.text,''))} (COMMA tipo ID {Semantic.add_param(Var($ID.text,$tipo.text,''))})* 
+    : tipo ID {Semantic.add_param(Operand($ID.text,$tipo.text,None))} (COMMA tipo ID {Semantic.add_param(Operand($ID.text,$tipo.text,None))})* 
     ;
 
 estatuto
@@ -90,16 +90,16 @@ termino
 
 factor
     : OPEN_PARENTHESIS {gen.addOperator('(')}expresion CLOSE_PARENTHESIS {gen.finParentesis()}
-    | (PLUS| MINUS)? var_cte
+    | (PLUS| MINUS {gen.isNegative()})? var_cte {gen.makeNegative($MINUS.text)}
     ;
 
 var_cte
-    : ID OPEN_PARENTHESIS {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
+    : ID OPEN_PARENTHESIS {gen.incoming_Params()} {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.check_params($ID.text)} {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
     | ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)*
-    | CTE_INT {gen.addVar(Var(None,'int',$CTE_INT.text))}
-    | CTE_F {gen.addVar(Var(None,'num',$CTE_F.text))}
-    | CTE_STRING {gen.addVar(Var(None,'text',$CTE_STRING.text))}
-    | CTE_BOOL {gen.addVar(Var(None,'bool',$CTE_BOOL.text))}
+    | CTE_INT {gen.addConst(Operand(None,'int',$CTE_INT.text))}
+    | CTE_F {gen.addConst(Operand(None,'num',$CTE_F.text))}
+    | CTE_STRING {gen.addConst(Operand(None,'text',$CTE_STRING.text))}
+    | CTE_BOOL {gen.addConst(Operand(None,'bool',$CTE_BOOL.text))}
     ;
 
 swhile
@@ -107,11 +107,11 @@ swhile
     ;
 
 invocacion
-    : ID OPEN_PARENTHESIS {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, True)} {gen.era($ID.text)} {gen.addOperator('(')}  (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.finParentesis()} SEMICOLON
+    : ID OPEN_PARENTHESIS {gen.incoming_Params()} {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, True)} {gen.era($ID.text)} {gen.addOperator('(')}  (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.check_params($ID.text)} {gen.finParentesis()} SEMICOLON
     ;
 
 getinput
-    : GETINPUT OPEN_PARENTHESIS ID {gen.getinput(Semantic.look_for_variable($ID.text))} (COMMA CTE_STRING)? CLOSE_PARENTHESIS SEMICOLON
+    : GETINPUT OPEN_PARENTHESIS ID (COMMA CTE_STRING)? {gen.getinput(Semantic.look_for_variable($ID.text), $CTE_STRING.text)}CLOSE_PARENTHESIS SEMICOLON
     ;
 
 especiales

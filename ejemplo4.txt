@@ -4,13 +4,14 @@ var int i,j;
 
 func void uno(int a)
 {
-    i =a*2;
-    if(i<a+4)
+    var int li;
+    li =a*2;
+    if(li<a+4)
     {
         uno(a+1);
         
     };
-    display(i);
+    display(li);
 }
 
 func int dos(int b)
@@ -21,7 +22,6 @@ func int dos(int b)
 
 main
 {
-    i=2;
     j=i*2-1;
     uno(j);
     display(i+dos(i+j));

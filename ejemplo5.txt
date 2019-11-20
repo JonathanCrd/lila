@@ -1,0 +1,31 @@
+lila factorialProg
+
+var int suma, i;
+
+func num factorial(int n){
+    var num fact;
+    if(n==0){
+        return 1.0;
+    }
+    else{
+        return n*factorial(n-1);
+    };
+}
+
+func int dameUno(){
+    var int a;
+    a=1+0;
+}
+
+main{
+    i=0;
+    while(i<10){
+        i = i + 1;
+    }
+    display(i);
+    i = dameUno();
+    suma = 10 + -1;
+    // display(factorial(-1));
+}
+
+

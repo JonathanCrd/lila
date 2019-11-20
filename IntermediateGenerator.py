@@ -16,17 +16,29 @@ class IntermediateGenerator:
         self.counter = 1
         self.var_counter = 1
         self.param_counter = 1
+        self.params_reader = []
+
         self.cube = Semantic_Cube()
 
-    def addVar(self,variable:Var):
+    def addVar(self,variable:Operand):
         self.stack_variables.append(variable)
 
-    '''
-    Tratar a la funcion como una variable para el caso de asignacion
-    '''
+    def addConst(self, constant:Operand):
+        ##Search if the constant already exists
+        if constant.value not in VirtualAddress.constants_table:
+            VirtualAddress.constants_table[constant.value] = [constant.v_type, VirtualAddress.getAddress('Const ' + str(constant.v_type))]
+
+        constant.memory = VirtualAddress.constants_table[constant.value][1]
+        self.stack_variables.append(constant)
+
     def addFunct(self,function:Function):
-        temp = Var('t'+str(self.var_counter),function.f_type,None)
-        self.Quadruples.append(Quadruple('=',function.name,None,temp))
+        '''
+        Tratar a la funcion como una variable para el caso de asignacion
+        '''
+        temp = Operand('t'+str(self.var_counter),function.f_type,None)
+        temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+        Semantic.Era.var_counters['Temp '+str(temp.v_type)] += 1
+        self.Quadruples.append(Quadruple('=',Semantic.look_for_variable(function.name),None,temp))
         self.var_counter += 1
         self.addVar(temp)
 
@@ -49,12 +61,13 @@ class IntermediateGenerator:
         opnd = self.stack_variables.pop()
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
     
-    def getinput(self,variable:Var):
+    def getinput(self,variable:Operand,message):
+        ##falta crear operando pop?
+        variable.value = message
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
     def func_return(self):
         opnd = self.stack_variables.pop()
-
         self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
     
     def assign(self):
@@ -70,6 +83,8 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"') 
 
     def contextChange(self):
+        # Create new ERA instance when enters the main function
+        Semantic.Era = ERA()
         self.var_counter = 1
 
     def exitExpresion(self):
@@ -80,7 +95,10 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
+                ##Hay que hacer validacion de si se pudo?
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -96,7 +114,9 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -112,7 +132,9 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -128,7 +150,9 @@ class IntermediateGenerator:
             #Checa los tipos de los operandos, si son compatibles, genera cuadruplo
             if(Semantic_Cube.cube[str(opnd_Izq.v_type)][str(opnd_Der.v_type)][str(op)] != None):
                 # Resultado se agrega a la pila de variables
-                res = Var('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res = Operand('t'+str(self.var_counter),Semantic_Cube.cube[opnd_Izq.v_type][opnd_Der.v_type][op],None)
+                res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+                Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
                 self.var_counter += 1
                 self.stack_variables.append(res)
                 # Genera cuadruplo
@@ -157,7 +181,7 @@ class IntermediateGenerator:
 
     #X es el cuadruplo a rellenar, y cont es el valor de relleno
     def fill(self,x,cont):
-        self.Quadruples[x].resultado = Var(None,None,cont+1)
+        self.Quadruples[x].resultado = Operand(None,None,cont+1)
         #print(self.Quadruples[x].operator,self.Quadruples[x].left,self.Quadruples[x].right,self.Quadruples[x].resultado)
 
     def conditionElse(self):
@@ -172,7 +196,7 @@ class IntermediateGenerator:
     def whileEnd(self):
         end = self.stack_jumps.pop()
         sreturn = self.stack_jumps.pop()
-        self.Quadruples.append(Quadruple("GOTO",None,None,Var(None,None,sreturn+1)))
+        self.Quadruples.append(Quadruple("GOTO",None,None,Operand(None,None,sreturn+1)))
         self.fill(end,len(self.Quadruples))
 
     def goTo(self):
@@ -181,42 +205,99 @@ class IntermediateGenerator:
         
     def goSub(self,funct_name):
         index = Semantic.dirFunctions[funct_name].quadruple_index
-        self.Quadruples.append(Quadruple("GOSUB",None,None,Var(funct_name,None,index+1)))
+        self.Quadruples.append(Quadruple("GOSUB",None,None,Operand(funct_name,None,index+1)))
         
     def era(self,funct_name):
-        self.Quadruples.append(Quadruple("ERA",None,None,Var(funct_name,None,None)))
+        #Semantic.dirFunctions[funct_name].memory_required)
+        self.Quadruples.append(Quadruple("ERA",None,None, funct_name))
 
     def params(self):
         var_temp = self.stack_variables.pop()
-        self.Quadruples.append(Quadruple('param',Var(var_temp.name,var_temp.v_type,var_temp.value),None,Var('param' + str(self.param_counter),None,None)))
+        self.params_reader[-1].append(var_temp)
+        self.Quadruples.append(Quadruple('PARAM',var_temp,None,Operand('param' + str(self.param_counter),None,None)))
+        self.param_counter += 1
+        
+
+    def check_params(self, funct_name):
+        '''
+        Method that verifies each param and that the number of params in the call math the function declaration.
+        '''
+        params_declared = Semantic.dirFunctions[funct_name].params
+        params_found = self.params_reader[-1]
+        if(len(params_found) == len(params_declared)):
+            for i in range(0,len(params_found)):
+                if(params_found[i].v_type != params_declared[i].v_type):
+                    raise SyntaxError("Param '" + params_found[i].name + "' should be of type " + params_declared[i].v_type)
+        else:
+            raise SyntaxError("Function '"+ funct_name + "' expects " + str(len(params_declared)) + " params, but instead got " + str(len(params_found)))
+
+        self.params_reader.pop()
+
+    def incoming_Params(self):
+        self.params_reader.append([])
 
     def endProc(self):
+        VirtualAddress.resetLocals()
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
 
     def end(self):
-        self.Quadruples.append(Quadruple('end',None,None,None))
+        self.Quadruples.append(Quadruple('END',None,None,None))
 
+    def getObj(self):
+        return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration,Semantic.Era.var_counters]
+
+    def isNegative(self):
+        pass
+        
+    def makeNegative(self,minus):
+        if (minus == '-'):
+            exp = self.stack_variables.pop()
+            if(exp.v_type=='int'):
+                pass
+            elif (exp.v_type=='num'):
+                pass
+            else:
+                raise TypeError("Variable "+str(exp.v_type)+" can't be negative")
+            
+            res = Operand('t'+str(self.var_counter),exp.v_type,None)
+            res.memory = VirtualAddress.getAddress('Temp '+str(res.v_type))
+            Semantic.Era.var_counters['Temp '+str(res.v_type)] += 1
+            self.var_counter += 1
+            self.stack_variables.append(res)
+            self.Quadruples.append(Quadruple('NEGATIVE',exp,-1,res))
+
+        
     def test_final(self):
+        
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')
         for item in self.Quadruples:
            try:
-               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')','(',item.right.name, item.right.v_type, item.right.value,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value, item.left.memory,')','(',item.right.name, item.right.v_type, item.right.value,item.right.memory,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                i+=1
            except:
                 try:
-                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                     i+=1
                 except:
                     try:
-                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,")]")
+                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                         i+=1
                     except:
                         print(i,'[',item.operator,item.left,item.right,item.resultado,']')
                         i+=1
         print('=======')
-        
+
         print("STACK DE VARIABLES")
         for variable in self.stack_variables:
             print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
+
+        print("TABLA DE CONSTANTES")
+        print(VirtualAddress.constants_table)
+
+        print("DIR DE FUNCIONES")
+        for x,y in Semantic.dirFunctions.items():
+            print(x, y.name, y.f_type, len(y.params), y.memory_required)
+            
+            
