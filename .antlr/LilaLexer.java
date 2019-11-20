@@ -1,7 +1,7 @@
 // Generated from /Users/lizzie/Documents/GitHub/lila/Lila.g4 by ANTLR 4.7.1
 
 from IntermediateGenerator import IntermediateGenerator, Quadruple
-from Classes import Semantic, Function, Var
+from Classes import Semantic, Function, Operand, VirtualAddress
 gen = IntermediateGenerator()
 
 import org.antlr.v4.runtime.Lexer;

@@ -16,15 +16,19 @@ data
     ;
 
 data2
-    : tipo ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* SEMICOLON
+    : tipo array* ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* SEMICOLON
     ;
 
 main
     : MAIN {gen.contextChange()} bloque
     ;
 
+array
+    : OPEN_BRACKET CTE_INT CLOSE_BRACKET
+    ;
+
 tipo
-    : (INT | NUM | TEXT | BOOL) (OPEN_BRACKET CTE_INT CLOSE_BRACKET)*
+    : (INT | NUM | TEXT | BOOL) 
     ;
 
 funciones
@@ -67,8 +71,7 @@ sreturn
     ;
 
 arr
-    : var_cte (COMMA var_cte)*
-    | OPEN_BRACKET arr CLOSE_BRACKET (COMMA OPEN_BRACKET arr CLOSE_BRACKET)*
+    : OPEN_BRACKET var_cte (COMMA var_cte)* CLOSE_BRACKET (COMMA OPEN_BRACKET var_cte (COMMA var_cte)* CLOSE_BRACKET)*
     ;
 
 expresion

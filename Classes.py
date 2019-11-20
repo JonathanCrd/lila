@@ -12,6 +12,7 @@ class Operand:
         self.v_type = v_type
         self.value = value
         self.memory = None
+        self.array = None
 
 class VirtualAddress:
     segment_size = 2000

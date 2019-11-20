@@ -1,6 +1,8 @@
 lila factorialProg
 
 var int suma, i;
+int[3][5] miArr;
+
 
 func num factorial(int n){
     var num fact;
@@ -12,20 +14,15 @@ func num factorial(int n){
     };
 }
 
-func int dameUno(){
-    var int a;
-    a=1+0;
-}
-
 main{
+
     i=0;
-    while(i<10){
-        i = i + 1;
-    }
-    display(i);
-    i = dameUno();
-    suma = 10 + -1;
-    // display(factorial(-1));
+    miArr[1][1];
+    //while(i<10){
+    //    i = i + 1;
+    //}
+    //suma = 10 + -1;
+    // display(factorial(1));
 }
 
 
