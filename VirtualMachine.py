@@ -178,8 +178,9 @@ class VirtualMachine:
                     self.memory.write(value[1],False)
 
     def write_globals(self):
-        for key,var in self.global_vars.items():
-            self.memory.write(var.memory,None)
+        pass
+        # for key,var in self.global_vars.items():
+        #     self.memory.write(var.memory,None)
 
     def quadruples_handler(self):
         '''

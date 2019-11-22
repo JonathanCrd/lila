@@ -12,20 +12,13 @@ func num factorial(int n){
     };
 }
 
-func int dameUno(){
-    var int a;
-    a=1+0;
-}
-
 main{
     i=0;
     while(i<10){
         i = i + 1;
     }
-    display(i);
-    i = dameUno();
+    display(factorial(1));
     suma = 10 + -1;
-    // display(factorial(-1));
 }
 
 
