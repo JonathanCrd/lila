@@ -268,7 +268,7 @@ class IntermediateGenerator:
 
         
     def test_final(self):
-        
+        return
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')

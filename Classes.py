@@ -229,17 +229,17 @@ class Semantic:
 
     @staticmethod
     def display_test():
-        print("=============================")
-        print("DIR FUNCIONES: ")
-        for x, y in Semantic.dirFunctions.items():
-            print(x, y.name, y.f_type, len(y.params), y.memory_required)
-        print("\nVARS GLOBALESs: ")
-        for x, y in Semantic.varGlobals.items():
-            print(x, y.name, y.v_type, y.value)
-        print("\nVARS LOCALES: ")
-        for x, y in Semantic.varFunct.items():
-            print(x, y.name, y.v_type, y.value)
-        print("=============================")
+        # print("=============================")
+        # print("DIR FUNCIONES: ")
+        # for x, y in Semantic.dirFunctions.items():
+        #     print(x, y.name, y.f_type, len(y.params), y.memory_required)
+        # print("\nVARS GLOBALESs: ")
+        # for x, y in Semantic.varGlobals.items():
+        #     print(x, y.name, y.v_type, y.value)
+        # print("\nVARS LOCALES: ")
+        # for x, y in Semantic.varFunct.items():
+        #     print(x, y.name, y.v_type, y.value)
+        # print("=============================")
         pass
 
 class Semantic_Cube():

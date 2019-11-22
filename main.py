@@ -2,7 +2,6 @@ import sys
 from antlr4 import *
 from LilaLexer import LilaLexer
 from LilaParser import LilaParser
-from LilaLangListener import LilaLangListener
 from antlr4.error.ErrorListener import ErrorListener
 from VirtualMachine import VirtualMachine
 
@@ -19,7 +18,7 @@ class CustomErrorListener(ErrorListener):
 
 def main():
     #sys.tracebacklimit = 0
-    input_stream = FileStream('ejemplo5.txt')
+    input_stream = FileStream('CodeExamples/ejemplo5.txt')
     lexer = LilaLexer(input_stream)
     lexer._listeners = [CustomErrorListener()]
     stream = CommonTokenStream(lexer)
