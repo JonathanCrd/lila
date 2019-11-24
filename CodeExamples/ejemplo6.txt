@@ -12,8 +12,16 @@ func int fibo(int n)
     };
 }
 
+func void hola(){
+    display("hola");
+}
+
 func int sumar(int a, int b, int c){
+    var int d;
     return a + b + c;
+    d = 100;
+    display(d);
+
 }
 
 func int dameInt(int a){
@@ -26,7 +34,7 @@ func int dameUno(){
 
 main
 {        
-    numero = 2;
+    numero = 10;
     i = 0;
 
     while(i<numero){
@@ -35,5 +43,7 @@ main
     }
 
     display(sumar(sumar(1,1,1),1,sumar(2,2,2)));
+
+    hola();
 
 }

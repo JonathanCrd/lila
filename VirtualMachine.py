@@ -138,28 +138,23 @@ class Memory:
             self.next_base_address[key].pop()
             self.base_address[key].pop()
         
-        
-
 class VirtualMachine:
     def __init__(self, obj : list ):
         '''
         Virtual machine to execute the Lila programming language code.
         It takes as a parameter an obj containing the quadruples, function directory, global variables and constant table. 
         '''
-        self.total_quadruples = obj[0]
-        self.quadruples = obj[1]
-        self.constants_table = obj[2]
-        self.dir_functions = obj[3]
-        self.global_vars = obj[4]
-        memory_declaration = obj[5]
+        self.quadruples = obj['quadruples']
+        self.constants_table = obj['constant_table']
+        self.dir_functions = obj['dir_functions']
+        memory_declaration = obj['memory_declaration']
         self.memory = Memory(memory_declaration)
-        main_memory_required = obj[6] # Useful for setting the point in which the next call to a function wil be based on memory
+        main_memory_required = obj['dir_functions']['main'].memory_required # Setting the point in which the next call to a function wil be based on memory
         
         self.pointer_stack = [0] # This will point to the quadruple to execute
         self.call_stack = [] # This saves all the function calls
         self.params_stack=[]
         self.write_const()
-        self.write_globals()
         self.memory.era_statement(main_memory_required)
         self.prepare_memory = {}
 
@@ -177,15 +172,11 @@ class VirtualMachine:
                 else:
                     self.memory.write(value[1],False)
 
-    def write_globals(self):
-        for key,var in self.global_vars.items():
-            self.memory.write(var.memory,None)
-
     def quadruples_handler(self):
         '''
         Calls the proper method according to the operand/code in the first position of each quadruple.
         '''
-        while(self.pointer_stack[-1] < self.total_quadruples):
+        while(self.pointer_stack[-1] < len(self.quadruples)):
             quadruple = self.quadruples[self.pointer_stack[-1]]
             
             if (quadruple.operator == '+' or quadruple.operator == '-'  or quadruple.operator == '*' or quadruple.operator == '/' or quadruple.operator == '<' or quadruple.operator == '>'  or quadruple.operator == '<=' or quadruple.operator == '>=' or quadruple.operator == '!=' or quadruple.operator == '==' or quadruple.operator == 'AND' or quadruple.operator == 'OR'):
@@ -221,9 +212,6 @@ class VirtualMachine:
             
             self.pointer_stack[-1] += 1
         
-
-
-    # MATH
     def makeNegative(self):
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
@@ -318,7 +306,6 @@ class VirtualMachine:
         
         self.memory.write(address,value)
     
-
     def era(self):
         '''
         Requests space for execution when a function is called.
@@ -351,11 +338,13 @@ class VirtualMachine:
         The current function must not be a void one since the return statement is not valid in void functions.
         '''
         index = self.pointer_stack[-1]
-        address = self.quadruples[index].resultado.memory
+        address = self.quadruples[index].left.memory
         value = self.memory.read(address)
 
-        func_var = self.global_vars[self.call_stack[-1]]
-        self.memory.write(func_var.memory,value)
+        assign_address = self.quadruples[index].resultado
+        self.memory.write(assign_address,value)
+
+        self.end_procedure()
         
     def end_procedure(self):
         self.pointer_stack.pop()

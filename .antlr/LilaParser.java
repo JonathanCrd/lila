@@ -1,4 +1,4 @@
-// Generated from /Users/lizzie/Documents/GitHub/lila/Lila.g4 by ANTLR 4.7.1
+// Generated from c:\Users\jonym\Documents\GitHub\lila\Lila.g4 by ANTLR 4.7.1
 
 from IntermediateGenerator import IntermediateGenerator, Quadruple
 from Classes import Semantic, Function, Operand, VirtualAddress

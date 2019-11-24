@@ -67,8 +67,12 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
     def func_return(self):
+        '''
+        Generates the RETURN quadruple with the operand to assign to an specific function.
+        '''
         opnd = self.stack_variables.pop()
-        self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
+        func = Semantic.varGlobals[Semantic.lastFuncKey].memory
+        self.Quadruples.append(Quadruple('RETURN',opnd,None,func))
     
     def assign(self):
         if self.top_operators() == '=':
@@ -83,7 +87,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"') 
 
     def contextChange(self):
-        # Create new ERA instance when enters the main function
+        '''
+        Creates a new ERA object for the main block
+        '''
         Semantic.Era = ERA()
         self.var_counter = 1
 
@@ -176,6 +182,10 @@ class IntermediateGenerator:
             self.stack_jumps.append(len(self.Quadruples)-1)
     
     def conditionEnd(self):
+        '''
+        Fills the last pending jump in the jumps stacks.
+        Usefull when the condition ends or when the main block is found.
+        '''
         end = self.stack_jumps.pop()
         self.fill(end,len(self.Quadruples))
 
@@ -217,7 +227,6 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('PARAM',var_temp,None,Operand('param' + str(self.param_counter),None,None)))
         self.param_counter += 1
         
-
     def check_params(self, funct_name):
         '''
         Method that verifies each param and that the number of params in the call math the function declaration.
@@ -241,10 +250,19 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
 
     def end(self):
+        '''
+        Generates the quadruple END and adds the 'main' block to the function directory.
+        '''
+        main = Function('main', 'void', None) #The quadruple index is irrelevant for the main block in the dir_function
+        main.memory_required = Semantic.Era.var_counters
+        Semantic.add_function(main)
         self.Quadruples.append(Quadruple('END',None,None,None))
 
     def getObj(self):
-        return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration,Semantic.Era.var_counters]
+        '''
+        Returns the OBJ in form of a dictionary needed for the virtual machine.
+        '''
+        return {'quadruples': self.Quadruples, 'constant_table': VirtualAddress.constants_table, 'dir_functions': Semantic.dirFunctions, 'memory_declaration': VirtualAddress.memory_declaration} 
 
     def isNegative(self):
         pass
@@ -266,9 +284,7 @@ class IntermediateGenerator:
             self.stack_variables.append(res)
             self.Quadruples.append(Quadruple('NEGATIVE',exp,-1,res))
 
-        
     def test_final(self):
-        return
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')

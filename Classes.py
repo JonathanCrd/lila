@@ -107,6 +107,9 @@ class Semantic:
 
     @staticmethod
     def enterFunciones(name,tipo,void,index):
+        '''
+        Method to check if the function is already defined. If not, a new ERA instance is created.
+        '''
         if(void == None):
            funcTemp = Function(name,tipo,index)
         else:
@@ -119,7 +122,6 @@ class Semantic:
         # Create new ERA instance for the counters of this function
         Semantic.Era = ERA()
             
-
     @staticmethod
     def add_function(function:Function):
         '''
