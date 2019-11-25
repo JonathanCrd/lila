@@ -6,17 +6,19 @@ class Quadruple:
         self.left = left
         self.right = right
         self.resultado = resultado
-        
+
 class IntermediateGenerator:
     def __init__(self):
         self.Quadruples = []
         self.stack_operators = []
         self.stack_variables = []
         self.stack_jumps = []
-        self.counter = 1
+
+        self.params_reader = []
+
+        # Counter for the temp and params name
         self.var_counter = 1
         self.param_counter = 1
-        self.params_reader = []
 
         self.cube = Semantic_Cube()
 
@@ -262,6 +264,7 @@ class IntermediateGenerator:
         '''
         Returns the OBJ in form of a dictionary needed for the virtual machine.
         '''
+        a = Semantic.varGlobals
         return {'quadruples': self.Quadruples, 'constant_table': VirtualAddress.constants_table, 'dir_functions': Semantic.dirFunctions, 'memory_declaration': VirtualAddress.memory_declaration} 
 
     def isNegative(self):
@@ -315,5 +318,4 @@ class IntermediateGenerator:
         print("DIR DE FUNCIONES")
         for x,y in Semantic.dirFunctions.items():
             print(x, y.name, y.f_type, len(y.params), y.memory_required)
-            
-            
+        

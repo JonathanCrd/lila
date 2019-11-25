@@ -1,6 +1,8 @@
 lila fibonacci
 
 var int i, numero;
+text miTexto;
+int [2] miArr;
 
 func int fibo(int n)
 {
@@ -45,5 +47,8 @@ main
     display(sumar(sumar(1,1,1),1,sumar(2,2,2)));
 
     hola();
+    miTexto = "HOLA CRAYOLA";
+    display(miTexto);
+
 
 }

@@ -8,7 +8,7 @@ gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {gen.test_final()} {return gen.getObj()}
+    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {Semantic.display_test()}{gen.test_final()} {return gen.getObj()}
     ;
 
 data
@@ -16,7 +16,7 @@ data
     ;
 
 data2
-    : tipo array* ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* SEMICOLON
+    : (tipo | tipo array) ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* {Semantic.reset_array_setup()} SEMICOLON
     ;
 
 main
@@ -24,7 +24,7 @@ main
     ;
 
 array
-    : OPEN_BRACKET CTE_INT CLOSE_BRACKET
+    : {Semantic.array_declaration()} (OPEN_BRACKET CTE_INT {Semantic.array_dimension($CTE_INT.text)} CLOSE_BRACKET {Semantic.array_next_dim()})* {Semantic.arr_second_round()}
     ;
 
 tipo

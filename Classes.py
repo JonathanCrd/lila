@@ -14,22 +14,26 @@ class Operand:
         self.memory = None
         self.array = None
 
+class DimensionStruct:
+    def __init__(self,upper_limit):
+        self.upper_limit = upper_limit
+        self.m = None
+
 class VirtualAddress:
-    segment_size = 2000
     memory_declaration = {
-        'Global int'    : 5000, #4000
+        'Global int'    : 4000, #4000
         'Global num'    : 6000,
         'Global text'   : 8000,
         'Global bool'   : 10000,
-        'Local int'     : 9000, #20000
+        'Local int'     : 20000, #20000
         'Local num'     : 22000,
         'Local text'    : 24000,
         'Local bool'    : 26000,
-        'Temp int'      : 43000, #30000
+        'Temp int'      : 30000, #30000
         'Temp num'      : 32000,
         'Temp text'     : 34000,
-        'Temp bool'     : 45000, #36000
-        'Const int'     : 20000, #40000
+        'Temp bool'     : 36000, #36000
+        'Const int'     : 40000, #40000
         'Const num'     : 42000,
         'Const text'    : 44000,
         'Const bool'    : 48000
@@ -64,10 +68,12 @@ class VirtualAddress:
         'Temp bool'     : 0
     }
 
+    aux = 1
     @staticmethod
     def getAddress(a_type):
         tempAdress = VirtualAddress.memory_declaration[a_type] + VirtualAddress.counters[a_type]
-        VirtualAddress.counters[a_type] += 1
+        VirtualAddress.counters[a_type] += VirtualAddress.aux
+        VirtualAddress.aux = 1
         return tempAdress
     
     @staticmethod
@@ -104,6 +110,11 @@ class Semantic:
     isGlobal = True
     lastFuncKey = None
     Era = None
+
+    #Handle arrays
+    dims = None
+    dim_counter = 0
+    arr_r = 0
 
     @staticmethod
     def enterFunciones(name,tipo,void,index):
@@ -142,15 +153,18 @@ class Semantic:
             return False
 
     @staticmethod
-    def add_var(var):
+    def add_var(var:Operand):
         '''
         Method to add a variable into the current scope table.
-        It recieves an object Variable to append, 
+        It recieves an object Variable to append.
         '''
+
+        var.array = Semantic.dims
+
         if Semantic.isGlobal == True:
             #This is a global variable
             if var.name not in Semantic.varGlobals:
-                #Asociar direccion virtual global
+                #Asociate it with a global dir
                 var.memory = VirtualAddress.getAddress('Global '+ str(var.v_type))
                 Semantic.varGlobals[var.name] = var
             else:
@@ -214,13 +228,13 @@ class Semantic:
         if func_type != last_type.v_type:
             raise SyntaxError("Function of type '"+ func_type + "' must return same type, can't return '" + last_type.v_type +"'")
 
-    '''
-    Check if the  function is void and depending on it expected value will raise an exception.
-    Expected True means that the function is espected to be void.
-    != void y quiera void -> invocacion OR  != void y no quiera void -> asignacion OR 
-    '''
     @staticmethod
     def isVoid(funct_name:str,expected:bool):
+        '''
+        Check if the  function is void and depending on it expected value will raise an exception.
+        Expected True means that the function is espected to be void.
+        != void y quiera void -> invocacion OR  != void y no quiera void -> asignacion OR 
+        '''
         f_type = Semantic.dirFunctions[funct_name].f_type
         if f_type != 'void' and expected:
             raise SyntaxError("Function '" + funct_name + "' must be assigned to a variable since it is not void")
@@ -228,6 +242,58 @@ class Semantic:
             if f_type == 'void' and not(expected):
                 raise SyntaxError("Function '" + funct_name + "' cannot be used as operand since it is void")
     
+    @staticmethod
+    def array_declaration():
+        '''
+        Initialize the vars needed at the begining of array declarations.
+        '''
+        Semantic.dims = []
+        Semantic.dim_counter = 1
+        Semantic.arr_r = 1
+    
+    @staticmethod
+    def array_dimension(upper_limit):
+        '''
+        Creates the structure with the upper limit and recalculates R.
+        '''
+        upper_limit = int(upper_limit) - 1 # Adjust the upper_limit with a base of 0, like Cpp
+
+        # Check if the limit is at least 1
+        if (upper_limit < 0):
+            raise IndexError("Error, arrays should be at least size of 1.")
+
+        dim_temp = DimensionStruct(upper_limit)
+        Semantic.dims.append(dim_temp)
+        Semantic.arr_r = (upper_limit + 1) * Semantic.arr_r
+
+    @staticmethod
+    def array_next_dim():
+        '''
+        Add 1 to the dim size of the current array.
+        '''
+        Semantic.dim_counter += 1
+    
+    @staticmethod
+    def arr_second_round():
+        '''
+        Calculate the m for each dimension.
+        In this case, K it is not important since the lower limit is always 0.
+        '''
+        VirtualAddress.aux = Semantic.arr_r
+        k = 0
+        Semantic.dim_counter = 1
+        for item in Semantic.dims:
+            item.m = Semantic.arr_r / (item.upper_limit + 1)
+            Semantic.arr_r = item.m
+    
+    @staticmethod
+    def reset_array_setup():
+        '''
+        At the end of the statement, resets the vars needed for array handling.
+        '''
+        Semantic.dims = None
+        Semantic.dim_counter = 0
+        Semantic.arr_r = 0
 
     @staticmethod
     def display_test():

@@ -1,0 +1,13 @@
+lila arreglos
+
+var int a;
+int[1] b;
+int[2][2] c;
+int d;
+int[2][2][2] e;
+int f;
+
+main
+{       
+    a = 10;
+}
