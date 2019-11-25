@@ -222,6 +222,12 @@ class Semantic:
 
     @staticmethod
     def checkReturn(last_type):
+        '''
+        Check if the Return statement can be performed in the current context.
+        '''
+        if(Semantic.lastFuncKey == None):
+            raise SyntaxError("Block main can't have a return")
+
         func_type = Semantic.dirFunctions[Semantic.lastFuncKey].f_type
         if func_type == 'void':
             raise SyntaxError("Function of type '"+ func_type + "' can't have a return")
@@ -295,6 +301,22 @@ class Semantic:
         Semantic.dim_counter = 0
         Semantic.arr_r = 0
 
+    @staticmethod
+    def check_var_dim(var_id):
+        '''
+        Check if the variable given is a dimensioned one. If not, raise an exception.
+        '''
+        if (Semantic.varGlobals[var_id] is None):
+            raise AttributeError("Error, variable '" + var_id + "' is not a dimensioned.")
+
+    @staticmethod
+    def check_dim(var_id,dim):
+        '''
+        Check if the dimension given exists in the variable given. If not, raise an exception.
+        '''
+        if(dim > Semantic.varGlobals[var_id].array):
+            raise KeyError("Error, dimension " + dim + " does not exists in variable '" + var_id + "'")
+        
     @staticmethod
     def display_test():
         # print("=============================")

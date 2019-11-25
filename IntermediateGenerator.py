@@ -20,6 +20,8 @@ class IntermediateGenerator:
         self.var_counter = 1
         self.param_counter = 1
 
+        self.stack_dim = []
+
         self.cube = Semantic_Cube()
 
     def addVar(self,variable:Operand):
@@ -286,6 +288,9 @@ class IntermediateGenerator:
             self.var_counter += 1
             self.stack_variables.append(res)
             self.Quadruples.append(Quadruple('NEGATIVE',exp,-1,res))
+
+    def ver(self):
+        pass
 
     def test_final(self):
         i=1
