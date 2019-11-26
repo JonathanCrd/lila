@@ -7,13 +7,13 @@ func int fact(int n){
         return 1;
     }
     else{
-        return n * fact(n-1)
-    }
+        return n * fact(n-1);
+    };
 } 
 
 main
 {        
-    input(number, "Give a number: ");
+    getinput(number, "Give a number: ");
 
     display("Factorial: ");
     display(fact(number));
