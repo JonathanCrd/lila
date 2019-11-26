@@ -325,7 +325,8 @@ class Semantic:
         '''
         Check if the variable given is a dimensioned one. If not, raise an exception.
         '''
-        if (Semantic.varGlobals[var_id] is None):
+        var_temp = Semantic.look_for_variable(var_id)
+        if (var_temp.array is None):
             raise AttributeError("Error, variable '" + str(var_id) + "' is not a dimensioned.")
         
     @staticmethod
@@ -333,7 +334,8 @@ class Semantic:
         '''
         Check if the dimension given exists in the variable given. If not, raise an exception.
         '''
-        if(Semantic.total_dims[-1] != len(Semantic.varGlobals[var_id].array)):
+        var_temp = Semantic.look_for_variable(var_id)
+        if(Semantic.total_dims[-1] != len(var_temp.array)):
             raise KeyError("Error in dimensions of '" + str(var_id) + "'")
 
         Semantic.total_dims.pop()
@@ -343,13 +345,22 @@ class Semantic:
         '''
         Check if the dimension given exists in the variable given. If not, raise an exception.
         '''
-        if(Semantic.total_dims[-1] > len(Semantic.varGlobals[var_id].array)):
+        var_temp = Semantic.look_for_variable(var_id)
+        if(Semantic.total_dims[-1] > len(var_temp.array)):
             raise KeyError("Error in dimensions of '" + str(var_id) + "'")
 
     @staticmethod
     def count_dim(var_id):
         Semantic.total_dims[-1] += 1
 
+    @staticmethod   
+    def checkSpecialParam(var_name):
+        var_temp = Semantic.look_for_variable(var_name)
+        Semantic.check_var_dim(var_temp.name)
+
+        if 1 != len(var_temp.array):
+            raise TypeError("This function expects an array of only 1 dimension")
+    
     @staticmethod
     def display_test():
         # print("=============================")

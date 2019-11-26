@@ -151,7 +151,7 @@ class VirtualMachine:
         
         self.pointer_stack = [0] # This will point to the quadruple to execute
         self.call_stack = [] # This saves all the function calls
-        self.params_stack=[]
+        self.params_stack = []
         self.write_const()
         self.memory.era_statement(main_memory_required)
         self.prepare_memory = {}

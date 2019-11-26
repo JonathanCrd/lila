@@ -4,7 +4,9 @@ var int[2][2] c, d;
 int a;
 
 func void imprime(int abeja){
-    display(abeja[0][0])
+    var text[2][2] mariposa;
+    mariposa[0][0] = "hola";
+    display(mariposa[0][0]);
 }
 
 main
@@ -13,6 +15,8 @@ main
     c[0][1] = 200;
     c[1][0] = 30;
     c[1][1] = 400;
+
+    a[0][0] = 7;
 
     d[0][0] = 1;
     d[0][1] = 0;
