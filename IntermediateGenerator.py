@@ -335,7 +335,8 @@ class IntermediateGenerator:
         This method is going to pop the last item of the stack dimension.
         '''
         aux = self.stack_variables.pop()
-        temp = Operand('t'+str(self.var_counter),'int',None)
+        v_type = Semantic.look_for_variable(v_id)
+        temp = Operand('t'+str(self.var_counter),v_type.v_type,None)
         temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
         temp.pointer = True
         self.Quadruples.append(Quadruple('+BASE',aux, Semantic.look_for_variable(v_id), temp))
