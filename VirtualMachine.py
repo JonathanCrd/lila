@@ -225,7 +225,10 @@ class VirtualMachine:
         self.memory.write(resultAddress,result)
 
     def verify(self):
-        size = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        if (self.quadruples[self.pointer_stack[-1]].left.pointer):
+            size = self.memory.read(self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory))
+        else:
+            size = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         lowerLimit = self.quadruples[self.pointer_stack[-1]].right
         upperLimit = self.quadruples[self.pointer_stack[-1]].resultado
         if (size < lowerLimit or size > upperLimit):

@@ -5,7 +5,7 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "python.pythonPath": "/Users/lizzie/anaconda3/bin/python",
+    "python.pythonPath": "C:\\Users\\jonym\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }

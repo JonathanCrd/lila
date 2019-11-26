@@ -295,6 +295,7 @@ class IntermediateGenerator:
         var = self.stack_variables.pop()
         Semantic.check_var_dim(var.name)
         self.stack_dim.append(0)
+        Semantic.total_dims.append(0)
 
     def VER(self, v_id):
         '''

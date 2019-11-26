@@ -74,7 +74,13 @@ class VirtualAddress:
     def getAddress(a_type):
         tempAdress = VirtualAddress.memory_declaration[a_type] + VirtualAddress.counters[a_type]
         VirtualAddress.counters[a_type] += VirtualAddress.aux
-        VirtualAddress.aux = 1
+        return tempAdress
+
+    @staticmethod
+    def getConstantAddress(a_type):
+        tempAdress = VirtualAddress.memory_declaration[a_type] + VirtualAddress.counters[a_type]
+        VirtualAddress.counters[a_type] += 1
+
         return tempAdress
     
     @staticmethod
@@ -115,7 +121,7 @@ class Semantic:
     #Handle arrays
     dims = None
     dim_counter = 0
-    total_dims = 0
+    total_dims = []
     arr_r = 0
 
     @staticmethod
@@ -286,7 +292,7 @@ class Semantic:
         ##Search if the constant already exists
         constant = str(int(constant))
         if constant not in VirtualAddress.constants_table:
-            VirtualAddress.constants_table[constant] = ['int', VirtualAddress.getAddress('Const ' + str('int'))]
+            VirtualAddress.constants_table[constant] = ['int', VirtualAddress.getConstantAddress('Const ' + str('int'))]
 
     
     @staticmethod
@@ -311,7 +317,8 @@ class Semantic:
         Semantic.dims = None
         Semantic.dim_counter = 0
         Semantic.arr_r = 0
-        Semantic.total_dims = 0
+        Semantic.total_dims = []
+        VirtualAddress.aux = 1
 
     @staticmethod
     def check_var_dim(var_id):
@@ -320,28 +327,28 @@ class Semantic:
         '''
         if (Semantic.varGlobals[var_id] is None):
             raise AttributeError("Error, variable '" + str(var_id) + "' is not a dimensioned.")
-
+        
     @staticmethod
     def check_dims(var_id):
         '''
         Check if the dimension given exists in the variable given. If not, raise an exception.
         '''
-        if(Semantic.total_dims != len(Semantic.varGlobals[var_id].array)):
+        if(Semantic.total_dims[-1] != len(Semantic.varGlobals[var_id].array)):
             raise KeyError("Error in dimensions of '" + str(var_id) + "'")
-        
-        Semantic.total_dims = 0
-    
+
+        Semantic.total_dims.pop()
+
     @staticmethod
     def checkMoreDims(var_id):
         '''
         Check if the dimension given exists in the variable given. If not, raise an exception.
         '''
-        if(Semantic.total_dims > len(Semantic.varGlobals[var_id].array)):
+        if(Semantic.total_dims[-1] > len(Semantic.varGlobals[var_id].array)):
             raise KeyError("Error in dimensions of '" + str(var_id) + "'")
 
     @staticmethod
     def count_dim(var_id):
-        Semantic.total_dims += 1
+        Semantic.total_dims[-1] += 1
 
     @staticmethod
     def display_test():
