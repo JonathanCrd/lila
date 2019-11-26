@@ -3,6 +3,10 @@ lila arreglos
 var int[2][2] c, d;
 int a;
 
+func void imprime(int abeja){
+    display(abeja[0][0])
+}
+
 main
 {
     c[0][0] = 10 + 10 * 4;

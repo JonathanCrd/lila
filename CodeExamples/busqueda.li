@@ -1,26 +1,29 @@
 lila busqueda
 
-var int[10] arrA;
-int num, arrSize, cont, pos, i;
+var int[10] values;
+int numero, arrSize, cont, pos, i, aux;
 
 main{
-    input(arrSize, "Give array size: ");
-    display("Give array elements: ");
-    i = 0;
-    while(i<arrSize){
-        display("Element ", i);
-        input(arrA[i]);
-        i = i + 1;
-    }
+    values[0] = 10;
+    values[1] = 2;
+    values[2] = 0;
+    values[3] = 14;
+    values[4] = 43;
+    values[5] = 25;
+    values[6] = 18;
+    values[7] = 1;
+    values[8] = 5;
+    values[9] = 45;
 
-    input(num, "Give element to search: ");
+    getinput(numero, "Give element to search: ");
     i = 0;
-    while(i<arrSize){
-        if(arrA[i]==num){
+    cont = 0;
+    while(i<10){
+        if(values[i]==numero){
             cont = 1;
-            pos = i +1;
-            i = arrSize;
-        }
+            pos = i;
+            i = 10;
+        };
         i = i + 1;
     }
 
@@ -28,6 +31,6 @@ main{
         display("Elemento no existe");
     }
     else{
-        display("Elemento esta en posicion: ", pos)
-    }
+        display("Elemento esta en posicion: ", pos);
+    };
 }

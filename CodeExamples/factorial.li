@@ -15,7 +15,7 @@ func int factorial(int n){
 
 main
 {        
-    input(number, "Give a number: ");
+    getinput(number, "Give a number: ");
     display("Factorial: ");
     display(factorial(number));
 }

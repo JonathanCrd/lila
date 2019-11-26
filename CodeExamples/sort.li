@@ -5,11 +5,20 @@ int[10] values;
 
 main
 {
-    values = [10,2,0,14,43,25,18,1,5,45];
-    
+    values[0] = 10;
+    values[1] = 2;
+    values[2] = 0;
+    values[3] = 14;
+    values[4] = 43;
+    values[5] = 25;
+    values[6] = 18;
+    values[7] = 1;
+    values[8] = 5;
+    values[9] = 45;
+
     display("Unsorted list: ");
     n = 0;
-    while(n<5){
+    while(n<10){
         display(values[n], " ");
         n = n + 1;
     }
@@ -25,7 +34,7 @@ main
                 temp = values[i];
                 values[i] = values[j];
                 values[j] = temp;
-            }
+            };
             j = j + 1;
         }
         i = i +1;
@@ -35,7 +44,7 @@ main
 
     display("Sorted list: ");
     n = 0;
-    while(n<5){
+    while(n<10){
         display(values[n], " ");
         n = n + 1;
     }
