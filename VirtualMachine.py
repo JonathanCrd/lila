@@ -93,8 +93,7 @@ class Memory:
             return self.memory[address_type][actual_location]
         else:
             raise MemoryError("Value not declared.")
-                
-        
+                     
     def write(self, address, input):
         '''
         Method that writes a given input inside an specified memory address
@@ -127,7 +126,6 @@ class Memory:
         self.next_base_address['Temp text'].append(memory_required['Temp text'] + self.next_base_address['Temp text'][-1])
         self.next_base_address['Temp bool'].append(memory_required['Temp bool'] + self.next_base_address['Temp bool'][-1])
         
-
     def dump_memory_stack(self):
         '''
         Method to pop the last base addreses and next base address of each type.
@@ -205,13 +203,35 @@ class VirtualMachine:
                 self.end_procedure()
             elif (quadruple.operator == 'NEGATIVE'):
                 self.makeNegative()
+            elif (quadruple.operator == '+BASE'):
+                self.sum_base()
+            elif (quadruple.operator == 'VER'):
+                self.verify()
             elif (quadruple.operator == 'END'):
+                print('SE ACABO')
                 pass
             else:
                 pass
             
             self.pointer_stack[-1] += 1
         
+    def sum_base(self):
+        left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        right = self.quadruples[self.pointer_stack[-1]].right.memory
+        
+        resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
+        resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+        result = left + right
+        self.memory.write(resultAddress,result)
+
+    def verify(self):
+        size = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        lowerLimit = self.quadruples[self.pointer_stack[-1]].right
+        upperLimit = self.quadruples[self.pointer_stack[-1]].resultado
+        if (size < lowerLimit or size > upperLimit):
+            raise IndexError("Index out of bounds.")
+
+
     def makeNegative(self):
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
@@ -224,16 +244,31 @@ class VirtualMachine:
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+
+        if (self.quadruples[self.pointer_stack[-1]].left.pointer):
+            left = self.memory.read(left)
+        if (self.quadruples[self.pointer_stack[-1]].resultado.pointer):
+            resultAddress =  self.memory.read(resultAddress)
+
         casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x))}
         result = casting[resultType](left)
         self.memory.write(resultAddress,result)
 
     def arithmetic(self):
+
         op = self.quadruples[self.pointer_stack[-1]].operator
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         right = self.memory.read(self.quadruples[self.pointer_stack[-1]].right.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+        
+        if (self.quadruples[self.pointer_stack[-1]].left.pointer):
+            left = self.memory.read(left)
+        if (self.quadruples[self.pointer_stack[-1]].right.pointer):
+            right = self.memory.read(right)
+        if (self.quadruples[self.pointer_stack[-1]].resultado.pointer):
+            resultAddress =  self.memory.read(resultAddress)
+        
         operations = { 
                 "+": (lambda x,y: x+y), 
                 "-": (lambda x,y: x-y),
@@ -358,4 +393,6 @@ class VirtualMachine:
         index = self.pointer_stack[-1]
         paramValue = self.memory.read(self.quadruples[index].left.memory)
         self.params_stack.append(paramValue)
+
+
         

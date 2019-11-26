@@ -63,7 +63,7 @@ display
     ;
     
 asignacion
-    : (ID {gen.addVar(Semantic.look_for_variable($ID.text))} | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} (OPEN_BRACKET exp CLOSE_BRACKET)+ {gen.finParentesis()}) EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}| arr) SEMICOLON 
+    : (ID {gen.addVar(Semantic.look_for_variable($ID.text))} | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} {gen.access_array_begin()} (OPEN_BRACKET {Semantic.check_var_dim($ID.text)} exp {gen.VER($ID.text)} CLOSE_BRACKET)+ {Semantic.check_dims($ID.text)}{gen.access_array_end($ID.text)} {gen.finParentesis()}) EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}| arr) SEMICOLON 
     ;
 
 sreturn

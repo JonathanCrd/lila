@@ -13,6 +13,7 @@ class Operand:
         self.value = value
         self.memory = None
         self.array = None
+        self.pointer = False
 
 class DimensionStruct:
     def __init__(self,upper_limit):
@@ -114,6 +115,7 @@ class Semantic:
     #Handle arrays
     dims = None
     dim_counter = 0
+    total_dims = 0
     arr_r = 0
 
     @staticmethod
@@ -278,6 +280,14 @@ class Semantic:
         Add 1 to the dim size of the current array.
         '''
         Semantic.dim_counter += 1
+
+    @staticmethod
+    def addConstWithoutStack(constant):
+        ##Search if the constant already exists
+        constant = str(int(constant))
+        if constant not in VirtualAddress.constants_table:
+            VirtualAddress.constants_table[constant] = ['int', VirtualAddress.getAddress('Const ' + str('int'))]
+
     
     @staticmethod
     def arr_second_round():
@@ -290,6 +300,7 @@ class Semantic:
         Semantic.dim_counter = 1
         for item in Semantic.dims:
             item.m = Semantic.arr_r / (item.upper_limit + 1)
+            Semantic.addConstWithoutStack(item.m)
             Semantic.arr_r = item.m
     
     @staticmethod
@@ -300,6 +311,7 @@ class Semantic:
         Semantic.dims = None
         Semantic.dim_counter = 0
         Semantic.arr_r = 0
+        Semantic.total_dims = 0
 
     @staticmethod
     def check_var_dim(var_id):
@@ -307,16 +319,20 @@ class Semantic:
         Check if the variable given is a dimensioned one. If not, raise an exception.
         '''
         if (Semantic.varGlobals[var_id] is None):
-            raise AttributeError("Error, variable '" + var_id + "' is not a dimensioned.")
+            raise AttributeError("Error, variable '" + str(var_id) + "' is not a dimensioned.")
 
     @staticmethod
-    def check_dim(var_id,dim):
+    def check_dims(var_id):
         '''
         Check if the dimension given exists in the variable given. If not, raise an exception.
         '''
-        if(dim > Semantic.varGlobals[var_id].array):
-            raise KeyError("Error, dimension " + dim + " does not exists in variable '" + var_id + "'")
-        
+        if(Semantic.total_dims != len(Semantic.varGlobals[var_id].array)):
+            raise KeyError("Error in dimensions of '" + str(var_id) + "'")
+    
+    @staticmethod
+    def count_dim(var_id):
+        Semantic.total_dims += 1
+
     @staticmethod
     def display_test():
         # print("=============================")

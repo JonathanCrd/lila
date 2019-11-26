@@ -266,7 +266,6 @@ class IntermediateGenerator:
         '''
         Returns the OBJ in form of a dictionary needed for the virtual machine.
         '''
-        a = Semantic.varGlobals
         return {'quadruples': self.Quadruples, 'constant_table': VirtualAddress.constants_table, 'dir_functions': Semantic.dirFunctions, 'memory_declaration': VirtualAddress.memory_declaration} 
 
     def isNegative(self):
@@ -289,9 +288,53 @@ class IntermediateGenerator:
             self.stack_variables.append(res)
             self.Quadruples.append(Quadruple('NEGATIVE',exp,-1,res))
 
-    def ver(self):
-        pass
+    def access_array_begin(self):
+        '''
+        This method is going to append a 0 to the stack dimension.
+        '''
+        self.stack_dim.append(0)
 
+    def VER(self, v_id):
+        '''
+        Generates the VER quadruple
+        '''
+        Semantic.count_dim(v_id)
+        t_var = self.stack_variables[-1]
+        dim_var = Semantic.look_for_variable(v_id)
+        dim_struct = dim_var.array[self.stack_dim[-1]]
+        self.Quadruples.append(Quadruple('VER',t_var,0, dim_struct.upper_limit))
+
+        if (dim_struct.m != 1):
+            aux = self.stack_variables.pop()
+            temp = Operand('t'+str(self.var_counter),'int',None)
+            temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+            m = Operand('m','int',dim_struct.m)
+            m.memory = VirtualAddress.constants_table[str(int(dim_struct.m))][1]
+            self.Quadruples.append(Quadruple('*', aux, m, temp))
+            self.stack_variables.append(temp)
+        
+        if (self.stack_dim[-1] > 0):
+            aux2 = self.stack_variables.pop()
+            aux1 = self.stack_variables.pop()
+            temp = Operand('t'+str(self.var_counter),'int',None)
+            temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+            self.Quadruples.append(Quadruple('+',aux1,aux2,temp))
+            self.stack_variables.append(temp)
+
+        self.stack_dim[-1] += 1
+
+    def access_array_end(self,v_id):
+        '''
+        This method is going to pop the last item of the stack dimension.
+        '''
+        aux = self.stack_variables.pop()
+        temp = Operand('t'+str(self.var_counter),'int',None)
+        temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+        temp.pointer = True
+        self.Quadruples.append(Quadruple('+BASE',aux, Semantic.look_for_variable(v_id), temp))
+        self.stack_variables.append(temp)
+        self.stack_dim.pop()
+    
     def test_final(self):
         i=1
         print("Quadruples length: ",len(self.Quadruples))
@@ -309,8 +352,12 @@ class IntermediateGenerator:
                         print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                         i+=1
                     except:
-                        print(i,'[',item.operator,item.left,item.right,item.resultado,']')
-                        i+=1
+                        try:
+                            print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,item.resultado,"]")
+                            i+=1
+                        except:
+                            print(i,'[',item.operator,item.left,item.right,item.resultado,']')
+                            i+=1
         print('=======')
 
         print("STACK DE VARIABLES")
