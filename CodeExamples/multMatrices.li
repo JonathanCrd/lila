@@ -1,0 +1,38 @@
+lila multiplica
+var int[2][2] matrixA, matrixB;
+int i, j, row, col;
+
+
+main{
+    input(row,"First matrix: Number of rows");
+    input(col,"First matrix: Number of columns");
+    display("First matrix: Enter each element");
+
+    i=0;
+    while(i<row){
+
+        j=0;
+        while(j<col){
+
+            display("Enter value at row ", i, " col ", j):
+            input(matrixA[i][j])
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+
+    display("Second matrix: Enter each element");
+
+    i=0;
+    while(i<row){
+        j=0;
+        while(j<col){
+
+            display("Enter value at row ", i, " col ", j):
+            input(matrixA[i][j])
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+
+}
