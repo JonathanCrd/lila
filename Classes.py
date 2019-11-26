@@ -328,7 +328,17 @@ class Semantic:
         '''
         if(Semantic.total_dims != len(Semantic.varGlobals[var_id].array)):
             raise KeyError("Error in dimensions of '" + str(var_id) + "'")
+        
+        Semantic.total_dims = 0
     
+    @staticmethod
+    def checkMoreDims(var_id):
+        '''
+        Check if the dimension given exists in the variable given. If not, raise an exception.
+        '''
+        if(Semantic.total_dims > len(Semantic.varGlobals[var_id].array)):
+            raise KeyError("Error in dimensions of '" + str(var_id) + "'")
+
     @staticmethod
     def count_dim(var_id):
         Semantic.total_dims += 1

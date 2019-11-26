@@ -299,6 +299,8 @@ class IntermediateGenerator:
         Generates the VER quadruple
         '''
         Semantic.count_dim(v_id)
+        Semantic.checkMoreDims(v_id)
+
         t_var = self.stack_variables[-1]
         dim_var = Semantic.look_for_variable(v_id)
         dim_struct = dim_var.array[self.stack_dim[-1]]
