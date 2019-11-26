@@ -292,6 +292,8 @@ class IntermediateGenerator:
         '''
         This method is going to append a 0 to the stack dimension.
         '''
+        var = self.stack_variables.pop()
+        Semantic.check_var_dim(var.name)
         self.stack_dim.append(0)
 
     def VER(self, v_id):
