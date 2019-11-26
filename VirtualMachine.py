@@ -314,7 +314,10 @@ class VirtualMachine:
 
     def display(self):
         index = self.pointer_stack[-1]
-        print(self.memory.read(self.quadruples[index].resultado.memory))
+        resultAddress = self.memory.read(self.quadruples[index].resultado.memory)
+        if (self.quadruples[index].resultado.pointer):
+            resultAddress =  self.memory.read(resultAddress)
+        print(resultAddress)
 
     def op_input(self):
         index = self.pointer_stack[-1]

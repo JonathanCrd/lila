@@ -16,7 +16,7 @@ main
 {        
     i = 0;
     //x = 9;
-    input(x, "Give a number: ");
+    getinput(x, "Give a number: ");
     display("Fibonacci: ");
     while(i<x){
         display(fibo(i), " ");

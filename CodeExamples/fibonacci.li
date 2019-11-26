@@ -14,12 +14,14 @@ func void fibo(int n)
         z = x + y;
         x = y;
         y = z;
+
+        aux= aux+1;
     }
 }
 
 main
 {        
-    input(number, "Give a number: ");
+    getinput(number, "Give a number: ");
     display("Fibonacci: ");
     fibo(number);
 }

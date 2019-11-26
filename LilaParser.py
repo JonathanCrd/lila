@@ -14,7 +14,7 @@ gen = IntermediateGenerator()
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3=")
-        buf.write("\u01f4\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\u01f6\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
@@ -34,44 +34,44 @@ def serializedATN():
         buf.write("\n\r\f\r\16\r\u00c9\13\r\3\r\3\r\3\r\3\16\3\16\3\16\3")
         buf.write("\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\6\16\u00da")
         buf.write("\n\16\r\16\16\16\u00db\3\16\3\16\3\16\3\16\5\16\u00e2")
-        buf.write("\n\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00ea\n\16\3")
-        buf.write("\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\20")
-        buf.write("\3\20\7\20\u00f8\n\20\f\20\16\20\u00fb\13\20\3\20\3\20")
-        buf.write("\3\20\3\20\3\20\3\20\7\20\u0103\n\20\f\20\16\20\u0106")
-        buf.write("\13\20\3\20\3\20\7\20\u010a\n\20\f\20\16\20\u010d\13\20")
-        buf.write("\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u0115\n\21\3\21\3")
-        buf.write("\21\3\21\7\21\u011a\n\21\f\21\16\21\u011d\13\21\3\22\3")
-        buf.write("\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22")
-        buf.write("\3\22\5\22\u012c\n\22\3\22\3\22\3\22\3\22\5\22\u0132\n")
-        buf.write("\22\3\23\3\23\3\23\3\23\3\23\3\23\5\23\u013a\n\23\3\23")
-        buf.write("\3\23\3\23\7\23\u013f\n\23\f\23\16\23\u0142\13\23\3\24")
-        buf.write("\3\24\3\24\3\24\3\24\3\24\5\24\u014a\n\24\3\24\3\24\3")
-        buf.write("\24\7\24\u014f\n\24\f\24\16\24\u0152\13\24\3\25\3\25\3")
-        buf.write("\25\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u015d\n\25\3\25")
-        buf.write("\3\25\3\25\5\25\u0162\n\25\3\26\3\26\3\26\3\26\3\26\3")
-        buf.write("\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\7\26\u0171\n\26")
-        buf.write("\f\26\16\26\u0174\13\26\5\26\u0176\n\26\3\26\3\26\3\26")
-        buf.write("\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\6\26\u0184")
-        buf.write("\n\26\r\26\16\26\u0185\3\26\3\26\3\26\3\26\3\26\3\26\3")
-        buf.write("\26\3\26\3\26\3\26\3\26\3\26\5\26\u0194\n\26\3\27\3\27")
+        buf.write("\n\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\17\3\17\3\17")
+        buf.write("\3\17\3\17\3\17\3\20\3\20\3\20\3\20\7\20\u00f5\n\20\f")
+        buf.write("\20\16\20\u00f8\13\20\3\20\3\20\3\20\3\20\3\20\3\20\7")
+        buf.write("\20\u0100\n\20\f\20\16\20\u0103\13\20\3\20\3\20\7\20\u0107")
+        buf.write("\n\20\f\20\16\20\u010a\13\20\3\21\3\21\3\21\3\21\3\21")
+        buf.write("\3\21\5\21\u0112\n\21\3\21\3\21\3\21\7\21\u0117\n\21\f")
+        buf.write("\21\16\21\u011a\13\21\3\22\3\22\3\22\3\22\3\22\3\22\3")
+        buf.write("\22\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u0129\n\22\3\22")
+        buf.write("\3\22\3\22\3\22\5\22\u012f\n\22\3\23\3\23\3\23\3\23\3")
+        buf.write("\23\3\23\5\23\u0137\n\23\3\23\3\23\3\23\7\23\u013c\n\23")
+        buf.write("\f\23\16\23\u013f\13\23\3\24\3\24\3\24\3\24\3\24\3\24")
+        buf.write("\5\24\u0147\n\24\3\24\3\24\3\24\7\24\u014c\n\24\f\24\16")
+        buf.write("\24\u014f\13\24\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25")
+        buf.write("\3\25\5\25\u015a\n\25\3\25\3\25\3\25\5\25\u015f\n\25\3")
+        buf.write("\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26")
+        buf.write("\3\26\3\26\7\26\u016e\n\26\f\26\16\26\u0171\13\26\5\26")
+        buf.write("\u0173\n\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3")
+        buf.write("\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\6\26\u0186")
+        buf.write("\n\26\r\26\16\26\u0187\3\26\3\26\3\26\3\26\3\26\3\26\3")
+        buf.write("\26\3\26\3\26\3\26\3\26\3\26\5\26\u0196\n\26\3\27\3\27")
         buf.write("\3\27\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\30\3\30")
-        buf.write("\3\30\3\30\3\30\3\30\3\30\3\30\3\30\7\30\u01aa\n\30\f")
-        buf.write("\30\16\30\u01ad\13\30\5\30\u01af\n\30\3\30\3\30\3\30\3")
-        buf.write("\30\3\30\3\30\3\31\3\31\3\31\3\31\3\31\5\31\u01bc\n\31")
+        buf.write("\3\30\3\30\3\30\3\30\3\30\3\30\3\30\7\30\u01ac\n\30\f")
+        buf.write("\30\16\30\u01af\13\30\5\30\u01b1\n\30\3\30\3\30\3\30\3")
+        buf.write("\30\3\30\3\30\3\31\3\31\3\31\3\31\3\31\5\31\u01be\n\31")
         buf.write("\3\31\3\31\3\31\3\31\3\32\3\32\3\32\3\32\3\32\3\32\3\32")
-        buf.write("\3\32\3\32\3\32\5\32\u01cc\n\32\3\32\3\32\3\32\3\32\3")
+        buf.write("\3\32\3\32\3\32\5\32\u01ce\n\32\3\32\3\32\3\32\3\32\3")
         buf.write("\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32")
         buf.write("\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32")
         buf.write("\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\5\32")
-        buf.write("\u01f2\n\32\3\32\2\2\33\2\4\6\b\n\f\16\20\22\24\26\30")
-        buf.write("\32\34\36 \"$&(*,.\60\62\2\4\3\2\f\17\3\2+\65\2\u0216")
+        buf.write("\u01f4\n\32\3\32\2\2\33\2\4\6\b\n\f\16\20\22\24\26\30")
+        buf.write("\32\34\36 \"$&(*,.\60\62\2\4\3\2\f\17\3\2+\65\2\u0217")
         buf.write("\2\64\3\2\2\2\4G\3\2\2\2\6S\3\2\2\2\bb\3\2\2\2\nf\3\2")
         buf.write("\2\2\fs\3\2\2\2\16u\3\2\2\2\20\u0090\3\2\2\2\22\u00a5")
         buf.write("\3\2\2\2\24\u00a7\3\2\2\2\26\u00b3\3\2\2\2\30\u00bd\3")
-        buf.write("\2\2\2\32\u00e1\3\2\2\2\34\u00ed\3\2\2\2\36\u00f3\3\2")
-        buf.write("\2\2 \u010e\3\2\2\2\"\u0131\3\2\2\2$\u0133\3\2\2\2&\u0143")
-        buf.write("\3\2\2\2(\u0161\3\2\2\2*\u0193\3\2\2\2,\u0195\3\2\2\2")
-        buf.write(".\u019c\3\2\2\2\60\u01b6\3\2\2\2\62\u01f1\3\2\2\2\64\65")
+        buf.write("\2\2\2\32\u00e1\3\2\2\2\34\u00ea\3\2\2\2\36\u00f0\3\2")
+        buf.write("\2\2 \u010b\3\2\2\2\"\u012e\3\2\2\2$\u0130\3\2\2\2&\u0140")
+        buf.write("\3\2\2\2(\u015e\3\2\2\2*\u0195\3\2\2\2,\u0197\3\2\2\2")
+        buf.write(".\u019e\3\2\2\2\60\u01b8\3\2\2\2\62\u01f3\3\2\2\2\64\65")
         buf.write("\7\4\2\2\65\66\7;\2\2\668\b\2\1\2\679\5\4\3\28\67\3\2")
         buf.write("\2\289\3\2\2\29=\3\2\2\2:<\5\16\b\2;:\3\2\2\2<?\3\2\2")
         buf.write("\2=;\3\2\2\2=>\3\2\2\2>@\3\2\2\2?=\3\2\2\2@A\b\2\1\2A")
@@ -131,124 +131,124 @@ def serializedATN():
         buf.write("\u00dd\u00de\b\16\1\2\u00de\u00df\b\16\1\2\u00df\u00e0")
         buf.write("\b\16\1\2\u00e0\u00e2\3\2\2\2\u00e1\u00cd\3\2\2\2\u00e1")
         buf.write("\u00cf\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3\u00e4\7\"\2\2")
-        buf.write("\u00e4\u00e9\b\16\1\2\u00e5\u00e6\5 \21\2\u00e6\u00e7")
-        buf.write("\b\16\1\2\u00e7\u00ea\3\2\2\2\u00e8\u00ea\5\36\20\2\u00e9")
-        buf.write("\u00e5\3\2\2\2\u00e9\u00e8\3\2\2\2\u00ea\u00eb\3\2\2\2")
-        buf.write("\u00eb\u00ec\7\31\2\2\u00ec\33\3\2\2\2\u00ed\u00ee\7\20")
-        buf.write("\2\2\u00ee\u00ef\5 \21\2\u00ef\u00f0\b\17\1\2\u00f0\u00f1")
-        buf.write("\b\17\1\2\u00f1\u00f2\7\31\2\2\u00f2\35\3\2\2\2\u00f3")
-        buf.write("\u00f4\7\22\2\2\u00f4\u00f9\5*\26\2\u00f5\u00f6\7\30\2")
-        buf.write("\2\u00f6\u00f8\5*\26\2\u00f7\u00f5\3\2\2\2\u00f8\u00fb")
-        buf.write("\3\2\2\2\u00f9\u00f7\3\2\2\2\u00f9\u00fa\3\2\2\2\u00fa")
-        buf.write("\u00fc\3\2\2\2\u00fb\u00f9\3\2\2\2\u00fc\u010b\7\23\2")
-        buf.write("\2\u00fd\u00fe\7\30\2\2\u00fe\u00ff\7\22\2\2\u00ff\u0104")
-        buf.write("\5*\26\2\u0100\u0101\7\30\2\2\u0101\u0103\5*\26\2\u0102")
-        buf.write("\u0100\3\2\2\2\u0103\u0106\3\2\2\2\u0104\u0102\3\2\2\2")
-        buf.write("\u0104\u0105\3\2\2\2\u0105\u0107\3\2\2\2\u0106\u0104\3")
-        buf.write("\2\2\2\u0107\u0108\7\23\2\2\u0108\u010a\3\2\2\2\u0109")
-        buf.write("\u00fd\3\2\2\2\u010a\u010d\3\2\2\2\u010b\u0109\3\2\2\2")
-        buf.write("\u010b\u010c\3\2\2\2\u010c\37\3\2\2\2\u010d\u010b\3\2")
-        buf.write("\2\2\u010e\u010f\5\"\22\2\u010f\u011b\b\21\1\2\u0110\u0111")
-        buf.write("\7%\2\2\u0111\u0115\b\21\1\2\u0112\u0113\7&\2\2\u0113")
-        buf.write("\u0115\b\21\1\2\u0114\u0110\3\2\2\2\u0114\u0112\3\2\2")
-        buf.write("\2\u0115\u0116\3\2\2\2\u0116\u0117\5\"\22\2\u0117\u0118")
-        buf.write("\b\21\1\2\u0118\u011a\3\2\2\2\u0119\u0114\3\2\2\2\u011a")
-        buf.write("\u011d\3\2\2\2\u011b\u0119\3\2\2\2\u011b\u011c\3\2\2\2")
-        buf.write("\u011c!\3\2\2\2\u011d\u011b\3\2\2\2\u011e\u012b\5$\23")
-        buf.write("\2\u011f\u0120\7\37\2\2\u0120\u012c\b\22\1\2\u0121\u0122")
-        buf.write("\7\36\2\2\u0122\u012c\b\22\1\2\u0123\u0124\7 \2\2\u0124")
-        buf.write("\u012c\b\22\1\2\u0125\u0126\7!\2\2\u0126\u012c\b\22\1")
-        buf.write("\2\u0127\u0128\7$\2\2\u0128\u012c\b\22\1\2\u0129\u012a")
-        buf.write("\7#\2\2\u012a\u012c\b\22\1\2\u012b\u011f\3\2\2\2\u012b")
-        buf.write("\u0121\3\2\2\2\u012b\u0123\3\2\2\2\u012b\u0125\3\2\2\2")
-        buf.write("\u012b\u0127\3\2\2\2\u012b\u0129\3\2\2\2\u012c\u012d\3")
-        buf.write("\2\2\2\u012d\u012e\5$\23\2\u012e\u012f\b\22\1\2\u012f")
-        buf.write("\u0132\3\2\2\2\u0130\u0132\5$\23\2\u0131\u011e\3\2\2\2")
-        buf.write("\u0131\u0130\3\2\2\2\u0132#\3\2\2\2\u0133\u0134\5&\24")
-        buf.write("\2\u0134\u0140\b\23\1\2\u0135\u0136\7\32\2\2\u0136\u013a")
-        buf.write("\b\23\1\2\u0137\u0138\7\33\2\2\u0138\u013a\b\23\1\2\u0139")
-        buf.write("\u0135\3\2\2\2\u0139\u0137\3\2\2\2\u013a\u013b\3\2\2\2")
-        buf.write("\u013b\u013c\5&\24\2\u013c\u013d\b\23\1\2\u013d\u013f")
-        buf.write("\3\2\2\2\u013e\u0139\3\2\2\2\u013f\u0142\3\2\2\2\u0140")
-        buf.write("\u013e\3\2\2\2\u0140\u0141\3\2\2\2\u0141%\3\2\2\2\u0142")
-        buf.write("\u0140\3\2\2\2\u0143\u0144\5(\25\2\u0144\u0150\b\24\1")
-        buf.write("\2\u0145\u0146\7\34\2\2\u0146\u014a\b\24\1\2\u0147\u0148")
-        buf.write("\7\35\2\2\u0148\u014a\b\24\1\2\u0149\u0145\3\2\2\2\u0149")
-        buf.write("\u0147\3\2\2\2\u014a\u014b\3\2\2\2\u014b\u014c\5(\25\2")
-        buf.write("\u014c\u014d\b\24\1\2\u014d\u014f\3\2\2\2\u014e\u0149")
-        buf.write("\3\2\2\2\u014f\u0152\3\2\2\2\u0150\u014e\3\2\2\2\u0150")
-        buf.write("\u0151\3\2\2\2\u0151\'\3\2\2\2\u0152\u0150\3\2\2\2\u0153")
-        buf.write("\u0154\7\24\2\2\u0154\u0155\b\25\1\2\u0155\u0156\5 \21")
-        buf.write("\2\u0156\u0157\7\25\2\2\u0157\u0158\b\25\1\2\u0158\u0162")
-        buf.write("\3\2\2\2\u0159\u015d\7\32\2\2\u015a\u015b\7\33\2\2\u015b")
-        buf.write("\u015d\b\25\1\2\u015c\u0159\3\2\2\2\u015c\u015a\3\2\2")
-        buf.write("\2\u015c\u015d\3\2\2\2\u015d\u015e\3\2\2\2\u015e\u015f")
-        buf.write("\5*\26\2\u015f\u0160\b\25\1\2\u0160\u0162\3\2\2\2\u0161")
-        buf.write("\u0153\3\2\2\2\u0161\u015c\3\2\2\2\u0162)\3\2\2\2\u0163")
-        buf.write("\u0164\7;\2\2\u0164\u0165\7\24\2\2\u0165\u0166\b\26\1")
-        buf.write("\2\u0166\u0167\b\26\1\2\u0167\u0168\b\26\1\2\u0168\u0169")
-        buf.write("\b\26\1\2\u0169\u0175\b\26\1\2\u016a\u016b\5 \21\2\u016b")
-        buf.write("\u0172\b\26\1\2\u016c\u016d\7\30\2\2\u016d\u016e\5 \21")
-        buf.write("\2\u016e\u016f\b\26\1\2\u016f\u0171\3\2\2\2\u0170\u016c")
-        buf.write("\3\2\2\2\u0171\u0174\3\2\2\2\u0172\u0170\3\2\2\2\u0172")
-        buf.write("\u0173\3\2\2\2\u0173\u0176\3\2\2\2\u0174\u0172\3\2\2\2")
-        buf.write("\u0175\u016a\3\2\2\2\u0175\u0176\3\2\2\2\u0176\u0177\3")
-        buf.write("\2\2\2\u0177\u0178\b\26\1\2\u0178\u0179\7\25\2\2\u0179")
-        buf.write("\u017a\b\26\1\2\u017a\u017b\b\26\1\2\u017b\u0194\b\26")
-        buf.write("\1\2\u017c\u017d\7;\2\2\u017d\u017e\b\26\1\2\u017e\u0183")
-        buf.write("\b\26\1\2\u017f\u0180\7\22\2\2\u0180\u0181\5$\23\2\u0181")
-        buf.write("\u0182\7\23\2\2\u0182\u0184\3\2\2\2\u0183\u017f\3\2\2")
-        buf.write("\2\u0184\u0185\3\2\2\2\u0185\u0183\3\2\2\2\u0185\u0186")
-        buf.write("\3\2\2\2\u0186\u0187\3\2\2\2\u0187\u0188\b\26\1\2\u0188")
-        buf.write("\u0194\3\2\2\2\u0189\u018a\7;\2\2\u018a\u0194\b\26\1\2")
-        buf.write("\u018b\u018c\7\'\2\2\u018c\u0194\b\26\1\2\u018d\u018e")
-        buf.write("\7)\2\2\u018e\u0194\b\26\1\2\u018f\u0190\7(\2\2\u0190")
-        buf.write("\u0194\b\26\1\2\u0191\u0192\7*\2\2\u0192\u0194\b\26\1")
-        buf.write("\2\u0193\u0163\3\2\2\2\u0193\u017c\3\2\2\2\u0193\u0189")
-        buf.write("\3\2\2\2\u0193\u018b\3\2\2\2\u0193\u018d\3\2\2\2\u0193")
-        buf.write("\u018f\3\2\2\2\u0193\u0191\3\2\2\2\u0194+\3\2\2\2\u0195")
-        buf.write("\u0196\7\7\2\2\u0196\u0197\b\27\1\2\u0197\u0198\5 \21")
-        buf.write("\2\u0198\u0199\b\27\1\2\u0199\u019a\5\26\f\2\u019a\u019b")
-        buf.write("\b\27\1\2\u019b-\3\2\2\2\u019c\u019d\7;\2\2\u019d\u019e")
-        buf.write("\7\24\2\2\u019e\u019f\b\30\1\2\u019f\u01a0\b\30\1\2\u01a0")
-        buf.write("\u01a1\b\30\1\2\u01a1\u01a2\b\30\1\2\u01a2\u01ae\b\30")
-        buf.write("\1\2\u01a3\u01a4\5 \21\2\u01a4\u01ab\b\30\1\2\u01a5\u01a6")
-        buf.write("\7\30\2\2\u01a6\u01a7\5 \21\2\u01a7\u01a8\b\30\1\2\u01a8")
-        buf.write("\u01aa\3\2\2\2\u01a9\u01a5\3\2\2\2\u01aa\u01ad\3\2\2\2")
-        buf.write("\u01ab\u01a9\3\2\2\2\u01ab\u01ac\3\2\2\2\u01ac\u01af\3")
-        buf.write("\2\2\2\u01ad\u01ab\3\2\2\2\u01ae\u01a3\3\2\2\2\u01ae\u01af")
-        buf.write("\3\2\2\2\u01af\u01b0\3\2\2\2\u01b0\u01b1\b\30\1\2\u01b1")
-        buf.write("\u01b2\7\25\2\2\u01b2\u01b3\b\30\1\2\u01b3\u01b4\b\30")
-        buf.write("\1\2\u01b4\u01b5\7\31\2\2\u01b5/\3\2\2\2\u01b6\u01b7\7")
-        buf.write("\21\2\2\u01b7\u01b8\7\24\2\2\u01b8\u01bb\7;\2\2\u01b9")
-        buf.write("\u01ba\7\30\2\2\u01ba\u01bc\7(\2\2\u01bb\u01b9\3\2\2\2")
-        buf.write("\u01bb\u01bc\3\2\2\2\u01bc\u01bd\3\2\2\2\u01bd\u01be\b")
-        buf.write("\31\1\2\u01be\u01bf\7\25\2\2\u01bf\u01c0\7\31\2\2\u01c0")
-        buf.write("\61\3\2\2\2\u01c1\u01c2\t\3\2\2\u01c2\u01c3\7\24\2\2\u01c3")
-        buf.write("\u01c4\7;\2\2\u01c4\u01c5\7\25\2\2\u01c5\u01f2\7\31\2")
-        buf.write("\2\u01c6\u01c7\7\66\2\2\u01c7\u01c8\7\24\2\2\u01c8\u01cb")
-        buf.write("\7;\2\2\u01c9\u01ca\7\30\2\2\u01ca\u01cc\7;\2\2\u01cb")
-        buf.write("\u01c9\3\2\2\2\u01cb\u01cc\3\2\2\2\u01cc\u01cd\3\2\2\2")
-        buf.write("\u01cd\u01ce\7\25\2\2\u01ce\u01f2\7\31\2\2\u01cf\u01d0")
-        buf.write("\7\67\2\2\u01d0\u01d1\7\24\2\2\u01d1\u01d2\7;\2\2\u01d2")
-        buf.write("\u01d3\7\30\2\2\u01d3\u01d4\7;\2\2\u01d4\u01d5\7\25\2")
-        buf.write("\2\u01d5\u01f2\7\31\2\2\u01d6\u01d7\78\2\2\u01d7\u01d8")
-        buf.write("\7\24\2\2\u01d8\u01d9\7)\2\2\u01d9\u01da\7\30\2\2\u01da")
-        buf.write("\u01db\7)\2\2\u01db\u01dc\7\30\2\2\u01dc\u01dd\7\'\2\2")
-        buf.write("\u01dd\u01de\7\25\2\2\u01de\u01f2\7\31\2\2\u01df\u01e0")
-        buf.write("\79\2\2\u01e0\u01e1\7\24\2\2\u01e1\u01e2\7;\2\2\u01e2")
-        buf.write("\u01e3\7\30\2\2\u01e3\u01e4\5*\26\2\u01e4\u01e5\7\30\2")
-        buf.write("\2\u01e5\u01e6\5*\26\2\u01e6\u01e7\7\25\2\2\u01e7\u01e8")
-        buf.write("\7\31\2\2\u01e8\u01f2\3\2\2\2\u01e9\u01ea\7:\2\2\u01ea")
-        buf.write("\u01eb\7\24\2\2\u01eb\u01ec\7;\2\2\u01ec\u01ed\7\30\2")
-        buf.write("\2\u01ed\u01ee\5*\26\2\u01ee\u01ef\7\25\2\2\u01ef\u01f0")
-        buf.write("\7\31\2\2\u01f0\u01f2\3\2\2\2\u01f1\u01c1\3\2\2\2\u01f1")
-        buf.write("\u01c6\3\2\2\2\u01f1\u01cf\3\2\2\2\u01f1\u01d6\3\2\2\2")
-        buf.write("\u01f1\u01df\3\2\2\2\u01f1\u01e9\3\2\2\2\u01f2\63\3\2")
-        buf.write("\2\2*8=KS\\nx\u0080\u0085\u008a\u009a\u00a5\u00ae\u00b8")
-        buf.write("\u00c7\u00db\u00e1\u00e9\u00f9\u0104\u010b\u0114\u011b")
-        buf.write("\u012b\u0131\u0139\u0140\u0149\u0150\u015c\u0161\u0172")
-        buf.write("\u0175\u0185\u0193\u01ab\u01ae\u01bb\u01cb\u01f1")
+        buf.write("\u00e4\u00e5\b\16\1\2\u00e5\u00e6\5 \21\2\u00e6\u00e7")
+        buf.write("\b\16\1\2\u00e7\u00e8\3\2\2\2\u00e8\u00e9\7\31\2\2\u00e9")
+        buf.write("\33\3\2\2\2\u00ea\u00eb\7\20\2\2\u00eb\u00ec\5 \21\2\u00ec")
+        buf.write("\u00ed\b\17\1\2\u00ed\u00ee\b\17\1\2\u00ee\u00ef\7\31")
+        buf.write("\2\2\u00ef\35\3\2\2\2\u00f0\u00f1\7\22\2\2\u00f1\u00f6")
+        buf.write("\5*\26\2\u00f2\u00f3\7\30\2\2\u00f3\u00f5\5*\26\2\u00f4")
+        buf.write("\u00f2\3\2\2\2\u00f5\u00f8\3\2\2\2\u00f6\u00f4\3\2\2\2")
+        buf.write("\u00f6\u00f7\3\2\2\2\u00f7\u00f9\3\2\2\2\u00f8\u00f6\3")
+        buf.write("\2\2\2\u00f9\u0108\7\23\2\2\u00fa\u00fb\7\30\2\2\u00fb")
+        buf.write("\u00fc\7\22\2\2\u00fc\u0101\5*\26\2\u00fd\u00fe\7\30\2")
+        buf.write("\2\u00fe\u0100\5*\26\2\u00ff\u00fd\3\2\2\2\u0100\u0103")
+        buf.write("\3\2\2\2\u0101\u00ff\3\2\2\2\u0101\u0102\3\2\2\2\u0102")
+        buf.write("\u0104\3\2\2\2\u0103\u0101\3\2\2\2\u0104\u0105\7\23\2")
+        buf.write("\2\u0105\u0107\3\2\2\2\u0106\u00fa\3\2\2\2\u0107\u010a")
+        buf.write("\3\2\2\2\u0108\u0106\3\2\2\2\u0108\u0109\3\2\2\2\u0109")
+        buf.write("\37\3\2\2\2\u010a\u0108\3\2\2\2\u010b\u010c\5\"\22\2\u010c")
+        buf.write("\u0118\b\21\1\2\u010d\u010e\7%\2\2\u010e\u0112\b\21\1")
+        buf.write("\2\u010f\u0110\7&\2\2\u0110\u0112\b\21\1\2\u0111\u010d")
+        buf.write("\3\2\2\2\u0111\u010f\3\2\2\2\u0112\u0113\3\2\2\2\u0113")
+        buf.write("\u0114\5\"\22\2\u0114\u0115\b\21\1\2\u0115\u0117\3\2\2")
+        buf.write("\2\u0116\u0111\3\2\2\2\u0117\u011a\3\2\2\2\u0118\u0116")
+        buf.write("\3\2\2\2\u0118\u0119\3\2\2\2\u0119!\3\2\2\2\u011a\u0118")
+        buf.write("\3\2\2\2\u011b\u0128\5$\23\2\u011c\u011d\7\37\2\2\u011d")
+        buf.write("\u0129\b\22\1\2\u011e\u011f\7\36\2\2\u011f\u0129\b\22")
+        buf.write("\1\2\u0120\u0121\7 \2\2\u0121\u0129\b\22\1\2\u0122\u0123")
+        buf.write("\7!\2\2\u0123\u0129\b\22\1\2\u0124\u0125\7$\2\2\u0125")
+        buf.write("\u0129\b\22\1\2\u0126\u0127\7#\2\2\u0127\u0129\b\22\1")
+        buf.write("\2\u0128\u011c\3\2\2\2\u0128\u011e\3\2\2\2\u0128\u0120")
+        buf.write("\3\2\2\2\u0128\u0122\3\2\2\2\u0128\u0124\3\2\2\2\u0128")
+        buf.write("\u0126\3\2\2\2\u0129\u012a\3\2\2\2\u012a\u012b\5$\23\2")
+        buf.write("\u012b\u012c\b\22\1\2\u012c\u012f\3\2\2\2\u012d\u012f")
+        buf.write("\5$\23\2\u012e\u011b\3\2\2\2\u012e\u012d\3\2\2\2\u012f")
+        buf.write("#\3\2\2\2\u0130\u0131\5&\24\2\u0131\u013d\b\23\1\2\u0132")
+        buf.write("\u0133\7\32\2\2\u0133\u0137\b\23\1\2\u0134\u0135\7\33")
+        buf.write("\2\2\u0135\u0137\b\23\1\2\u0136\u0132\3\2\2\2\u0136\u0134")
+        buf.write("\3\2\2\2\u0137\u0138\3\2\2\2\u0138\u0139\5&\24\2\u0139")
+        buf.write("\u013a\b\23\1\2\u013a\u013c\3\2\2\2\u013b\u0136\3\2\2")
+        buf.write("\2\u013c\u013f\3\2\2\2\u013d\u013b\3\2\2\2\u013d\u013e")
+        buf.write("\3\2\2\2\u013e%\3\2\2\2\u013f\u013d\3\2\2\2\u0140\u0141")
+        buf.write("\5(\25\2\u0141\u014d\b\24\1\2\u0142\u0143\7\34\2\2\u0143")
+        buf.write("\u0147\b\24\1\2\u0144\u0145\7\35\2\2\u0145\u0147\b\24")
+        buf.write("\1\2\u0146\u0142\3\2\2\2\u0146\u0144\3\2\2\2\u0147\u0148")
+        buf.write("\3\2\2\2\u0148\u0149\5(\25\2\u0149\u014a\b\24\1\2\u014a")
+        buf.write("\u014c\3\2\2\2\u014b\u0146\3\2\2\2\u014c\u014f\3\2\2\2")
+        buf.write("\u014d\u014b\3\2\2\2\u014d\u014e\3\2\2\2\u014e\'\3\2\2")
+        buf.write("\2\u014f\u014d\3\2\2\2\u0150\u0151\7\24\2\2\u0151\u0152")
+        buf.write("\b\25\1\2\u0152\u0153\5 \21\2\u0153\u0154\7\25\2\2\u0154")
+        buf.write("\u0155\b\25\1\2\u0155\u015f\3\2\2\2\u0156\u015a\7\32\2")
+        buf.write("\2\u0157\u0158\7\33\2\2\u0158\u015a\b\25\1\2\u0159\u0156")
+        buf.write("\3\2\2\2\u0159\u0157\3\2\2\2\u0159\u015a\3\2\2\2\u015a")
+        buf.write("\u015b\3\2\2\2\u015b\u015c\5*\26\2\u015c\u015d\b\25\1")
+        buf.write("\2\u015d\u015f\3\2\2\2\u015e\u0150\3\2\2\2\u015e\u0159")
+        buf.write("\3\2\2\2\u015f)\3\2\2\2\u0160\u0161\7;\2\2\u0161\u0162")
+        buf.write("\7\24\2\2\u0162\u0163\b\26\1\2\u0163\u0164\b\26\1\2\u0164")
+        buf.write("\u0165\b\26\1\2\u0165\u0166\b\26\1\2\u0166\u0172\b\26")
+        buf.write("\1\2\u0167\u0168\5 \21\2\u0168\u016f\b\26\1\2\u0169\u016a")
+        buf.write("\7\30\2\2\u016a\u016b\5 \21\2\u016b\u016c\b\26\1\2\u016c")
+        buf.write("\u016e\3\2\2\2\u016d\u0169\3\2\2\2\u016e\u0171\3\2\2\2")
+        buf.write("\u016f\u016d\3\2\2\2\u016f\u0170\3\2\2\2\u0170\u0173\3")
+        buf.write("\2\2\2\u0171\u016f\3\2\2\2\u0172\u0167\3\2\2\2\u0172\u0173")
+        buf.write("\3\2\2\2\u0173\u0174\3\2\2\2\u0174\u0175\b\26\1\2\u0175")
+        buf.write("\u0176\7\25\2\2\u0176\u0177\b\26\1\2\u0177\u0178\b\26")
+        buf.write("\1\2\u0178\u0196\b\26\1\2\u0179\u017a\7;\2\2\u017a\u0196")
+        buf.write("\b\26\1\2\u017b\u017c\7;\2\2\u017c\u017d\b\26\1\2\u017d")
+        buf.write("\u017e\b\26\1\2\u017e\u0185\b\26\1\2\u017f\u0180\7\22")
+        buf.write("\2\2\u0180\u0181\b\26\1\2\u0181\u0182\5$\23\2\u0182\u0183")
+        buf.write("\b\26\1\2\u0183\u0184\7\23\2\2\u0184\u0186\3\2\2\2\u0185")
+        buf.write("\u017f\3\2\2\2\u0186\u0187\3\2\2\2\u0187\u0185\3\2\2\2")
+        buf.write("\u0187\u0188\3\2\2\2\u0188\u0189\3\2\2\2\u0189\u018a\b")
+        buf.write("\26\1\2\u018a\u018b\b\26\1\2\u018b\u018c\b\26\1\2\u018c")
+        buf.write("\u0196\3\2\2\2\u018d\u018e\7\'\2\2\u018e\u0196\b\26\1")
+        buf.write("\2\u018f\u0190\7)\2\2\u0190\u0196\b\26\1\2\u0191\u0192")
+        buf.write("\7(\2\2\u0192\u0196\b\26\1\2\u0193\u0194\7*\2\2\u0194")
+        buf.write("\u0196\b\26\1\2\u0195\u0160\3\2\2\2\u0195\u0179\3\2\2")
+        buf.write("\2\u0195\u017b\3\2\2\2\u0195\u018d\3\2\2\2\u0195\u018f")
+        buf.write("\3\2\2\2\u0195\u0191\3\2\2\2\u0195\u0193\3\2\2\2\u0196")
+        buf.write("+\3\2\2\2\u0197\u0198\7\7\2\2\u0198\u0199\b\27\1\2\u0199")
+        buf.write("\u019a\5 \21\2\u019a\u019b\b\27\1\2\u019b\u019c\5\26\f")
+        buf.write("\2\u019c\u019d\b\27\1\2\u019d-\3\2\2\2\u019e\u019f\7;")
+        buf.write("\2\2\u019f\u01a0\7\24\2\2\u01a0\u01a1\b\30\1\2\u01a1\u01a2")
+        buf.write("\b\30\1\2\u01a2\u01a3\b\30\1\2\u01a3\u01a4\b\30\1\2\u01a4")
+        buf.write("\u01b0\b\30\1\2\u01a5\u01a6\5 \21\2\u01a6\u01ad\b\30\1")
+        buf.write("\2\u01a7\u01a8\7\30\2\2\u01a8\u01a9\5 \21\2\u01a9\u01aa")
+        buf.write("\b\30\1\2\u01aa\u01ac\3\2\2\2\u01ab\u01a7\3\2\2\2\u01ac")
+        buf.write("\u01af\3\2\2\2\u01ad\u01ab\3\2\2\2\u01ad\u01ae\3\2\2\2")
+        buf.write("\u01ae\u01b1\3\2\2\2\u01af\u01ad\3\2\2\2\u01b0\u01a5\3")
+        buf.write("\2\2\2\u01b0\u01b1\3\2\2\2\u01b1\u01b2\3\2\2\2\u01b2\u01b3")
+        buf.write("\b\30\1\2\u01b3\u01b4\7\25\2\2\u01b4\u01b5\b\30\1\2\u01b5")
+        buf.write("\u01b6\b\30\1\2\u01b6\u01b7\7\31\2\2\u01b7/\3\2\2\2\u01b8")
+        buf.write("\u01b9\7\21\2\2\u01b9\u01ba\7\24\2\2\u01ba\u01bd\7;\2")
+        buf.write("\2\u01bb\u01bc\7\30\2\2\u01bc\u01be\7(\2\2\u01bd\u01bb")
+        buf.write("\3\2\2\2\u01bd\u01be\3\2\2\2\u01be\u01bf\3\2\2\2\u01bf")
+        buf.write("\u01c0\b\31\1\2\u01c0\u01c1\7\25\2\2\u01c1\u01c2\7\31")
+        buf.write("\2\2\u01c2\61\3\2\2\2\u01c3\u01c4\t\3\2\2\u01c4\u01c5")
+        buf.write("\7\24\2\2\u01c5\u01c6\7;\2\2\u01c6\u01c7\7\25\2\2\u01c7")
+        buf.write("\u01f4\7\31\2\2\u01c8\u01c9\7\66\2\2\u01c9\u01ca\7\24")
+        buf.write("\2\2\u01ca\u01cd\7;\2\2\u01cb\u01cc\7\30\2\2\u01cc\u01ce")
+        buf.write("\7;\2\2\u01cd\u01cb\3\2\2\2\u01cd\u01ce\3\2\2\2\u01ce")
+        buf.write("\u01cf\3\2\2\2\u01cf\u01d0\7\25\2\2\u01d0\u01f4\7\31\2")
+        buf.write("\2\u01d1\u01d2\7\67\2\2\u01d2\u01d3\7\24\2\2\u01d3\u01d4")
+        buf.write("\7;\2\2\u01d4\u01d5\7\30\2\2\u01d5\u01d6\7;\2\2\u01d6")
+        buf.write("\u01d7\7\25\2\2\u01d7\u01f4\7\31\2\2\u01d8\u01d9\78\2")
+        buf.write("\2\u01d9\u01da\7\24\2\2\u01da\u01db\7)\2\2\u01db\u01dc")
+        buf.write("\7\30\2\2\u01dc\u01dd\7)\2\2\u01dd\u01de\7\30\2\2\u01de")
+        buf.write("\u01df\7\'\2\2\u01df\u01e0\7\25\2\2\u01e0\u01f4\7\31\2")
+        buf.write("\2\u01e1\u01e2\79\2\2\u01e2\u01e3\7\24\2\2\u01e3\u01e4")
+        buf.write("\7;\2\2\u01e4\u01e5\7\30\2\2\u01e5\u01e6\5*\26\2\u01e6")
+        buf.write("\u01e7\7\30\2\2\u01e7\u01e8\5*\26\2\u01e8\u01e9\7\25\2")
+        buf.write("\2\u01e9\u01ea\7\31\2\2\u01ea\u01f4\3\2\2\2\u01eb\u01ec")
+        buf.write("\7:\2\2\u01ec\u01ed\7\24\2\2\u01ed\u01ee\7;\2\2\u01ee")
+        buf.write("\u01ef\7\30\2\2\u01ef\u01f0\5*\26\2\u01f0\u01f1\7\25\2")
+        buf.write("\2\u01f1\u01f2\7\31\2\2\u01f2\u01f4\3\2\2\2\u01f3\u01c3")
+        buf.write("\3\2\2\2\u01f3\u01c8\3\2\2\2\u01f3\u01d1\3\2\2\2\u01f3")
+        buf.write("\u01d8\3\2\2\2\u01f3\u01e1\3\2\2\2\u01f3\u01eb\3\2\2\2")
+        buf.write("\u01f4\63\3\2\2\2)8=KS\\nx\u0080\u0085\u008a\u009a\u00a5")
+        buf.write("\u00ae\u00b8\u00c7\u00db\u00e1\u00f6\u0101\u0108\u0111")
+        buf.write("\u0118\u0128\u012e\u0136\u013d\u0146\u014d\u0159\u015e")
+        buf.write("\u016f\u0172\u0187\u0195\u01ad\u01b0\u01bd\u01cd\u01f3")
         return buf.getvalue()
 
 
@@ -1390,10 +1390,6 @@ class LilaParser ( Parser ):
             return self.getTypedRuleContext(LilaParser.ExpresionContext,0)
 
 
-        def arr(self):
-            return self.getTypedRuleContext(LilaParser.ArrContext,0)
-
-
         def OPEN_BRACKET(self, i:int=None):
             if i is None:
                 return self.getTokens(LilaParser.OPEN_BRACKET)
@@ -1476,22 +1472,11 @@ class LilaParser ( Parser ):
             self.state = 225
             localctx._EQUAL = self.match(LilaParser.EQUAL)
             gen.addOperator((None if localctx._EQUAL is None else localctx._EQUAL.text))
-            self.state = 231
-            self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [LilaParser.OPEN_PARENTHESIS, LilaParser.PLUS, LilaParser.MINUS, LilaParser.CTE_INT, LilaParser.CTE_STRING, LilaParser.CTE_F, LilaParser.CTE_BOOL, LilaParser.ID]:
-                self.state = 227
-                self.expresion()
-                gen.assign()
-                pass
-            elif token in [LilaParser.OPEN_BRACKET]:
-                self.state = 230
-                self.arr()
-                pass
-            else:
-                raise NoViableAltException(self)
 
-            self.state = 233
+            self.state = 227
+            self.expresion()
+            gen.assign()
+            self.state = 230
             self.match(LilaParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -1538,13 +1523,13 @@ class LilaParser ( Parser ):
         self.enterRule(localctx, 26, self.RULE_sreturn)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 235
+            self.state = 232
             self.match(LilaParser.RETURN)
-            self.state = 236
+            self.state = 233
             self.expresion()
             Semantic.checkReturn(gen.top_variables())
             gen.func_return()
-            self.state = 239
+            self.state = 236
             self.match(LilaParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -1607,49 +1592,49 @@ class LilaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 241
+            self.state = 238
             self.match(LilaParser.OPEN_BRACKET)
-            self.state = 242
+            self.state = 239
             self.var_cte()
-            self.state = 247
+            self.state = 244
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==LilaParser.COMMA:
-                self.state = 243
+                self.state = 240
                 self.match(LilaParser.COMMA)
-                self.state = 244
+                self.state = 241
                 self.var_cte()
-                self.state = 249
+                self.state = 246
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 250
+            self.state = 247
             self.match(LilaParser.CLOSE_BRACKET)
-            self.state = 265
+            self.state = 262
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==LilaParser.COMMA:
-                self.state = 251
+                self.state = 248
                 self.match(LilaParser.COMMA)
-                self.state = 252
+                self.state = 249
                 self.match(LilaParser.OPEN_BRACKET)
-                self.state = 253
+                self.state = 250
                 self.var_cte()
-                self.state = 258
+                self.state = 255
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==LilaParser.COMMA:
-                    self.state = 254
+                    self.state = 251
                     self.match(LilaParser.COMMA)
-                    self.state = 255
+                    self.state = 252
                     self.var_cte()
-                    self.state = 260
+                    self.state = 257
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 261
+                self.state = 258
                 self.match(LilaParser.CLOSE_BRACKET)
-                self.state = 267
+                self.state = 264
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1708,33 +1693,33 @@ class LilaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 268
+            self.state = 265
             self.comparacion()
             gen.exitExpresion()
-            self.state = 281
+            self.state = 278
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==LilaParser.AND or _la==LilaParser.OR:
-                self.state = 274
+                self.state = 271
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [LilaParser.AND]:
-                    self.state = 270
+                    self.state = 267
                     self.match(LilaParser.AND)
                     gen.addOperator('AND')
                     pass
                 elif token in [LilaParser.OR]:
-                    self.state = 272
+                    self.state = 269
                     self.match(LilaParser.OR)
                     gen.addOperator('OR')
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 276
+                self.state = 273
                 self.comparacion()
                 gen.exitExpresion()
-                self.state = 283
+                self.state = 280
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1797,57 +1782,57 @@ class LilaParser ( Parser ):
         localctx = LilaParser.ComparacionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_comparacion)
         try:
-            self.state = 303
+            self.state = 300
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,24,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,23,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 284
+                self.state = 281
                 self.exp()
-                self.state = 297
+                self.state = 294
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [LilaParser.GREATER_THAN]:
-                    self.state = 285
+                    self.state = 282
                     self.match(LilaParser.GREATER_THAN)
                     gen.addOperator('>')
                     pass
                 elif token in [LilaParser.LESS_THAN]:
-                    self.state = 287
+                    self.state = 284
                     self.match(LilaParser.LESS_THAN)
                     gen.addOperator('<')
                     pass
                 elif token in [LilaParser.NOTEQUAL]:
-                    self.state = 289
+                    self.state = 286
                     self.match(LilaParser.NOTEQUAL)
                     gen.addOperator('!=')
                     pass
                 elif token in [LilaParser.EQUALITY]:
-                    self.state = 291
+                    self.state = 288
                     self.match(LilaParser.EQUALITY)
                     gen.addOperator('==')
                     pass
                 elif token in [LilaParser.GREATER_THAN_EQUAL]:
-                    self.state = 293
+                    self.state = 290
                     self.match(LilaParser.GREATER_THAN_EQUAL)
                     gen.addOperator('>=')
                     pass
                 elif token in [LilaParser.LESS_THAN_EQUAL]:
-                    self.state = 295
+                    self.state = 292
                     self.match(LilaParser.LESS_THAN_EQUAL)
                     gen.addOperator('<=')
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 299
+                self.state = 296
                 self.exp()
                 gen.exitComparacion()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 302
+                self.state = 299
                 self.exp()
                 pass
 
@@ -1907,33 +1892,33 @@ class LilaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 305
+            self.state = 302
             self.termino()
             gen.exitExp()
-            self.state = 318
+            self.state = 315
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==LilaParser.PLUS or _la==LilaParser.MINUS:
-                self.state = 311
+                self.state = 308
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [LilaParser.PLUS]:
-                    self.state = 307
+                    self.state = 304
                     self.match(LilaParser.PLUS)
                     gen.addOperator('+')
                     pass
                 elif token in [LilaParser.MINUS]:
-                    self.state = 309
+                    self.state = 306
                     self.match(LilaParser.MINUS)
                     gen.addOperator('-')
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 313
+                self.state = 310
                 self.termino()
                 gen.exitExp()
-                self.state = 320
+                self.state = 317
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1992,33 +1977,33 @@ class LilaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 321
+            self.state = 318
             self.factor()
             gen.exitTermino()
-            self.state = 334
+            self.state = 331
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==LilaParser.MULTIPLICATION or _la==LilaParser.DIVISION:
-                self.state = 327
+                self.state = 324
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [LilaParser.MULTIPLICATION]:
-                    self.state = 323
+                    self.state = 320
                     self.match(LilaParser.MULTIPLICATION)
                     gen.addOperator('*')
                     pass
                 elif token in [LilaParser.DIVISION]:
-                    self.state = 325
+                    self.state = 322
                     self.match(LilaParser.DIVISION)
                     gen.addOperator('/')
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 329
+                self.state = 326
                 self.factor()
                 gen.exitTermino()
-                self.state = 336
+                self.state = 333
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2077,31 +2062,31 @@ class LilaParser ( Parser ):
         localctx = LilaParser.FactorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_factor)
         try:
-            self.state = 351
+            self.state = 348
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [LilaParser.OPEN_PARENTHESIS]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 337
+                self.state = 334
                 self.match(LilaParser.OPEN_PARENTHESIS)
                 gen.addOperator('(')
-                self.state = 339
+                self.state = 336
                 self.expresion()
-                self.state = 340
+                self.state = 337
                 self.match(LilaParser.CLOSE_PARENTHESIS)
                 gen.finParentesis()
                 pass
             elif token in [LilaParser.PLUS, LilaParser.MINUS, LilaParser.CTE_INT, LilaParser.CTE_STRING, LilaParser.CTE_F, LilaParser.CTE_BOOL, LilaParser.ID]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 346
+                self.state = 343
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [LilaParser.PLUS]:
-                    self.state = 343
+                    self.state = 340
                     self.match(LilaParser.PLUS)
                     pass
                 elif token in [LilaParser.MINUS]:
-                    self.state = 344
+                    self.state = 341
                     localctx._MINUS = self.match(LilaParser.MINUS)
                     gen.isNegative()
                     pass
@@ -2109,7 +2094,7 @@ class LilaParser ( Parser ):
                     pass
                 else:
                     pass
-                self.state = 348
+                self.state = 345
                 self.var_cte()
                 gen.makeNegative((None if localctx._MINUS is None else localctx._MINUS.text))
                 pass
@@ -2209,44 +2194,44 @@ class LilaParser ( Parser ):
         self.enterRule(localctx, 40, self.RULE_var_cte)
         self._la = 0 # Token type
         try:
-            self.state = 401
+            self.state = 403
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,34,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,33,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 353
+                self.state = 350
                 localctx._ID = self.match(LilaParser.ID)
-                self.state = 354
+                self.state = 351
                 self.match(LilaParser.OPEN_PARENTHESIS)
                 gen.incoming_Params()
                 Semantic.look_for_function((None if localctx._ID is None else localctx._ID.text))
                 Semantic.isVoid((None if localctx._ID is None else localctx._ID.text), False)
                 gen.era((None if localctx._ID is None else localctx._ID.text))
                 gen.addOperator('(')
-                self.state = 371
+                self.state = 368
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LilaParser.OPEN_PARENTHESIS) | (1 << LilaParser.PLUS) | (1 << LilaParser.MINUS) | (1 << LilaParser.CTE_INT) | (1 << LilaParser.CTE_STRING) | (1 << LilaParser.CTE_F) | (1 << LilaParser.CTE_BOOL) | (1 << LilaParser.ID))) != 0):
-                    self.state = 360
+                    self.state = 357
                     self.expresion()
                     gen.params()
-                    self.state = 368
+                    self.state = 365
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     while _la==LilaParser.COMMA:
-                        self.state = 362
+                        self.state = 359
                         self.match(LilaParser.COMMA)
-                        self.state = 363
+                        self.state = 360
                         self.expresion()
                         gen.params()
-                        self.state = 370
+                        self.state = 367
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
 
 
 
                 gen.goSub((None if localctx._ID is None else localctx._ID.text))
-                self.state = 374
+                self.state = 371
                 self.match(LilaParser.CLOSE_PARENTHESIS)
                 gen.check_params((None if localctx._ID is None else localctx._ID.text))
                 gen.finParentesis()
@@ -2255,60 +2240,65 @@ class LilaParser ( Parser ):
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 378
+                self.state = 375
                 localctx._ID = self.match(LilaParser.ID)
                 gen.addVar(Semantic.look_for_variable((None if localctx._ID is None else localctx._ID.text)))
-                {gen.addOperator('(')}
-                self.state = 385 
+                pass
+
+            elif la_ == 3:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 377
+                localctx._ID = self.match(LilaParser.ID)
+                gen.addVar(Semantic.look_for_variable((None if localctx._ID is None else localctx._ID.text)))
+                gen.addOperator('(')
+                gen.access_array_begin()
+                self.state = 387 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
                     self.state = 381
                     self.match(LilaParser.OPEN_BRACKET)
-                    self.state = 382
-                    self.exp()
+                    Semantic.check_var_dim((None if localctx._ID is None else localctx._ID.text))
                     self.state = 383
+                    self.exp()
+                    gen.VER((None if localctx._ID is None else localctx._ID.text))
+                    self.state = 385
                     self.match(LilaParser.CLOSE_BRACKET)
-                    self.state = 387 
+                    self.state = 389 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==LilaParser.OPEN_BRACKET):
                         break
 
+                Semantic.check_dims((None if localctx._ID is None else localctx._ID.text))
+                gen.access_array_end((None if localctx._ID is None else localctx._ID.text))
                 gen.finParentesis()
-                pass
-
-            elif la_ == 3:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 391
-                localctx._ID = self.match(LilaParser.ID)
-                gen.addVar(Semantic.look_for_variable((None if localctx._ID is None else localctx._ID.text)))
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 393
+                self.state = 395
                 localctx._CTE_INT = self.match(LilaParser.CTE_INT)
                 gen.addConst(Operand(None,'int',(None if localctx._CTE_INT is None else localctx._CTE_INT.text)))
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 395
+                self.state = 397
                 localctx._CTE_F = self.match(LilaParser.CTE_F)
                 gen.addConst(Operand(None,'num',(None if localctx._CTE_F is None else localctx._CTE_F.text)))
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 397
+                self.state = 399
                 localctx._CTE_STRING = self.match(LilaParser.CTE_STRING)
                 gen.addConst(Operand(None,'text',(None if localctx._CTE_STRING is None else localctx._CTE_STRING.text)))
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
-                self.state = 399
+                self.state = 401
                 localctx._CTE_BOOL = self.match(LilaParser.CTE_BOOL)
                 gen.addConst(Operand(None,'bool',(None if localctx._CTE_BOOL is None else localctx._CTE_BOOL.text)))
                 pass
@@ -2360,13 +2350,13 @@ class LilaParser ( Parser ):
         self.enterRule(localctx, 42, self.RULE_swhile)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 403
+            self.state = 405
             self.match(LilaParser.WHILE)
             gen.swhile()
-            self.state = 405
+            self.state = 407
             self.expresion()
             gen.checkExpresion()
-            self.state = 407
+            self.state = 409
             self.bloque()
             gen.whileEnd()
         except RecognitionException as re:
@@ -2431,43 +2421,43 @@ class LilaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 410
+            self.state = 412
             localctx._ID = self.match(LilaParser.ID)
-            self.state = 411
+            self.state = 413
             self.match(LilaParser.OPEN_PARENTHESIS)
             gen.incoming_Params()
             Semantic.look_for_function((None if localctx._ID is None else localctx._ID.text))
             Semantic.isVoid((None if localctx._ID is None else localctx._ID.text), True)
             gen.era((None if localctx._ID is None else localctx._ID.text))
             gen.addOperator('(')
-            self.state = 428
+            self.state = 430
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LilaParser.OPEN_PARENTHESIS) | (1 << LilaParser.PLUS) | (1 << LilaParser.MINUS) | (1 << LilaParser.CTE_INT) | (1 << LilaParser.CTE_STRING) | (1 << LilaParser.CTE_F) | (1 << LilaParser.CTE_BOOL) | (1 << LilaParser.ID))) != 0):
-                self.state = 417
+                self.state = 419
                 self.expresion()
                 gen.params()
-                self.state = 425
+                self.state = 427
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==LilaParser.COMMA:
-                    self.state = 419
+                    self.state = 421
                     self.match(LilaParser.COMMA)
-                    self.state = 420
+                    self.state = 422
                     self.expresion()
                     gen.params()
-                    self.state = 427
+                    self.state = 429
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
 
 
             gen.goSub((None if localctx._ID is None else localctx._ID.text))
-            self.state = 431
+            self.state = 433
             self.match(LilaParser.CLOSE_PARENTHESIS)
             gen.check_params((None if localctx._ID is None else localctx._ID.text))
             gen.finParentesis()
-            self.state = 434
+            self.state = 436
             self.match(LilaParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -2528,26 +2518,26 @@ class LilaParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 436
-            self.match(LilaParser.GETINPUT)
-            self.state = 437
-            self.match(LilaParser.OPEN_PARENTHESIS)
             self.state = 438
+            self.match(LilaParser.GETINPUT)
+            self.state = 439
+            self.match(LilaParser.OPEN_PARENTHESIS)
+            self.state = 440
             localctx._ID = self.match(LilaParser.ID)
-            self.state = 441
+            self.state = 443
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==LilaParser.COMMA:
-                self.state = 439
+                self.state = 441
                 self.match(LilaParser.COMMA)
-                self.state = 440
+                self.state = 442
                 localctx._CTE_STRING = self.match(LilaParser.CTE_STRING)
 
 
             gen.getinput(Semantic.look_for_variable((None if localctx._ID is None else localctx._ID.text)), (None if localctx._CTE_STRING is None else localctx._CTE_STRING.text))
-            self.state = 444
+            self.state = 446
             self.match(LilaParser.CLOSE_PARENTHESIS)
-            self.state = 445
+            self.state = 447
             self.match(LilaParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -2669,124 +2659,124 @@ class LilaParser ( Parser ):
         self.enterRule(localctx, 48, self.RULE_especiales)
         self._la = 0 # Token type
         try:
-            self.state = 495
+            self.state = 497
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [LilaParser.GETOUTLIERS, LilaParser.REMOVEOUTLIERS, LilaParser.TELLMEWHATTOUSE, LilaParser.PRINTMEASURES, LilaParser.MEAN, LilaParser.MEDIAN, LilaParser.MODE, LilaParser.RANGE, LilaParser.MIN, LilaParser.MAX, LilaParser.DESESTANDAR]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 447
+                self.state = 449
                 _la = self._input.LA(1)
                 if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LilaParser.GETOUTLIERS) | (1 << LilaParser.REMOVEOUTLIERS) | (1 << LilaParser.TELLMEWHATTOUSE) | (1 << LilaParser.PRINTMEASURES) | (1 << LilaParser.MEAN) | (1 << LilaParser.MEDIAN) | (1 << LilaParser.MODE) | (1 << LilaParser.RANGE) | (1 << LilaParser.MIN) | (1 << LilaParser.MAX) | (1 << LilaParser.DESESTANDAR))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 448
-                self.match(LilaParser.OPEN_PARENTHESIS)
-                self.state = 449
-                self.match(LilaParser.ID)
                 self.state = 450
-                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 451
+                self.match(LilaParser.ID)
+                self.state = 452
+                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.state = 453
                 self.match(LilaParser.SEMICOLON)
                 pass
             elif token in [LilaParser.QUICKSHOW]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 452
-                self.match(LilaParser.QUICKSHOW)
-                self.state = 453
-                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 454
+                self.match(LilaParser.QUICKSHOW)
+                self.state = 455
+                self.match(LilaParser.OPEN_PARENTHESIS)
+                self.state = 456
                 self.match(LilaParser.ID)
-                self.state = 457
+                self.state = 459
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==LilaParser.COMMA:
-                    self.state = 455
+                    self.state = 457
                     self.match(LilaParser.COMMA)
-                    self.state = 456
+                    self.state = 458
                     self.match(LilaParser.ID)
 
 
-                self.state = 459
+                self.state = 461
                 self.match(LilaParser.CLOSE_PARENTHESIS)
-                self.state = 460
+                self.state = 462
                 self.match(LilaParser.SEMICOLON)
                 pass
             elif token in [LilaParser.PEARSONCORRELATION]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 461
-                self.match(LilaParser.PEARSONCORRELATION)
-                self.state = 462
-                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 463
-                self.match(LilaParser.ID)
+                self.match(LilaParser.PEARSONCORRELATION)
                 self.state = 464
-                self.match(LilaParser.COMMA)
+                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 465
                 self.match(LilaParser.ID)
                 self.state = 466
-                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.match(LilaParser.COMMA)
                 self.state = 467
+                self.match(LilaParser.ID)
+                self.state = 468
+                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.state = 469
                 self.match(LilaParser.SEMICOLON)
                 pass
             elif token in [LilaParser.NORMALDISTRIBUTION]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 468
-                self.match(LilaParser.NORMALDISTRIBUTION)
-                self.state = 469
-                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 470
-                self.match(LilaParser.CTE_F)
+                self.match(LilaParser.NORMALDISTRIBUTION)
                 self.state = 471
-                self.match(LilaParser.COMMA)
+                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 472
                 self.match(LilaParser.CTE_F)
                 self.state = 473
                 self.match(LilaParser.COMMA)
                 self.state = 474
-                self.match(LilaParser.CTE_INT)
+                self.match(LilaParser.CTE_F)
                 self.state = 475
-                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.match(LilaParser.COMMA)
                 self.state = 476
+                self.match(LilaParser.CTE_INT)
+                self.state = 477
+                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.state = 478
                 self.match(LilaParser.SEMICOLON)
                 pass
             elif token in [LilaParser.FILLVALUE]:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 477
-                self.match(LilaParser.FILLVALUE)
-                self.state = 478
-                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 479
-                self.match(LilaParser.ID)
+                self.match(LilaParser.FILLVALUE)
                 self.state = 480
-                self.match(LilaParser.COMMA)
+                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 481
-                self.var_cte()
+                self.match(LilaParser.ID)
                 self.state = 482
                 self.match(LilaParser.COMMA)
                 self.state = 483
                 self.var_cte()
                 self.state = 484
-                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.match(LilaParser.COMMA)
                 self.state = 485
+                self.var_cte()
+                self.state = 486
+                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.state = 487
                 self.match(LilaParser.SEMICOLON)
                 pass
             elif token in [LilaParser.REMOVEVALUE]:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 487
-                self.match(LilaParser.REMOVEVALUE)
-                self.state = 488
-                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 489
-                self.match(LilaParser.ID)
+                self.match(LilaParser.REMOVEVALUE)
                 self.state = 490
-                self.match(LilaParser.COMMA)
+                self.match(LilaParser.OPEN_PARENTHESIS)
                 self.state = 491
-                self.var_cte()
+                self.match(LilaParser.ID)
                 self.state = 492
-                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.match(LilaParser.COMMA)
                 self.state = 493
+                self.var_cte()
+                self.state = 494
+                self.match(LilaParser.CLOSE_PARENTHESIS)
+                self.state = 495
                 self.match(LilaParser.SEMICOLON)
                 pass
             else:

@@ -310,6 +310,7 @@ class IntermediateGenerator:
             aux = self.stack_variables.pop()
             temp = Operand('t'+str(self.var_counter),'int',None)
             temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+            self.var_counter += 1
             m = Operand('m','int',dim_struct.m)
             m.memory = VirtualAddress.constants_table[str(int(dim_struct.m))][1]
             self.Quadruples.append(Quadruple('*', aux, m, temp))
@@ -320,6 +321,7 @@ class IntermediateGenerator:
             aux1 = self.stack_variables.pop()
             temp = Operand('t'+str(self.var_counter),'int',None)
             temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+            self.var_counter += 1
             self.Quadruples.append(Quadruple('+',aux1,aux2,temp))
             self.stack_variables.append(temp)
 

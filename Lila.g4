@@ -63,7 +63,7 @@ display
     ;
     
 asignacion
-    : (ID {gen.addVar(Semantic.look_for_variable($ID.text))} | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} {gen.access_array_begin()} (OPEN_BRACKET {Semantic.check_var_dim($ID.text)} exp {gen.VER($ID.text)} CLOSE_BRACKET)+ {Semantic.check_dims($ID.text)}{gen.access_array_end($ID.text)} {gen.finParentesis()}) EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}| arr) SEMICOLON 
+    : (ID {gen.addVar(Semantic.look_for_variable($ID.text))} | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} {gen.access_array_begin()} (OPEN_BRACKET {Semantic.check_var_dim($ID.text)} exp {gen.VER($ID.text)} CLOSE_BRACKET)+ {Semantic.check_dims($ID.text)}{gen.access_array_end($ID.text)} {gen.finParentesis()}) EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}) SEMICOLON 
     ;
 
 sreturn
@@ -98,8 +98,8 @@ factor
 
 var_cte
     : ID OPEN_PARENTHESIS {gen.incoming_Params()} {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.check_params($ID.text)} {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
-    | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {{gen.addOperator('(')}} (OPEN_BRACKET exp CLOSE_BRACKET)+ {gen.finParentesis()}
     | ID {gen.addVar(Semantic.look_for_variable($ID.text))}
+    | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} {gen.access_array_begin()} ( OPEN_BRACKET  {Semantic.check_var_dim($ID.text)}  exp  {gen.VER($ID.text)}  CLOSE_BRACKET)+  {Semantic.check_dims($ID.text)}{gen.access_array_end($ID.text)} {gen.finParentesis()}  
     | CTE_INT {gen.addConst(Operand(None,'int',$CTE_INT.text))}
     | CTE_F {gen.addConst(Operand(None,'num',$CTE_F.text))}
     | CTE_STRING {gen.addConst(Operand(None,'text',$CTE_STRING.text))}
@@ -198,6 +198,6 @@ NORMALDISTRIBUTION  : 'normalDistribution';
 FILLVALUE   : 'fillValue';
 REMOVEVALUE : 'removeValue';
 
-ID : [a-x]+[a-zA-Z0-9]* ;
+ID : [a-z]+[a-zA-Z0-9]* ;
 WS : [ \t\r\n]+ -> skip ; 
 Comment : '//' ~[\r\n]* -> skip ;

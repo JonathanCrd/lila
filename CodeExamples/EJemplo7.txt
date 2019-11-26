@@ -1,16 +1,12 @@
 lila arreglos
 
 var int[2][2] c;
-num a;
+int a;
 
 main
 {
-    a = 1;
     c[0][0] = 818;
-    c[0][1] = 819;
-    c[1][0] = 820;
-    c[a][0] = 867;
-
-    display(c[0][0]);
-    a = 10.0 + 20.0;
+    a = c[0][0];
+    display(a);
 }
+
