@@ -98,6 +98,9 @@ class IntermediateGenerator:
         self.var_counter = 1
 
     def exitExpresion(self):
+        '''
+        Genera el cuadruplo con el operador y los operandos en las pilas.
+        '''
         if self.top_operators() == 'AND' or self.top_operators() == 'OR':
             op = self.stack_operators.pop()
             opnd_Der = self.stack_variables.pop()
@@ -117,6 +120,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
             
     def exitComparacion(self):
+        '''
+        Generates the quadruple with the operator in the stack.
+        '''
         if self.top_operators() == '>' or self.top_operators() == '<' or self.top_operators() == '!=' or self.top_operators() == '==' or self.top_operators() == '>=' or self.top_operators() == '<=':
             op = self.stack_operators.pop()
             opnd_Der = self.stack_variables.pop()
@@ -135,6 +141,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
 
     def exitExp(self):
+        '''
+        Generates the arithmetic quadruple.
+        '''
         if self.top_operators() == '+' or self.top_operators() == '-':
             op = self.stack_operators.pop()
             opnd_Der = self.stack_variables.pop()
@@ -250,6 +259,9 @@ class IntermediateGenerator:
         self.params_reader.append([])
 
     def endProc(self):
+        '''
+        Generates ENDPROC and reset locals.
+        '''
         VirtualAddress.resetLocals()
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
 
