@@ -119,24 +119,22 @@ getinput
     ;
 
 especiales
-    :   MEAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MEAN')} CLOSE_PARENTHESIS SEMICOLON
-    |   MEDIAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MEDIAN')} CLOSE_PARENTHESIS SEMICOLON
-    |   MODE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MODE')} CLOSE_PARENTHESIS SEMICOLON
-    |   MIN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MIN')} CLOSE_PARENTHESIS SEMICOLON
-    |   MAX OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MAX')} CLOSE_PARENTHESIS SEMICOLON
-    |   RANGE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'RANGE')} CLOSE_PARENTHESIS SEMICOLON
-    |   DESESTANDAR OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'DESESTANDAR')} CLOSE_PARENTHESIS SEMICOLON
-    |   PRINTMEASURES OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'PRINTMEASURES')} CLOSE_PARENTHESIS SEMICOLON
-    |   GETOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'GETOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
-    |   REMOVEOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'REMOVEOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
-    |   FILLVALUE OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} COMMA var_cte COMMA var_cte {gen.q_fill_value($ID.text,'FILLVALUE')} CLOSE_PARENTHESIS SEMICOLON
-    |   (  
-        | TELLMEWHATTOUSE      
-        ) OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} CLOSE_PARENTHESIS SEMICOLON
+    : MEAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MEAN')} CLOSE_PARENTHESIS SEMICOLON
+    | MEDIAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MEDIAN')} CLOSE_PARENTHESIS SEMICOLON
+    | MODE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MODE')} CLOSE_PARENTHESIS SEMICOLON
+    | MIN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MIN')} CLOSE_PARENTHESIS SEMICOLON
+    | MAX OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MAX')} CLOSE_PARENTHESIS SEMICOLON
+    | RANGE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'RANGE')} CLOSE_PARENTHESIS SEMICOLON
+    | DESESTANDAR OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'DESESTANDAR')} CLOSE_PARENTHESIS SEMICOLON
+    | PRINTMEASURES OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'PRINTMEASURES')} CLOSE_PARENTHESIS SEMICOLON
+    | GETOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'GETOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
+    | REMOVEOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'REMOVEOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
+    | FILLVALUE OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} COMMA var_cte COMMA var_cte {gen.q_fill_value($ID.text,'FILLVALUE')} CLOSE_PARENTHESIS SEMICOLON
+    | REMOVEVALUE OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} COMMA var_cte {gen.q_remove_value($ID.text,'REMOVEVALUE')} CLOSE_PARENTHESIS SEMICOLON
+    | TELLMEWHATTOUSE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} CLOSE_PARENTHESIS SEMICOLON
     | QUICKSHOW OPEN_PARENTHESIS ID (COMMA ID)? CLOSE_PARENTHESIS SEMICOLON
     | PEARSONCORRELATION OPEN_PARENTHESIS ID COMMA ID CLOSE_PARENTHESIS SEMICOLON
     | NORMALDISTRIBUTION OPEN_PARENTHESIS CTE_F COMMA CTE_F COMMA CTE_INT CLOSE_PARENTHESIS SEMICOLON
-    | REMOVEVALUE OPEN_PARENTHESIS ID COMMA var_cte CLOSE_PARENTHESIS SEMICOLON
     ;
 
 //TOKENS 

@@ -234,6 +234,8 @@ class VirtualMachine:
                 self.q_removeOutliers()
             elif (quadruple.operator == 'FILLVALUE'):
                 self.q_fillValue()
+            elif (quadruple.operator == 'REMOVEVALUE'):
+                self.q_removeValue()
             elif (quadruple.operator == 'END'):
                 pass
             else:
@@ -542,16 +544,9 @@ class VirtualMachine:
         '''
         Print the measures of an array. 
         '''
-        array_temp = []
-        self.pointer_stack[-1] += 1
+        array_temp = self.read_array()
         quadruple = self.quadruples[self.pointer_stack[-1]]
         base_address = quadruple.left
-        size = quadruple.left + quadruple.right
-
-        for x in range(base_address,size+1):
-            temp = self.memory.read(x)
-            if(temp is not None):
-                array_temp.append(temp)
                 
         outlier_datapoints = self.detect_outlier(array_temp)
         for x in array_temp:
@@ -571,20 +566,32 @@ class VirtualMachine:
         valToReplace = self.memory.read(valToReplace)
         replacement = self.memory.read(replacement)
 
-        array_temp = []
-        self.pointer_stack[-1] += 1
+        array_temp = self.read_array()
         quadruple = self.quadruples[self.pointer_stack[-1]]
         base_address = quadruple.left
-        size = quadruple.left + quadruple.right
-
-        for x in range(base_address,size+1):
-            temp = self.memory.read(x)
-            if(temp is not None):
-                array_temp.append(temp)
                 
         for x in array_temp:
             if x == valToReplace:
                 x_address = base_address + array_temp.index(x)
                 array_temp[array_temp.index(x)] = replacement
                 self.memory.write(x_address,replacement)
+        print(array_temp)
+
+    def q_removeValue(self):
+        '''
+        Print the measures of an array. 
+        '''
+        valToReplace = self.quadruples[self.pointer_stack[-1]].left.memory
+
+        valToReplace = self.memory.read(valToReplace)
+
+        array_temp = self.read_array()
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+                
+        for x in array_temp:
+            if x == valToReplace:
+                x_address = base_address + array_temp.index(x)
+                array_temp[array_temp.index(x)] = None
+                self.memory.write(x_address,None)
         print(array_temp)

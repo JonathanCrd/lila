@@ -359,6 +359,16 @@ class IntermediateGenerator:
             self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
         else:
             raise TypeError("All parameters should be of the same type")
+
+    def q_remove_value(self,param_name:str,Operator:str):
+        varToRemove = self.stack_variables.pop()
+        param = Semantic.look_for_variable(param_name)
+
+        if(varToRemove.v_type == param.v_type):
+            self.Quadruples.append(Quadruple(Operator, varToRemove, None, None))
+            self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
+        else:
+            raise TypeError("All parameters should be of the same type")
         
 
     def test_final(self):

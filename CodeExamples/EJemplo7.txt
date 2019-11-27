@@ -1,6 +1,6 @@
 lila arreglos
 
-var int[2][2] c, d;
+var int c, d;
 num[10] e;
 text[3] a;
 
@@ -27,7 +27,11 @@ main
     a[1] = "jonathan";
     a[2] = "villarreal";
 
-    fillValue(a, "villarreal", "cardenas");
+    d = 24 + 100;
     display(a[2]);
+    fillValue(a, "villarreal", "cardenas");
+    display(a[2], d);
+    removeValue(a,"cardenas");
+    display(a[2], d);
 }
 
