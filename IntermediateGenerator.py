@@ -417,38 +417,38 @@ class IntermediateGenerator:
 
     def test_final(self):
         pass
-        #i=1
-        #print("Quadruples length: ",len(self.Quadruples))
-        #print('=======')
-        #for item in self.Quadruples:
-        #   try:
-        #       print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value, item.left.memory,')','(',item.right.name, item.right.v_type, item.right.value,item.right.memory,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
-        #       i+=1
-        #   except:
-        #        try:
-        #            print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
-        #            i+=1
-        #        except:
-        #            try:
-        #                print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
-        #                i+=1
-        #            except:
-        #                try:
-        #                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,item.resultado,"]")
-        #                    i+=1
-        #                except:
-        #                    print(i,'[',item.operator,item.left,item.right,item.resultado,']')
-        #                    i+=1
-        #print('=======')
+        i=1
+        print("Quadruples length: ",len(self.Quadruples))
+        print('=======')
+        for item in self.Quadruples:
+           try:
+               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value, item.left.memory,')','(',item.right.name, item.right.v_type, item.right.value,item.right.memory,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
+               i+=1
+           except:
+                try:
+                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
+                    i+=1
+                except:
+                    try:
+                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
+                        i+=1
+                    except:
+                        try:
+                            print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,item.resultado,"]")
+                            i+=1
+                        except:
+                            print(i,'[',item.operator,item.left,item.right,item.resultado,']')
+                            i+=1
+        print('=======')
+
+        print("STACK DE VARIABLES")
+        for variable in self.stack_variables:
+            print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
+
+        print("TABLA DE CONSTANTES")
+        print(VirtualAddress.constants_table)
 #
-        #print("STACK DE VARIABLES")
-        #for variable in self.stack_variables:
-        #    print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
-#
-        #print("TABLA DE CONSTANTES")
-        #print(VirtualAddress.constants_table)
-#
-        #print("DIR DE FUNCIONES")
-        #for x,y in Semantic.dirFunctions.items():
-        #    print(x, y.name, y.f_type, len(y.params), y.memory_required)
-        #
+        print("DIR DE FUNCIONES")
+        for x,y in Semantic.dirFunctions.items():
+            print(x, y.name, y.f_type, len(y.params), y.memory_required)
+        
