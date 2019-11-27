@@ -624,14 +624,19 @@ class VirtualMachine:
         array_right_type = None
 
         if next_quad.operator == 'QUICKPARAM':
-            self.pointer_stack[-1]=+1
+            self.pointer_stack[-1]+=1
             array_right = self.read_array()
             quadruple_right = self.quadruples[self.pointer_stack[-1]]
             array_right_type = quadruple_right.resultado
 
-        if not array_right and array_right_type != None:
+        if not array_right and array_right_type == None:
             if array_left_type == 'int' or array_left_type == 'num':
                 plt.boxplot(array_left)
+                plt.show()
+            elif array_left_type == 'text':
+                [print(*line) for line in array_left]
+        elif array_right and (array_right_type == 'int' or array_right_type == 'num') and (array_left_type == 'int' or array_left_type == 'num'):
+                plt.scatter(array_left,array_right)
                 plt.show()
 
 

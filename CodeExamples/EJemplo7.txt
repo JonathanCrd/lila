@@ -27,12 +27,6 @@ main
     a[1] = "jonathan";
     a[2] = "villarreal";
 
-    d = 24 + 100;
-    display(a[2]);
-    fillValue(a, "villarreal", "cardenas");
-    display(a[2], d);
-    removeValue(a,"cardenas");
-    display(a[2], d);
-    quickShow(e);
+    quickShow(e,e);
 }
 
