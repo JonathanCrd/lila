@@ -1,6 +1,7 @@
 lila arreglos
 
 var int[2][2] c, d;
+int[10] e;
 int a;
 
 func void imprime(int abeja){
@@ -21,8 +22,9 @@ main
     d[0][0] = 1;
     d[0][1] = 0;
 
-    a = c[0][0] + c[d[0][1]][d[0][d[0][1]]];
+    a = c[0][0] + c[d[0][1]][1];
     display(a);
     imprime(1);
+    mean(e);
 }
 
