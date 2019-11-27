@@ -24,7 +24,7 @@ main
     a[3] = "Perl";
     a[4] = "Scala";
 
-    tellMeWhatToUse(e);
+    pearsoneCorrelation(e,e);
     display("MUNECA");
 }
 

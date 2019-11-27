@@ -193,7 +193,7 @@ MIN     : 'min';
 MAX     : 'max';
 DESESTANDAR : 'desEstandar';
 QUICKSHOW   : 'quickShow';
-PEARSONCORRELATION  : 'pearsoneCorrelation';
+PEARSONCORRELATION  : 'pearsonCorrelation';
 NORMALDISTRIBUTION  : 'normalDistribution';
 FILLVALUE   : 'fillValue';
 REMOVEVALUE : 'removeValue';

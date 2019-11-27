@@ -52,7 +52,7 @@ public class LilaParser extends Parser {
 		"'+'", "'-'", "'*'", "'/'", "'<'", "'>'", "'!='", "'=='", "'='", "'<='", 
 		"'>='", "'AND'", "'OR'", null, null, null, null, "'getOutliers'", "'removeOutliers'", 
 		"'tellMeWhatToUse'", "'printMeasures'", "'mean'", "'median'", "'mode'", 
-		"'range'", "'min'", "'max'", "'desEstandar'", "'quickShow'", "'pearsoneCorrelation'", 
+		"'range'", "'min'", "'max'", "'desEstandar'", "'quickShow'", "'pearsonCorrelation'", 
 		"'normalDistribution'", "'fillValue'", "'removeValue'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {

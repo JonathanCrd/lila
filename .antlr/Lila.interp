@@ -52,7 +52,7 @@ null
 'max'
 'desEstandar'
 'quickShow'
-'pearsoneCorrelation'
+'pearsonCorrelation'
 'normalDistribution'
 'fillValue'
 'removeValue'

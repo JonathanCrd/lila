@@ -667,7 +667,20 @@ class VirtualMachine:
         array_right = self.read_array()
         #Calculate pearson correlation
         corr,_ = pearsonr(array_left,array_right)
-        print("Pearsons correlation: ", corr)
+        corr = 0.2
+        if corr == 0:
+            interpretation = " There is no correlation."
+        elif corr == 1:
+            interpretation = " There is a perfect positive correlation."
+        elif corr == -1:
+            interpretation = " There is a perfect negative correlation."
+        elif (abs(corr) >= 0.50) and (abs(corr) < 1):
+            interpretation = " There is strong correlation."
+        elif (abs(corr) >= 0.30) and (abs(corr) < 0.50):
+            interpretation = " There is moderate correlation."
+        elif (abs(corr) > 0) and (abs(corr) <= 0.29):
+            interpretation = " There is low correlation."
+        print("Pearsons correlation: ", corr, interpretation)
             
 
 
