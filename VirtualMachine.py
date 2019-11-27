@@ -621,6 +621,8 @@ class VirtualMachine:
 
         if len(outlier_datapoints) != 0:
             print("There are outliers, you should use the median: " +str(np.median(array_temp))+" instead of the mean: "+str(np.mean(array_temp)))
+        elif np.mean(array_temp) == np.median(array_temp):
+            print("You can use either, the mean: "+str(np.mean(array_temp))+" is equal to the median.")
         else:
             print("There aren't outliers, you may use the mean: "+str(np.mean(array_temp))+" instead of the median: "+str(np.median(array_temp)))
 

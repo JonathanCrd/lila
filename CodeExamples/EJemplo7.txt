@@ -12,11 +12,11 @@ func void imprime(int abeja){
 
 main
 {
-    e[0] = 10;
-    e[1] = 8;
-    e[2] = 6;
-    e[3] = 4;
-    e[4] = 12;
+    e[0] = 12;
+    e[1] = 12;
+    e[2] = 15;
+    e[3] = 15;
+    e[4] = 120;
 
     a[0] = "Python";
     a[1] = "C++";
@@ -24,7 +24,7 @@ main
     a[3] = "Perl";
     a[4] = "Scala";
 
-    pearsoneCorrelation(e,e);
+    tellMeWhatToUse(e);
     display("MUNECA");
 }
 
