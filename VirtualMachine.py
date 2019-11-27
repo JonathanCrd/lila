@@ -238,8 +238,10 @@ class VirtualMachine:
                 self.q_removeValue()
             elif (quadruple.operator == 'TELLMEWHATTOUSE'):
                 self.q_tellWhatToUse()
-            elif (quadruple.operator == 'QUICKSHOW'):
-                self.q_quickShow()
+            elif (quadruple.operator == 'QUICKSHOWONE'):
+                self.q_quickShowOne()
+            elif (quadruple.operator == 'QUICKSHOWTWO'):
+                self.q_quickShowTwo()
             elif (quadruple.operator == 'END'):
                 pass
             else:
@@ -614,31 +616,41 @@ class VirtualMachine:
         else:
             print("There aren't outliers, you may use the mean: "+str(np.mean(array_temp))+" instead of the median: "+str(np.median(array_temp)))
 
-    def q_quickShow(self):        
+    def q_quickShowOne(self):        
         array_left = self.read_array()
         quadruple_left = self.quadruples[self.pointer_stack[-1]]
         array_left_type = quadruple_left.resultado
- 
-        next_quad = self.quadruples[self.pointer_stack[-1]+1]
-        array_right = []
-        array_right_type = None
 
-        if next_quad.operator == 'QUICKPARAM':
-            self.pointer_stack[-1]+=1
-            array_right = self.read_array()
-            quadruple_right = self.quadruples[self.pointer_stack[-1]]
-            array_right_type = quadruple_right.resultado
-
-        if not array_right and array_right_type == None:
-            if array_left_type == 'int' or array_left_type == 'num':
+        if array_left_type == 'int' or array_left_type == 'num':
                 plt.boxplot(array_left)
                 plt.show()
-            elif array_left_type == 'text':
+        elif array_left_type == 'text':
                 [print(*line) for line in array_left]
-        elif array_right and (array_right_type == 'int' or array_right_type == 'num') and (array_left_type == 'int' or array_left_type == 'num'):
-                plt.scatter(array_left,array_right)
-                plt.show()
 
+    def q_quickShowTwo(self):        
+        array_left = self.read_array()
+        quadruple_left = self.quadruples[self.pointer_stack[-1]]
+        array_left_type = quadruple_left.resultado
+
+        array_right = self.read_array()
+        quadruple_right = self.quadruples[self.pointer_stack[-1]]
+        array_right_type = quadruple_right.resultado
+
+        if array_right and (array_right_type == 'int' or array_right_type == 'num') and (array_left_type == 'int' or array_left_type == 'num'):
+            plt.scatter(array_left,array_right)
+            plt.show()
+        elif array_right and array_right_type=='text' and (array_left_type == 'int' or array_left_type == 'num'):
+            y_pos = np.arange(len(array_right))
+            plt.bar(y_pos, array_left, align='center', alpha=0.5)
+            plt.xticks(y_pos, array_right)
+            plt.show()
+        elif array_left_type == 'text' and  (array_right_type == 'int' or array_right_type == 'num'):
+            x_pos = np.arange(len(array_left))
+            plt.barh(x_pos, array_right, align='center', alpha=0.5)
+            plt.yticks(x_pos, array_left)
+            plt.show()
+        else:
+            raise NotImplementedError("This combination doesn't create a graph")
 
         
         

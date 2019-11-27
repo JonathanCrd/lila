@@ -1,8 +1,8 @@
 lila arreglos
 
 var int c, d;
-num[10] e;
-text[3] a;
+num[5] e;
+text[5] a;
 
 func void imprime(int abeja){
     var text[2][2] mariposa;
@@ -12,21 +12,18 @@ func void imprime(int abeja){
 
 main
 {
-    e[0] = 1;
-    e[1] = 2;
-    e[2] = 3;
-    e[3] = 5;
-    e[4] = 5;
-    e[5] = 16;
-    e[6] = 7;
-    e[7] = 8;
-    e[8] = 9;
-    e[9] = 0;
+    e[0] = 10;
+    e[1] = 8;
+    e[2] = 6;
+    e[3] = 4;
+    e[4] = 12;
 
-    a[0] = "hola";
-    a[1] = "jonathan";
-    a[2] = "villarreal";
+    a[0] = "Python";
+    a[1] = "C++";
+    a[2] = "Java";
+    a[3] = "Perl";
+    a[4] = "Scala";
 
-    quickShow(e,e);
+    quickShow(e,a);
 }
 
