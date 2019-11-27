@@ -1,6 +1,6 @@
 lila arreglos
 
-int[15] grades, age;
+var int[15] grades, age;
 text[15] students;
 
 main
@@ -64,7 +64,7 @@ main
     mean(grades);
 
     // Now lets see who are the atypical grades
-    getoutliers(grades)
+    getOutliers(grades);
 
     // Lets see if there is a correlation between ages and grades
     pearsoneCorrelation(grades,age);
@@ -73,10 +73,10 @@ main
     fillValue(grades,99,100);
 
     // Hmm... now lets think what would happend if those atypical students were not present in the data
-    removeoutliers(grades);
+    removeOutliers(grades);
 
     // lets see now
-    printmeasures(grades);
+    printMeasures(grades);
 
 }
 
