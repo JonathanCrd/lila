@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 class Memory:
     def __init__(self,mem_declaration):
         self.memory_declaration = dict((v, k) for k, v in mem_declaration.items())
@@ -210,6 +213,8 @@ class VirtualMachine:
             elif (quadruple.operator == 'END'):
                 print('SE ACABO')
                 pass
+            elif (quadruple.operator == 'MEAN'):
+                self.q_mean()
             else:
                 pass
             
@@ -233,7 +238,6 @@ class VirtualMachine:
         upperLimit = self.quadruples[self.pointer_stack[-1]].resultado
         if (size < lowerLimit or size > upperLimit):
             raise IndexError("Index out of bounds.")
-
 
     def makeNegative(self):
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
@@ -400,5 +404,20 @@ class VirtualMachine:
         paramValue = self.memory.read(self.quadruples[index].left.memory)
         self.params_stack.append(paramValue)
 
+    def q_mean(self):
+        '''
+        Print the mean of an array. 
+        '''
+        print("YA ENTREEE")
+        #Get the array in the next quadruple and assign it to an actual array
+        array_temp = []
+        self.pointer_stack[-1] += 1
+        quadruple = self.quadruples[self.pointer_stack[-1]]
 
+        print(np.mean([1,2,3,4,5,6,7,8,9,10]))
+
+        arr = [1,2,3,4,None,6,None,8,9,10]
+        plt.plot(arr, color='#7a32c2', marker='o')
+        plt.show()
+        pass
         

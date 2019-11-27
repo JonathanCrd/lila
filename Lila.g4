@@ -119,11 +119,12 @@ getinput
     ;
 
 especiales
-    :   (GETOUTLIERS 
+    :   MEAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_mean($ID.text)} CLOSE_PARENTHESIS SEMICOLON
+    |   (
+        | GETOUTLIERS 
         | REMOVEOUTLIERS 
         | TELLMEWHATTOUSE 
         | PRINTMEASURES 
-        | MEAN 
         | MEDIAN 
         | MODE 
         | RANGE 
