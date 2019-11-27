@@ -94,7 +94,7 @@ class Memory:
         '''
         address_type, actual_location = self.address_translation(address)
         actual_location = actual_location + self.base_address[address_type][-1]
-        if actual_location in self.memory[address_type] and self.memory[address_type][actual_location] != None:
+        if actual_location in self.memory[address_type]:
             return self.memory[address_type][actual_location]
         else:
             raise MemoryError("Value not declared.")
@@ -212,9 +212,6 @@ class VirtualMachine:
                 self.sum_base()
             elif (quadruple.operator == 'VER'):
                 self.verify()
-            elif (quadruple.operator == 'END'):
-                print('SE ACABO')
-                pass
             elif (quadruple.operator == 'MEAN'):
                 self.q_mean()
             elif (quadruple.operator == 'MEDIAN'):
@@ -233,6 +230,11 @@ class VirtualMachine:
                 self.q_measures()
             elif (quadruple.operator == 'GETOUTLIERS'):
                 self.q_getOutliers()
+            elif (quadruple.operator == 'REMOVEOUTLIERS'):
+                self.q_removeOutliers()
+            elif (quadruple.operator == 'END'):
+                print('SE ACABO')
+                pass
             else:
                 pass
             
@@ -433,7 +435,9 @@ class VirtualMachine:
         size = quadruple.left + quadruple.right
 
         for x in range(base_address,size+1):
-            array_temp.append(self.memory.read(x))
+            temp = self.memory.read(x)
+            if(temp is not None):
+                array_temp.append(temp)
 
         return array_temp
 
@@ -505,21 +509,22 @@ class VirtualMachine:
         print("Range: ", rango)
         print("Standard deviation: ", stat.stdev(array_temp))
     
-    def detect_outlier(self,dataSet):
+    def detect_outlier(self,dataset):
         '''
-        This function calculates the z score for each of the data items.
-        An item is considered an outlier if the z score is greater than 3 standard devations.
+        This function calculates the interquartile range (IQR), which tells if a value is too far from the middle,
+        if a value is more than 1.5 times the IQR above the third quartile or below the first quartile it is considered an outlier
         '''
         outliers=[]
-        limit=3
-        this_mean = np.mean(dataSet)
-        this_stdev=np.std(dataSet)
-        
-        for y in dataSet:
-            z_score= (y - this_mean)/this_stdev
-            if np.abs(z_score) > limit:
+        sorted(dataset)
+        q1, q3= np.percentile(dataset,[25,75])
+        iqr = q3 - q1
+        lower_bound = q1 -(1.5 * iqr) 
+        upper_bound = q3 +(1.5 * iqr) 
+        for y in dataset:
+            if y < lower_bound or y > upper_bound:
                 outliers.append(y)
         return outliers
+
     
     def q_getOutliers(self):
         '''
@@ -531,3 +536,48 @@ class VirtualMachine:
             print(outlier_datapoints)
         else:
             print("No outliers")
+    
+    def q_removeOutliers(self):
+        '''
+        Print the measures of an array. 
+        '''
+        array_temp = []
+        self.pointer_stack[-1] += 1
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+        size = quadruple.left + quadruple.right
+
+        for x in range(base_address,size+1):
+            temp = self.memory.read(x)
+            if(temp is not None):
+                array_temp.append(temp)
+                
+        outlier_datapoints = self.detect_outlier(array_temp)
+        for x in array_temp:
+            if x in outlier_datapoints:
+                x_address = base_address + array_temp.index(x)
+                array_temp[array_temp.index(x)] = None
+                self.memory.write(x_address,None)
+        print(array_temp)
+
+    def q_replaceValue(self, valToReplace, replacement):
+        '''
+        Print the measures of an array. 
+        '''
+        array_temp = []
+        self.pointer_stack[-1] += 1
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+        size = quadruple.left + quadruple.right
+
+        for x in range(base_address,size+1):
+            temp = self.memory.read(x)
+            if(temp is not None):
+                array_temp.append(temp)
+                
+        for x in array_temp:
+            if x == valToReplace:
+                x_address = base_address + array_temp.index(x)
+                array_temp[array_temp.index(x)] = replacement
+                self.memory.write(x_address,replacement)
+        print(array_temp)
