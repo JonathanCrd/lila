@@ -371,6 +371,7 @@ class VirtualMachine:
         if message == None:
             value = input()
         else:
+            message = message[1:-1]
             value = input(message)
         try:
             if i_type == 'int':
