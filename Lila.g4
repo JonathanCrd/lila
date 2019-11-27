@@ -70,10 +70,6 @@ sreturn
     : RETURN expresion {Semantic.checkReturn(gen.top_variables())} {gen.func_return()} SEMICOLON
     ;
 
-arr
-    : OPEN_BRACKET var_cte (COMMA var_cte)* CLOSE_BRACKET (COMMA OPEN_BRACKET var_cte (COMMA var_cte)* CLOSE_BRACKET)*
-    ;
-
 expresion
     : comparacion {gen.exitExpresion()} ((AND {gen.addOperator('AND')}| OR {gen.addOperator('OR')}) comparacion {gen.exitExpresion()})* 
     ;

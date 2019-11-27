@@ -21,10 +21,13 @@ main
     a[0] = "Python";
     a[1] = "C++";
     a[2] = "Java";
-    a[3] = "Perl";
+    a[3] = "Perla";
     a[4] = "Scala";
 
     pearsoneCorrelation(e,e);
-    display("MUNECA");
+    mean(e);
+    tellMeWhatToUse(e);
+    fillValue(a,"Perla","Perl");
+    quickShow(e,a);
 }
 
