@@ -1,5 +1,6 @@
 import numpy as np
 import statistics as stat
+import pandas as pd
 import matplotlib.pyplot as plt
 
 class Memory:
@@ -230,6 +231,8 @@ class VirtualMachine:
                 self.q_desestandar()
             elif (quadruple.operator == 'PRINTMEASURES'):
                 self.q_measures()
+            elif (quadruple.operator == 'GETOUTLIERS'):
+                self.q_getOutliers()
             else:
                 pass
             
@@ -501,3 +504,30 @@ class VirtualMachine:
         print("Minimum: ", max(array_temp))
         print("Range: ", rango)
         print("Standard deviation: ", stat.stdev(array_temp))
+    
+    def detect_outlier(self,dataSet):
+        '''
+        This function calculates the z score for each of the data items.
+        An item is considered an outlier if the z score is greater than 3 standard devations.
+        '''
+        outliers=[]
+        limit=3
+        this_mean = np.mean(dataSet)
+        this_stdev=np.std(dataSet)
+        
+        for y in dataSet:
+            z_score= (y - this_mean)/this_stdev
+            if np.abs(z_score) > limit:
+                outliers.append(y)
+        return outliers
+    
+    def q_getOutliers(self):
+        '''
+        Print the measures of an array. 
+        '''
+        array_temp = self.read_array()
+        outlier_datapoints = self.detect_outlier(array_temp)
+        if outlier_datapoints:
+            print(outlier_datapoints)
+        else:
+            print("No outliers")

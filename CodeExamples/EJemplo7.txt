@@ -42,6 +42,6 @@ main
     min(e);
     max(e);
     desEstandar(e);
-    printMeasures(e);
+    getOutliers(e);
 }
 

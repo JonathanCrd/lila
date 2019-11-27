@@ -127,8 +127,8 @@ especiales
     |   RANGE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'RANGE')} CLOSE_PARENTHESIS SEMICOLON
     |   DESESTANDAR OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'DESESTANDAR')} CLOSE_PARENTHESIS SEMICOLON
     |   PRINTMEASURES OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'PRINTMEASURES')} CLOSE_PARENTHESIS SEMICOLON
-    |   (
-        | GETOUTLIERS 
+    |   GETOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'GETOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
+    |   ( 
         | REMOVEOUTLIERS 
         | TELLMEWHATTOUSE      
         ) OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} CLOSE_PARENTHESIS SEMICOLON
