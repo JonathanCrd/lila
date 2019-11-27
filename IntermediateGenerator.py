@@ -47,26 +47,40 @@ class IntermediateGenerator:
         self.addVar(temp)
 
     def addOperator(self,operator:str):
+        '''
+        Add operator to the stack
+        '''
         self.stack_operators.append(operator)
 
     def top_operators(self):
+        '''
+        Return the top operator withouth pop it.
+        '''
         if self.stack_operators == []:
             return None
         else:
             return self.stack_operators[-1]
 
     def top_variables(self):
+        '''
+        Return the top variable withouth pop it.
+        '''
         if self.stack_variables == []:
             return None
         else:
             return self.stack_variables[-1]
     
     def display(self):
+        '''
+        Generates the display quadruple
+        '''
         opnd = self.stack_variables.pop()
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
     
     def getinput(self,variable:Operand,message):
-        ##falta crear operando pop?
+        '''
+        Generates INPUT cuadruple.
+        '''
         variable.value = message
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
@@ -180,7 +194,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
 
     def finParentesis(self):
-        # Aqui es donde va a quitar el fondo falso
+        '''
+        Pop of ).
+        '''
         if self.top_operators() == '(':
             self.stack_operators.pop()
         else:
@@ -256,6 +272,9 @@ class IntermediateGenerator:
         self.params_reader.pop()
 
     def incoming_Params(self):
+        '''
+        Apend a blank list to the params reader.
+        '''
         self.params_reader.append([])
 
     def endProc(self):
@@ -279,9 +298,6 @@ class IntermediateGenerator:
         Returns the OBJ in form of a dictionary needed for the virtual machine.
         '''
         return {'quadruples': self.Quadruples, 'constant_table': VirtualAddress.constants_table, 'dir_functions': Semantic.dirFunctions, 'memory_declaration': VirtualAddress.memory_declaration} 
-
-    def isNegative(self):
-        pass
         
     def makeNegative(self,minus):
         if (minus == '-'):

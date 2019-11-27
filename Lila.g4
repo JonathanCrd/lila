@@ -89,7 +89,7 @@ termino
 
 factor
     : OPEN_PARENTHESIS {gen.addOperator('(')}expresion CLOSE_PARENTHESIS {gen.finParentesis()}
-    | (PLUS| MINUS {gen.isNegative()})? var_cte {gen.makeNegative($MINUS.text)}
+    | (PLUS| MINUS)? var_cte {gen.makeNegative($MINUS.text)}
     ;
 
 var_cte
