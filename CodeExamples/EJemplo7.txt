@@ -1,47 +1,82 @@
 lila arreglos
 
-var int[2][2] c, d;
-num[10] e;
-int a;
-
-func void imprime(int abeja){
-    var text[2][2] mariposa;
-    mariposa[0][0] = "hola";
-    display(mariposa[0][0]);
-}
+var int[15] grades, age;
+text[15] students;
 
 main
 {
-    c[0][0] = 10 + 10 * 4;
-    c[0][1] = 200;
-    c[1][0] = 30;
-    c[1][1] = 400;
+    grades[0] = 90;
+    grades[1] = 71;
+    grades[2] = 95;
+    grades[3] = 76;
+    grades[4] = 9;
+    grades[5] = 100;
+    grades[6] = 90;
+    grades[7] = 85;
+    grades[8] = 99;
+    grades[9] = 100;
+    grades[10] = 100;
+    grades[11] = 90;
+    grades[12] = 97;
+    grades[13] = 96;
+    grades[14] = 89;
 
-    a = 7;
+    age[0] = 18;
+    age[1] = 18;
+    age[2] = 19;
+    age[3] = 19;
+    age[4] = 17;
+    age[5] = 18;
+    age[6] = 19;
+    age[7] = 16;
+    age[8] = 18;
+    age[9] = 19;
+    age[10] = 19;
+    age[11] = 20;
+    age[12] = 20;
+    age[13] = 20;
+    age[14] = 21;
 
-    d[0][0] = 1;
-    d[0][1] = 0;
+    students[0] = "LAURA";
+    students[1] = "LUISA";
+    students[2] = "JUAN";
+    students[3] = "ANTONIO";
+    students[4] = "LUIS";
+    students[5] = "ITZEL";
+    students[6] = "ERNESTO";
+    students[7] = "ALEXANDER";
+    students[8] = "FRANCISCO";
+    students[9] = "JULIAN";
+    students[10] = "BERTHA";
+    students[11] = "MONICA";
+    students[12] = "JULIAN";
+    students[13] = "MANUEL";
+    students[14] = "JESUS";
 
-    e[0] = 1;
-    e[1] = 2;
-    e[2] = 3;
-    e[3] = 5;
-    e[4] = 5;
-    e[5] = 6;
-    e[6] = 7;
-    e[7] = 8;
-    e[8] = 9;
-    e[9] = 10;
+    // Where to start?
+    tellMeWhatToUse(grades);
 
-    a = c[0][0] + c[d[0][1]][1];
-    display(a);
-    imprime(1);
-    mean(e);
-    e[0] = 20;
-    median(e);
-    min(e);
-    max(e);
-    desEstandar(e);
-    printMeasures(e);
+    // lets see the data visualy
+    quickShow(grades,students);
+    quickShow(grades,age);
+
+    // Ok lets see the mean
+    mean(grades);
+
+    // Now lets see who are the atypical grades
+    getOutliers(grades);
+
+    // Lets see if there is a correlation between ages and grades
+    pearsoneCorrelation(grades,age);
+
+    // Lets bee cool and round the 99 to 100
+    fillValue(grades,99,100);
+
+    // Hmm... now lets think what would happend if those atypical students were not present in the data
+    removeOutliers(grades);
+
+    // lets see now
+    printMeasures(grades);
+
 }
 

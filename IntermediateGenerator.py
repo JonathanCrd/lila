@@ -47,26 +47,40 @@ class IntermediateGenerator:
         self.addVar(temp)
 
     def addOperator(self,operator:str):
+        '''
+        Add operator to the stack
+        '''
         self.stack_operators.append(operator)
 
     def top_operators(self):
+        '''
+        Return the top operator withouth pop it.
+        '''
         if self.stack_operators == []:
             return None
         else:
             return self.stack_operators[-1]
 
     def top_variables(self):
+        '''
+        Return the top variable withouth pop it.
+        '''
         if self.stack_variables == []:
             return None
         else:
             return self.stack_variables[-1]
     
     def display(self):
+        '''
+        Generates the display quadruple
+        '''
         opnd = self.stack_variables.pop()
         self.Quadruples.append(Quadruple('DISPLAY',None,None,opnd))
     
     def getinput(self,variable:Operand,message):
-        ##falta crear operando pop?
+        '''
+        Generates INPUT cuadruple.
+        '''
         variable.value = message
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
@@ -98,6 +112,9 @@ class IntermediateGenerator:
         self.var_counter = 1
 
     def exitExpresion(self):
+        '''
+        Genera el cuadruplo con el operador y los operandos en las pilas.
+        '''
         if self.top_operators() == 'AND' or self.top_operators() == 'OR':
             op = self.stack_operators.pop()
             opnd_Der = self.stack_variables.pop()
@@ -117,6 +134,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
             
     def exitComparacion(self):
+        '''
+        Generates the quadruple with the operator in the stack.
+        '''
         if self.top_operators() == '>' or self.top_operators() == '<' or self.top_operators() == '!=' or self.top_operators() == '==' or self.top_operators() == '>=' or self.top_operators() == '<=':
             op = self.stack_operators.pop()
             opnd_Der = self.stack_variables.pop()
@@ -135,6 +155,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
 
     def exitExp(self):
+        '''
+        Generates the arithmetic quadruple.
+        '''
         if self.top_operators() == '+' or self.top_operators() == '-':
             op = self.stack_operators.pop()
             opnd_Der = self.stack_variables.pop()
@@ -171,7 +194,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"')
 
     def finParentesis(self):
-        # Aqui es donde va a quitar el fondo falso
+        '''
+        Pop of ).
+        '''
         if self.top_operators() == '(':
             self.stack_operators.pop()
         else:
@@ -240,16 +265,22 @@ class IntermediateGenerator:
         if(len(params_found) == len(params_declared)):
             for i in range(0,len(params_found)):
                 if(params_found[i].v_type != params_declared[i].v_type):
-                    raise SyntaxError("Param '" + params_found[i].name + "' should be of type " + params_declared[i].v_type)
+                    raise TypeError("Param '" + params_found[i].name + "' should be of type " + params_declared[i].v_type)
         else:
             raise SyntaxError("Function '"+ funct_name + "' expects " + str(len(params_declared)) + " params, but instead got " + str(len(params_found)))
 
         self.params_reader.pop()
 
     def incoming_Params(self):
+        '''
+        Apend a blank list to the params reader.
+        '''
         self.params_reader.append([])
 
     def endProc(self):
+        '''
+        Generates ENDPROC and reset locals.
+        '''
         VirtualAddress.resetLocals()
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
 
@@ -267,9 +298,6 @@ class IntermediateGenerator:
         Returns the OBJ in form of a dictionary needed for the virtual machine.
         '''
         return {'quadruples': self.Quadruples, 'constant_table': VirtualAddress.constants_table, 'dir_functions': Semantic.dirFunctions, 'memory_declaration': VirtualAddress.memory_declaration} 
-
-    def isNegative(self):
-        pass
         
     def makeNegative(self,minus):
         if (minus == '-'):
@@ -346,10 +374,49 @@ class IntermediateGenerator:
     def q_basics(self,param_name:str,Operator:str):
         self.Quadruples.append(Quadruple(Operator, None, None, None))
         param = Semantic.look_for_variable(param_name)
-        self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
-        pass
+        self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,param.v_type))
     
+    def q_twoParams(self,param_name:str,Operator:str):
+        '''
+        get the last 2 variables of the stack and generates 2 ARR quadruple instead of just one.
+        '''
+        varB = self.stack_variables.pop()
+        varA = self.stack_variables.pop()
+
+        if varA.array[0].upper_limit != varB.array[0].upper_limit:
+            raise IndexError("This function expects arrays of the same size")
+        else:
+            self.Quadruples.append(Quadruple(Operator, None, None, None))
+            self.Quadruples.append(Quadruple('ARR',varA.memory,varA.array[0].upper_limit,varA.v_type))
+            self.Quadruples.append(Quadruple('ARR',varB.memory,varB.array[0].upper_limit,varB.v_type))
+
+    def q_fill_value(self,param_name:str,Operator:str):
+        '''
+        Generates fill quadruple for fill value function.
+        '''
+        replacement = self.stack_variables.pop()
+        varToReplace = self.stack_variables.pop()
+        param = Semantic.look_for_variable(param_name)
+
+        if(replacement.v_type == varToReplace.v_type and varToReplace.v_type == param.v_type):
+            self.Quadruples.append(Quadruple(Operator, varToReplace, replacement, None))
+            self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
+        else:
+            raise TypeError("All parameters should be of the same type")
+
+    def q_remove_value(self,param_name:str,Operator:str):
+        varToRemove = self.stack_variables.pop()
+        param = Semantic.look_for_variable(param_name)
+
+        if(varToRemove.v_type == param.v_type):
+            self.Quadruples.append(Quadruple(Operator, varToRemove, None, None))
+            self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
+        else:
+            raise TypeError("All parameters should be of the same type")
+        
+
     def test_final(self):
+        pass
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')
@@ -380,7 +447,7 @@ class IntermediateGenerator:
 
         print("TABLA DE CONSTANTES")
         print(VirtualAddress.constants_table)
-
+#
         print("DIR DE FUNCIONES")
         for x,y in Semantic.dirFunctions.items():
             print(x, y.name, y.f_type, len(y.params), y.memory_required)

@@ -1,6 +1,8 @@
 import numpy as np
 import statistics as stat
+import pandas as pd
 import matplotlib.pyplot as plt
+from scipy.stats import pearsonr
 
 class Memory:
     def __init__(self,mem_declaration):
@@ -93,7 +95,7 @@ class Memory:
         '''
         address_type, actual_location = self.address_translation(address)
         actual_location = actual_location + self.base_address[address_type][-1]
-        if actual_location in self.memory[address_type] and self.memory[address_type][actual_location] != None:
+        if actual_location in self.memory[address_type]:
             return self.memory[address_type][actual_location]
         else:
             raise MemoryError("Value not declared.")
@@ -211,9 +213,6 @@ class VirtualMachine:
                 self.sum_base()
             elif (quadruple.operator == 'VER'):
                 self.verify()
-            elif (quadruple.operator == 'END'):
-                print('SE ACABO')
-                pass
             elif (quadruple.operator == 'MEAN'):
                 self.q_mean()
             elif (quadruple.operator == 'MEDIAN'):
@@ -230,6 +229,24 @@ class VirtualMachine:
                 self.q_desestandar()
             elif (quadruple.operator == 'PRINTMEASURES'):
                 self.q_measures()
+            elif (quadruple.operator == 'GETOUTLIERS'):
+                self.q_getOutliers()
+            elif (quadruple.operator == 'REMOVEOUTLIERS'):
+                self.q_removeOutliers()
+            elif (quadruple.operator == 'FILLVALUE'):
+                self.q_fillValue()
+            elif (quadruple.operator == 'REMOVEVALUE'):
+                self.q_removeValue()
+            elif (quadruple.operator == 'TELLMEWHATTOUSE'):
+                self.q_tellWhatToUse()
+            elif (quadruple.operator == 'QUICKSHOWONE'):
+                self.q_quickShowOne()
+            elif (quadruple.operator == 'QUICKSHOWTWO'):
+                self.q_quickShowTwo()
+            elif (quadruple.operator == 'PEARSONCORRELATION'):
+                self.q_correlation()
+            elif (quadruple.operator == 'END'):
+                pass
             else:
                 pass
             
@@ -339,6 +356,11 @@ class VirtualMachine:
         resultAddress = self.memory.read(self.quadruples[index].resultado.memory)
         if (self.quadruples[index].resultado.pointer):
             resultAddress =  self.memory.read(resultAddress)
+
+        #Remove " " from text
+        if(self.quadruples[index].resultado.v_type == 'text'):
+            resultAddress = resultAddress[1:-1]
+        
         print(resultAddress)
 
     def op_input(self):
@@ -349,6 +371,7 @@ class VirtualMachine:
         if message == None:
             value = input()
         else:
+            message = message[1:-1]
             value = input(message)
         try:
             if i_type == 'int':
@@ -430,7 +453,9 @@ class VirtualMachine:
         size = quadruple.left + quadruple.right
 
         for x in range(base_address,size+1):
-            array_temp.append(self.memory.read(x))
+            temp = self.memory.read(x)
+            if(temp is not None):
+                array_temp.append(temp)
 
         return array_temp
 
@@ -501,3 +526,162 @@ class VirtualMachine:
         print("Minimum: ", max(array_temp))
         print("Range: ", rango)
         print("Standard deviation: ", stat.stdev(array_temp))
+    
+    def detect_outlier(self,dataset):
+        '''
+        This function calculates the interquartile range (IQR), which tells if a value is too far from the middle,
+        if a value is more than 1.5 times the IQR above the third quartile or below the first quartile it is considered an outlier
+        '''
+        outliers=[]
+        sorted(dataset)
+        q1, q3= np.percentile(dataset,[25,75])
+        iqr = q3 - q1
+        lower_bound = q1 -(1.5 * iqr) 
+        upper_bound = q3 +(1.5 * iqr) 
+        for y in dataset:
+            if y < lower_bound or y > upper_bound:
+                outliers.append(y)
+        return outliers
+
+    
+    def q_getOutliers(self):
+        '''
+        Prints an array of the outliers of a given dataset
+        '''
+        array_temp = self.read_array()
+        outlier_datapoints = self.detect_outlier(array_temp)
+        if outlier_datapoints:
+            print(outlier_datapoints)
+        else:
+            print("No outliers")
+    
+    def q_removeOutliers(self):
+        '''
+        Removes the outliers of a given dataset, replaces them with None thus removing them from calculations such as mean.
+        '''
+        array_temp = self.read_array()
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+                
+        outlier_datapoints = self.detect_outlier(array_temp)
+        for x in array_temp:
+            if x in outlier_datapoints:
+                x_address = base_address + array_temp.index(x)
+                array_temp[array_temp.index(x)] = None
+                self.memory.write(x_address,None)
+        print("Outliers marked as none: ", array_temp)
+
+    def q_fillValue(self):
+        '''
+        Given a dataset, it replaces an specific value with another  specfic value.
+        '''
+        valToReplace = self.quadruples[self.pointer_stack[-1]].left.memory
+        replacement = self.quadruples[self.pointer_stack[-1]].right.memory
+
+        valToReplace = self.memory.read(valToReplace)
+        replacement = self.memory.read(replacement)
+
+        array_temp = self.read_array()
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+                
+        for x in array_temp:
+            if x == valToReplace:
+                x_address = base_address + array_temp.index(x)
+                array_temp[array_temp.index(x)] = replacement
+                self.memory.write(x_address,replacement)
+        print(array_temp)
+
+    def q_removeValue(self):
+        '''
+        Removes a given value from a dataset. It replaces the given value with None, thus removing it from calculations such as mean.
+        '''
+        valToReplace = self.quadruples[self.pointer_stack[-1]].left.memory
+
+        valToReplace = self.memory.read(valToReplace)
+
+        array_temp = self.read_array()
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+                
+        for x in array_temp:
+            if x == valToReplace:
+                x_address = base_address + array_temp.index(x)
+                array_temp[array_temp.index(x)] = None
+                self.memory.write(x_address,None)
+        print(array_temp)
+
+    def q_tellWhatToUse(self):
+        '''
+        This function receives a dataset of num or int type.
+        It calculates the outliers in the array, and determines if it is better to use the mean or the median.
+        When there are a lot of outliers in a dataset, the mean can be skewed.
+        '''
+        array_temp = self.read_array()
+        outlier_datapoints = self.detect_outlier(array_temp)
+
+        if len(outlier_datapoints) != 0:
+            print("There are outliers, you should use the median: " +str(np.median(array_temp))+" instead of the mean: "+str(np.mean(array_temp)))
+        elif np.mean(array_temp) == np.median(array_temp):
+            print("You can use either, the mean: "+str(np.mean(array_temp))+" is equal to the median.")
+        else:
+            print("There aren't outliers, you may use the mean: "+str(np.mean(array_temp))+" instead of the median: "+str(np.median(array_temp)))
+
+    def q_quickShowOne(self):        
+        array_left = self.read_array()
+        quadruple_left = self.quadruples[self.pointer_stack[-1]]
+        array_left_type = quadruple_left.resultado
+
+        if array_left_type == 'int' or array_left_type == 'num':
+                plt.boxplot(array_left)
+                plt.show()
+        elif array_left_type == 'text':
+                [print(*line) for line in array_left]
+
+    def q_quickShowTwo(self):        
+        array_left = self.read_array()
+        quadruple_left = self.quadruples[self.pointer_stack[-1]]
+        array_left_type = quadruple_left.resultado
+
+        array_right = self.read_array()
+        quadruple_right = self.quadruples[self.pointer_stack[-1]]
+        array_right_type = quadruple_right.resultado
+
+        if array_right and (array_right_type == 'int' or array_right_type == 'num') and (array_left_type == 'int' or array_left_type == 'num'):
+            plt.scatter(array_left,array_right)
+            plt.show()
+        elif array_right and array_right_type=='text' and (array_left_type == 'int' or array_left_type == 'num'):
+            y_pos = np.arange(len(array_right))
+            plt.bar(y_pos, array_left, align='center', alpha=0.5)
+            plt.xticks(y_pos, array_right)
+            plt.show()
+        elif array_left_type == 'text' and  (array_right_type == 'int' or array_right_type == 'num'):
+            x_pos = np.arange(len(array_left))
+            plt.barh(x_pos, array_right, align='center', alpha=0.5)
+            plt.yticks(x_pos, array_left)
+            plt.show()
+        else:
+            raise NotImplementedError("This combination doesn't create a graph")
+
+    def q_correlation(self):        
+        array_left = self.read_array()
+        array_right = self.read_array()
+        #Calculate pearson correlation
+        corr,_ = pearsonr(array_left,array_right)
+        corr = 0.2
+        if corr == 0:
+            interpretation = " There is no correlation."
+        elif corr == 1:
+            interpretation = " There is a perfect positive correlation."
+        elif corr == -1:
+            interpretation = " There is a perfect negative correlation."
+        elif (abs(corr) >= 0.50) and (abs(corr) < 1):
+            interpretation = " There is strong correlation."
+        elif (abs(corr) >= 0.30) and (abs(corr) < 0.50):
+            interpretation = " There is moderate correlation."
+        elif (abs(corr) > 0) and (abs(corr) <= 0.29):
+            interpretation = " There is low correlation."
+        print("Pearsons correlation: ", corr, interpretation)
+            
+
+

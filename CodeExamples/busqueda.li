@@ -23,7 +23,7 @@ main{
             cont = 1;
             pos = i;
             i = 10;
-        };
+        }
         i = i + 1;
     }
 
@@ -32,5 +32,5 @@ main{
     }
     else{
         display("Elemento esta en posicion: ", pos);
-    };
+    }
 }
