@@ -1,33 +1,82 @@
 lila arreglos
 
-var int c, d;
-num[5] e;
-text[5] a;
-
-func void imprime(int abeja){
-    var text[2][2] mariposa;
-    mariposa[0][0] = "hola";
-    display(mariposa[0][0]);
-}
+int[15] grades, age;
+text[15] students;
 
 main
 {
-    e[0] = 12;
-    e[1] = 12;
-    e[2] = 15;
-    e[3] = 15;
-    e[4] = 120;
+    grades[0] = 90;
+    grades[1] = 71;
+    grades[2] = 95;
+    grades[3] = 76;
+    grades[4] = 9;
+    grades[5] = 100;
+    grades[6] = 90;
+    grades[7] = 85;
+    grades[8] = 99;
+    grades[9] = 100;
+    grades[10] = 100;
+    grades[11] = 90;
+    grades[12] = 97;
+    grades[13] = 96;
+    grades[14] = 89;
 
-    a[0] = "Python";
-    a[1] = "C++";
-    a[2] = "Java";
-    a[3] = "Perla";
-    a[4] = "Scala";
+    age[0] = 18;
+    age[1] = 18;
+    age[2] = 19;
+    age[3] = 19;
+    age[4] = 17;
+    age[5] = 18;
+    age[6] = 19;
+    age[7] = 16;
+    age[8] = 18;
+    age[9] = 19;
+    age[10] = 19;
+    age[11] = 20;
+    age[12] = 20;
+    age[13] = 20;
+    age[14] = 21;
 
-    pearsoneCorrelation(e,e);
-    mean(e);
-    tellMeWhatToUse(e);
-    fillValue(a,"Perla","Perl");
-    quickShow(e,a);
+    students[0] = "LAURA";
+    students[1] = "LUISA";
+    students[2] = "JUAN";
+    students[3] = "ANTONIO";
+    students[4] = "LUIS";
+    students[5] = "ITZEL";
+    students[6] = "ERNESTO";
+    students[7] = "ALEXANDER";
+    students[8] = "FRANCISCO";
+    students[9] = "JULIAN";
+    students[10] = "BERTHA";
+    students[11] = "MONICA";
+    students[12] = "JULIAN";
+    students[13] = "MANUEL";
+    students[14] = "JESUS";
+
+    // Where to start?
+    tellMeWhatToUse(grades);
+
+    // lets see the data visualy
+    quickShow(grades,students);
+    quickShow(grades,age);
+
+    // Ok lets see the mean
+    mean(grades);
+
+    // Now lets see who are the atypical grades
+    getoutliers(grades)
+
+    // Lets see if there is a correlation between ages and grades
+    pearsoneCorrelation(grades,age);
+
+    // Lets bee cool and round the 99 to 100
+    fillValue(grades,99,100);
+
+    // Hmm... now lets think what would happend if those atypical students were not present in the data
+    removeoutliers(grades);
+
+    // lets see now
+    printmeasures(grades);
+
 }
 

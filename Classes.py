@@ -62,6 +62,9 @@ class VirtualAddress:
     aux = 1
     @staticmethod
     def getAddress(a_type):
+        '''
+        Return the next available address for an specific type.
+        '''
         tempAdress = VirtualAddress.memory_declaration[a_type] + VirtualAddress.counters[a_type]
         VirtualAddress.counters[a_type] += VirtualAddress.aux
         return tempAdress
