@@ -355,6 +355,10 @@ class Semantic:
 
     @staticmethod   
     def checkSpecialParam(var_name):
+        '''
+        Checks that ID given as parameter for special function is of only one dimension
+        Also checks that it's of type int or num
+        '''
         var_temp = Semantic.look_for_variable(var_name)
         Semantic.check_var_dim(var_temp.name)
 
@@ -364,7 +368,19 @@ class Semantic:
         if var_temp.v_type != 'int' and var_temp.v_type != 'num':
             raise TypeError("This function expects an array of type int or num")
 
+    @staticmethod  
+    def checkIsOneDim(var_name):
+        var_temp = Semantic.look_for_variable(var_name)
+        Semantic.check_var_dim(var_temp.name)
+
+        if 1 != len(var_temp.array):
+            raise TypeError("This function expects an array of only 1 dimension")
     
+    @staticmethod
+    def typeCongruence(var_name, expresion):
+        print(var_name, expresion)
+
+   
     @staticmethod
     def display_test():
         # print("=============================")

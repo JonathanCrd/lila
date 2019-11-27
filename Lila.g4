@@ -51,7 +51,7 @@ estatuto
     ;
 
 condicion
-    : IF expresion {gen.checkExpresion()} bloque (ELSE {gen.conditionElse()} bloque)? SEMICOLON {gen.conditionEnd()}
+    : IF expresion {gen.checkExpresion()} bloque (ELSE {gen.conditionElse()} bloque)?  {gen.conditionEnd()}
     ;
 
 bloque
@@ -129,13 +129,13 @@ especiales
     |   PRINTMEASURES OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'PRINTMEASURES')} CLOSE_PARENTHESIS SEMICOLON
     |   GETOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'GETOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
     |   REMOVEOUTLIERS OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'REMOVEOUTLIERS')} CLOSE_PARENTHESIS SEMICOLON
+    |   FILLVALUE OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} COMMA var_cte COMMA var_cte {gen.q_fill_value($ID.text,'FILLVALUE')} CLOSE_PARENTHESIS SEMICOLON
     |   (  
         | TELLMEWHATTOUSE      
         ) OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} CLOSE_PARENTHESIS SEMICOLON
     | QUICKSHOW OPEN_PARENTHESIS ID (COMMA ID)? CLOSE_PARENTHESIS SEMICOLON
     | PEARSONCORRELATION OPEN_PARENTHESIS ID COMMA ID CLOSE_PARENTHESIS SEMICOLON
     | NORMALDISTRIBUTION OPEN_PARENTHESIS CTE_F COMMA CTE_F COMMA CTE_INT CLOSE_PARENTHESIS SEMICOLON
-    | FILLVALUE OPEN_PARENTHESIS ID COMMA var_cte COMMA var_cte CLOSE_PARENTHESIS SEMICOLON
     | REMOVEVALUE OPEN_PARENTHESIS ID COMMA var_cte CLOSE_PARENTHESIS SEMICOLON
     ;
 

@@ -232,8 +232,9 @@ class VirtualMachine:
                 self.q_getOutliers()
             elif (quadruple.operator == 'REMOVEOUTLIERS'):
                 self.q_removeOutliers()
+            elif (quadruple.operator == 'FILLVALUE'):
+                self.q_fillValue()
             elif (quadruple.operator == 'END'):
-                print('SE ACABO')
                 pass
             else:
                 pass
@@ -558,12 +559,18 @@ class VirtualMachine:
                 x_address = base_address + array_temp.index(x)
                 array_temp[array_temp.index(x)] = None
                 self.memory.write(x_address,None)
-        print(array_temp)
+        print("Outliers marked as none: ", array_temp)
 
-    def q_replaceValue(self, valToReplace, replacement):
+    def q_fillValue(self):
         '''
         Print the measures of an array. 
         '''
+        valToReplace = self.quadruples[self.pointer_stack[-1]].left.memory
+        replacement = self.quadruples[self.pointer_stack[-1]].right.memory
+
+        valToReplace = self.memory.read(valToReplace)
+        replacement = self.memory.read(replacement)
+
         array_temp = []
         self.pointer_stack[-1] += 1
         quadruple = self.quadruples[self.pointer_stack[-1]]

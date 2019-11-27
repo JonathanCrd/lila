@@ -240,7 +240,7 @@ class IntermediateGenerator:
         if(len(params_found) == len(params_declared)):
             for i in range(0,len(params_found)):
                 if(params_found[i].v_type != params_declared[i].v_type):
-                    raise SyntaxError("Param '" + params_found[i].name + "' should be of type " + params_declared[i].v_type)
+                    raise TypeError("Param '" + params_found[i].name + "' should be of type " + params_declared[i].v_type)
         else:
             raise SyntaxError("Function '"+ funct_name + "' expects " + str(len(params_declared)) + " params, but instead got " + str(len(params_found)))
 
@@ -347,41 +347,54 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple(Operator, None, None, None))
         param = Semantic.look_for_variable(param_name)
         self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
-        pass
-    
-    def test_final(self):
-        i=1
-        print("Quadruples length: ",len(self.Quadruples))
-        print('=======')
-        for item in self.Quadruples:
-           try:
-               print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value, item.left.memory,')','(',item.right.name, item.right.v_type, item.right.value,item.right.memory,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
-               i+=1
-           except:
-                try:
-                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
-                    i+=1
-                except:
-                    try:
-                        print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
-                        i+=1
-                    except:
-                        try:
-                            print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,item.resultado,"]")
-                            i+=1
-                        except:
-                            print(i,'[',item.operator,item.left,item.right,item.resultado,']')
-                            i+=1
-        print('=======')
-
-        print("STACK DE VARIABLES")
-        for variable in self.stack_variables:
-            print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
-
-        print("TABLA DE CONSTANTES")
-        print(VirtualAddress.constants_table)
-
-        print("DIR DE FUNCIONES")
-        for x,y in Semantic.dirFunctions.items():
-            print(x, y.name, y.f_type, len(y.params), y.memory_required)
         
+    
+    def q_fill_value(self,param_name:str,Operator:str):
+        replacement = self.stack_variables.pop()
+        varToReplace = self.stack_variables.pop()
+        param = Semantic.look_for_variable(param_name)
+
+        if(replacement.v_type == varToReplace.v_type and varToReplace.v_type == param.v_type):
+            self.Quadruples.append(Quadruple(Operator, varToReplace, replacement, None))
+            self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
+        else:
+            raise TypeError("All parameters should be of the same type")
+        
+
+    def test_final(self):
+        pass
+        #i=1
+        #print("Quadruples length: ",len(self.Quadruples))
+        #print('=======')
+        #for item in self.Quadruples:
+        #   try:
+        #       print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value, item.left.memory,')','(',item.right.name, item.right.v_type, item.right.value,item.right.memory,')','(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
+        #       i+=1
+        #   except:
+        #        try:
+        #            print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
+        #            i+=1
+        #        except:
+        #            try:
+        #                print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
+        #                i+=1
+        #            except:
+        #                try:
+        #                    print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,item.resultado,"]")
+        #                    i+=1
+        #                except:
+        #                    print(i,'[',item.operator,item.left,item.right,item.resultado,']')
+        #                    i+=1
+        #print('=======')
+#
+        #print("STACK DE VARIABLES")
+        #for variable in self.stack_variables:
+        #    print(str(variable.name) + " " + str(variable.v_type) + " " + str(variable.value) )
+#
+        #print("TABLA DE CONSTANTES")
+        #print(VirtualAddress.constants_table)
+#
+        #print("DIR DE FUNCIONES")
+        #for x,y in Semantic.dirFunctions.items():
+        #    print(x, y.name, y.f_type, len(y.params), y.memory_required)
+        #

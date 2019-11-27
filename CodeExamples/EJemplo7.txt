@@ -2,7 +2,7 @@ lila arreglos
 
 var int[2][2] c, d;
 num[10] e;
-int a;
+text[3] a;
 
 func void imprime(int abeja){
     var text[2][2] mariposa;
@@ -12,16 +12,6 @@ func void imprime(int abeja){
 
 main
 {
-    c[0][0] = 10 + 10 * 4;
-    c[0][1] = 200;
-    c[1][0] = 30;
-    c[1][1] = 1 + 10;
-
-    
-
-    d[0][0] = 1;
-    d[0][1] = 0;
-
     e[0] = 1;
     e[1] = 2;
     e[2] = 3;
@@ -33,12 +23,11 @@ main
     e[8] = 9;
     e[9] = 0;
 
-    a = c[0][0] + c[d[0][1]][1];
-    removeOutliers(e);
-    mode(e);
-    min(e);
-    max(e);
-    getOutliers(e);
-    mean(e);
+    a[0] = "hola";
+    a[1] = "jonathan";
+    a[2] = "villarreal";
+
+    fillValue(a, "villarreal", "cardenas");
+    display(a[2]);
 }
 
