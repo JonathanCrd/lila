@@ -238,6 +238,8 @@ class VirtualMachine:
                 self.q_removeValue()
             elif (quadruple.operator == 'TELLMEWHATTOUSE'):
                 self.q_tellWhatToUse()
+            elif (quadruple.operator == 'QUICKSHOW'):
+                self.q_quickShow()
             elif (quadruple.operator == 'END'):
                 pass
             else:
@@ -611,3 +613,30 @@ class VirtualMachine:
             print("There are outliers, you should use the median: " +str(np.median(array_temp))+" instead of the mean: "+str(np.mean(array_temp)))
         else:
             print("There aren't outliers, you may use the mean: "+str(np.mean(array_temp))+" instead of the median: "+str(np.median(array_temp)))
+
+    def q_quickShow(self):        
+        array_left = self.read_array()
+        quadruple_left = self.quadruples[self.pointer_stack[-1]]
+        array_left_type = quadruple_left.resultado
+ 
+        next_quad = self.quadruples[self.pointer_stack[-1]+1]
+        array_right = []
+        array_right_type = None
+
+        if next_quad.operator == 'QUICKPARAM':
+            self.pointer_stack[-1]=+1
+            array_right = self.read_array()
+            quadruple_right = self.quadruples[self.pointer_stack[-1]]
+            array_right_type = quadruple_right.resultado
+
+        if not array_right and array_right_type != None:
+            if array_left_type == 'int' or array_left_type == 'num':
+                plt.boxplot(array_left)
+                plt.show()
+
+
+        
+        
+            
+
+

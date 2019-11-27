@@ -346,8 +346,7 @@ class IntermediateGenerator:
     def q_basics(self,param_name:str,Operator:str):
         self.Quadruples.append(Quadruple(Operator, None, None, None))
         param = Semantic.look_for_variable(param_name)
-        self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
-        
+        self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,param.v_type))
     
     def q_fill_value(self,param_name:str,Operator:str):
         replacement = self.stack_variables.pop()

@@ -58,16 +58,6 @@ class VirtualAddress:
         'Const bool'    : 0
     }
     constants_table = {}
-    var_counters = {
-        'int'     : 0,
-        'num'     : 0,
-        'text'    : 0,
-        'bool'    : 0,
-        'Temp int'      : 0,
-        'Temp num'      : 0,
-        'Temp text'     : 0,
-        'Temp bool'     : 0
-    }
 
     aux = 1
     @staticmethod
@@ -375,6 +365,7 @@ class Semantic:
         if var_temp.v_type != 'int' and var_temp.v_type != 'num':
             raise TypeError("This function expects an array of type int or num")
 
+    
     @staticmethod  
     def checkIsOneDim(var_name):
         '''

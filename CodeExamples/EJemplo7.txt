@@ -33,6 +33,6 @@ main
     display(a[2], d);
     removeValue(a,"cardenas");
     display(a[2], d);
-    tellMeWhatToUse(e);
+    quickShow(e);
 }
 
