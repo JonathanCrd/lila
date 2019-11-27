@@ -377,6 +377,9 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,param.v_type))
     
     def q_twoParams(self,param_name:str,Operator:str):
+        '''
+        get the last 2 variables of the stack and generates 2 ARR quadruple instead of just one.
+        '''
         varB = self.stack_variables.pop()
         varA = self.stack_variables.pop()
 
@@ -388,6 +391,9 @@ class IntermediateGenerator:
             self.Quadruples.append(Quadruple('ARR',varB.memory,varB.array[0].upper_limit,varB.v_type))
 
     def q_fill_value(self,param_name:str,Operator:str):
+        '''
+        Generates fill quadruple for fill value function.
+        '''
         replacement = self.stack_variables.pop()
         varToReplace = self.stack_variables.pop()
         param = Semantic.look_for_variable(param_name)
