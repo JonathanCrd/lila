@@ -356,6 +356,11 @@ class VirtualMachine:
         resultAddress = self.memory.read(self.quadruples[index].resultado.memory)
         if (self.quadruples[index].resultado.pointer):
             resultAddress =  self.memory.read(resultAddress)
+
+        #Remove " " from text
+        if(self.quadruples[index].resultado.v_type == 'text'):
+            resultAddress = resultAddress[1:-1]
+        
         print(resultAddress)
 
     def op_input(self):
