@@ -236,6 +236,8 @@ class VirtualMachine:
                 self.q_fillValue()
             elif (quadruple.operator == 'REMOVEVALUE'):
                 self.q_removeValue()
+            elif (quadruple.operator == 'TELLMEWHATTOUSE'):
+                self.q_tellWhatToUse()
             elif (quadruple.operator == 'END'):
                 pass
             else:
@@ -531,7 +533,7 @@ class VirtualMachine:
     
     def q_getOutliers(self):
         '''
-        Print the measures of an array. 
+        Prints an array of the outliers of a given dataset
         '''
         array_temp = self.read_array()
         outlier_datapoints = self.detect_outlier(array_temp)
@@ -542,7 +544,7 @@ class VirtualMachine:
     
     def q_removeOutliers(self):
         '''
-        Print the measures of an array. 
+        Removes the outliers of a given dataset, replaces them with None thus removing them from calculations such as mean.
         '''
         array_temp = self.read_array()
         quadruple = self.quadruples[self.pointer_stack[-1]]
@@ -558,7 +560,7 @@ class VirtualMachine:
 
     def q_fillValue(self):
         '''
-        Print the measures of an array. 
+        Given a dataset, it replaces an specific value with another  specfic value.
         '''
         valToReplace = self.quadruples[self.pointer_stack[-1]].left.memory
         replacement = self.quadruples[self.pointer_stack[-1]].right.memory
@@ -579,7 +581,7 @@ class VirtualMachine:
 
     def q_removeValue(self):
         '''
-        Print the measures of an array. 
+        Removes a given value from a dataset. It replaces the given value with None, thus removing it from calculations such as mean.
         '''
         valToReplace = self.quadruples[self.pointer_stack[-1]].left.memory
 
@@ -595,3 +597,17 @@ class VirtualMachine:
                 array_temp[array_temp.index(x)] = None
                 self.memory.write(x_address,None)
         print(array_temp)
+
+    def q_tellWhatToUse(self):
+        '''
+        This function receives a dataset of num or int type.
+        It calculates the outliers in the array, and determines if it is better to use the mean or the median.
+        When there are a lot of outliers in a dataset, the mean can be skewed.
+        '''
+        array_temp = self.read_array()
+        outlier_datapoints = self.detect_outlier(array_temp)
+
+        if len(outlier_datapoints) != 0:
+            print("There are outliers, you should use the median: " +str(np.median(array_temp))+" instead of the mean: "+str(np.mean(array_temp)))
+        else:
+            print("There aren't outliers, you may use the mean: "+str(np.mean(array_temp))+" instead of the median: "+str(np.median(array_temp)))

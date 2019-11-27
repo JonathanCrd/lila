@@ -212,7 +212,10 @@ class Semantic:
     
     @staticmethod
     def look_for_function(function_name:str):
-        #validate that the function exists
+        '''
+        Validates that a function exists (function name is given as parameter) exists in the directory of Functions.
+        If it exists, it returns the function object, if not it raises an error.
+        '''
         if function_name in Semantic.dirFunctions.keys():
             return Semantic.dirFunctions[function_name]
         else:
@@ -220,6 +223,10 @@ class Semantic:
 
     @staticmethod
     def look_for_variable(var_name:str):
+        '''
+        Checks if a variables (given as parameter) exists either in Table of Globals or Table of locals
+        If it exists, it returns the variable, if not it raises an error.
+        '''
         if var_name in Semantic.varGlobals.keys():
             return Semantic.varGlobals[var_name]
         else:
@@ -370,17 +377,15 @@ class Semantic:
 
     @staticmethod  
     def checkIsOneDim(var_name):
+        '''
+        Checks that ID given as parameter for special function is of only one dimension
+        '''
         var_temp = Semantic.look_for_variable(var_name)
         Semantic.check_var_dim(var_temp.name)
 
         if 1 != len(var_temp.array):
             raise TypeError("This function expects an array of only 1 dimension")
     
-    @staticmethod
-    def typeCongruence(var_name, expresion):
-        print(var_name, expresion)
-
-   
     @staticmethod
     def display_test():
         # print("=============================")
