@@ -343,10 +343,10 @@ class IntermediateGenerator:
         self.stack_variables.append(temp)
         self.stack_dim.pop()
     
-    def q_mean(self,param_name:str):
-        self.Quadruples.append(Quadruple('MEAN', None, None, None))
+    def q_basics(self,param_name:str,Operator:str):
+        self.Quadruples.append(Quadruple(Operator, None, None, None))
         param = Semantic.look_for_variable(param_name)
-        self.Quadruples.append(Quadruple('ARR',param.memory,len(param.array),None))
+        self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
         pass
     
     def test_final(self):

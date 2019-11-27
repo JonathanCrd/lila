@@ -1,4 +1,5 @@
 import numpy as np
+import statistics as stat
 import matplotlib.pyplot as plt
 
 class Memory:
@@ -215,6 +216,20 @@ class VirtualMachine:
                 pass
             elif (quadruple.operator == 'MEAN'):
                 self.q_mean()
+            elif (quadruple.operator == 'MEDIAN'):
+                self.q_median()
+            elif (quadruple.operator == 'MODE'):
+                self.q_mode()
+            elif (quadruple.operator == 'MIN'):
+                self.q_min()
+            elif (quadruple.operator == 'MAX'):
+                self.q_max()
+            elif (quadruple.operator == 'RANGE'):
+                self.q_range()
+            elif (quadruple.operator == 'DESESTANDAR'):
+                self.q_desestandar()
+            elif (quadruple.operator == 'PRINTMEASURES'):
+                self.q_measures()
             else:
                 pass
             
@@ -404,20 +419,85 @@ class VirtualMachine:
         paramValue = self.memory.read(self.quadruples[index].left.memory)
         self.params_stack.append(paramValue)
 
+    def read_array(self):
+        '''
+        Read the array specified in the next quadruple.
+        '''
+        array_temp = []
+        self.pointer_stack[-1] += 1
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+        size = quadruple.left + quadruple.right
+
+        for x in range(base_address,size+1):
+            array_temp.append(self.memory.read(x))
+
+        return array_temp
+
     def q_mean(self):
         '''
         Print the mean of an array. 
         '''
-        print("YA ENTREEE")
-        #Get the array in the next quadruple and assign it to an actual array
-        array_temp = []
-        self.pointer_stack[-1] += 1
-        quadruple = self.quadruples[self.pointer_stack[-1]]
-
-        print(np.mean([1,2,3,4,5,6,7,8,9,10]))
-
-        arr = [1,2,3,4,None,6,None,8,9,10]
-        plt.plot(arr, color='#7a32c2', marker='o')
-        plt.show()
-        pass
+        array_temp = self.read_array()
+        print(np.mean(array_temp))
         
+    def q_median(self):
+        '''
+        Print the median of an array. 
+        '''
+        array_temp = self.read_array()
+        print(np.median(array_temp))
+
+    def q_mode(self):
+        '''
+        Print the mode of an array. 
+        '''
+        array_temp = self.read_array()
+        try:
+            print(stat.mode(array_temp))
+        except:
+            print("There is no mode.")
+    
+    def q_min(self):
+        '''
+        Print the min value of an array. 
+        '''
+        array_temp = self.read_array()
+        print(min(array_temp))
+    
+    def q_max(self):
+        '''
+        Print the max value of an array. 
+        '''
+        array_temp = self.read_array()
+        print(max(array_temp))
+    
+    def q_range(self):
+        '''
+        Print the range of an array. 
+        '''
+        array_temp = self.read_array()
+        rango = max(array_temp) - min(array_temp)
+        print(rango)
+
+    def q_desestandar(self):
+        '''
+        Print the standard deviation of an array. 
+        '''
+        array_temp = self.read_array()
+        print(stat.stdev(array_temp))
+    
+    def q_measures(self):
+        '''
+        Print the measures of an array. 
+        '''
+        array_temp = self.read_array()
+        print("Measures of data: /n")
+        print("Mean: ", np.mean(array_temp))
+        print("Median: ", np.median(array_temp))
+        print("Mode: ", stat.mode(array_temp))
+        rango = max(array_temp) - min(array_temp)
+        print("Minimum: ", min(array_temp))
+        print("Minimum: ", max(array_temp))
+        print("Range: ", rango)
+        print("Standard deviation: ", stat.stdev(array_temp))
