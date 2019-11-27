@@ -1,0 +1,25 @@
+lila fibonacciRecursivo
+
+var int i, x;
+
+func int fibo(int n)
+{
+    if(n <=1){
+        return n;
+    }
+    else{
+        return fibo(n - 1) + fibo(n - 2);
+    };
+}
+
+main
+{        
+    i = 0;
+    //x = 9;
+    getinput(x, "Give a number: ");
+    display("Fibonacci: ");
+    while(i<x){
+        display(fibo(i), " ");
+        i = i + 1;
+    }
+}

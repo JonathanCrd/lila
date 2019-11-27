@@ -1,0 +1,20 @@
+lila factorialRecursivo
+
+var int number;
+
+func int fact(int n){
+    if(n==1){
+        return 1;
+    }
+    else{
+        return n * fact(n-1);
+    };
+} 
+
+main
+{        
+    getinput(number, "Give a number: ");
+
+    display("Factorial: ");
+    display(fact(number));
+}

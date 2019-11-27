@@ -1,0 +1,51 @@
+lila sort
+
+var int n, i, j, temp;
+int[10] values;
+
+main
+{
+    values[0] = 10;
+    values[1] = 2;
+    values[2] = 0;
+    values[3] = 14;
+    values[4] = 43;
+    values[5] = 25;
+    values[6] = 18;
+    values[7] = 1;
+    values[8] = 5;
+    values[9] = 45;
+
+    display("Unsorted list: ");
+    n = 0;
+    while(n<10){
+        display(values[n], " ");
+        n = n + 1;
+    }
+
+    i = 0;
+    j = 0;
+    temp = 0;
+
+    while(i<10){
+        j = i+1;
+        while(j<10){
+            if(values[j]<values[i]){
+                temp = values[i];
+                values[i] = values[j];
+                values[j] = temp;
+            };
+            j = j + 1;
+        }
+        i = i +1;
+    }
+
+    
+
+    display("Sorted list: ");
+    n = 0;
+    while(n<10){
+        display(values[n], " ");
+        n = n + 1;
+    }
+}

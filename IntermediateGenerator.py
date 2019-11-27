@@ -6,17 +6,21 @@ class Quadruple:
         self.left = left
         self.right = right
         self.resultado = resultado
-        
+
 class IntermediateGenerator:
     def __init__(self):
         self.Quadruples = []
         self.stack_operators = []
         self.stack_variables = []
         self.stack_jumps = []
-        self.counter = 1
+
+        self.params_reader = []
+
+        # Counter for the temp and params name
         self.var_counter = 1
         self.param_counter = 1
-        self.params_reader = []
+
+        self.stack_dim = []
 
         self.cube = Semantic_Cube()
 
@@ -67,8 +71,12 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('INPUT',None,None,variable))
 
     def func_return(self):
+        '''
+        Generates the RETURN quadruple with the operand to assign to an specific function.
+        '''
         opnd = self.stack_variables.pop()
-        self.Quadruples.append(Quadruple('RETURN',None,None,opnd))
+        func = Semantic.varGlobals[Semantic.lastFuncKey].memory
+        self.Quadruples.append(Quadruple('RETURN',opnd,None,func))
     
     def assign(self):
         if self.top_operators() == '=':
@@ -83,7 +91,9 @@ class IntermediateGenerator:
                 raise TypeError('Variable of type "' + str(opnd_Izq.v_type) + '" is not compatible with type "'+ str(opnd_Der.v_type +'" using "'+str(op))+'"') 
 
     def contextChange(self):
-        # Create new ERA instance when enters the main function
+        '''
+        Creates a new ERA object for the main block
+        '''
         Semantic.Era = ERA()
         self.var_counter = 1
 
@@ -176,6 +186,10 @@ class IntermediateGenerator:
             self.stack_jumps.append(len(self.Quadruples)-1)
     
     def conditionEnd(self):
+        '''
+        Fills the last pending jump in the jumps stacks.
+        Usefull when the condition ends or when the main block is found.
+        '''
         end = self.stack_jumps.pop()
         self.fill(end,len(self.Quadruples))
 
@@ -217,7 +231,6 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('PARAM',var_temp,None,Operand('param' + str(self.param_counter),None,None)))
         self.param_counter += 1
         
-
     def check_params(self, funct_name):
         '''
         Method that verifies each param and that the number of params in the call math the function declaration.
@@ -241,10 +254,19 @@ class IntermediateGenerator:
         self.Quadruples.append(Quadruple('ENDPROC',None,None,None))
 
     def end(self):
+        '''
+        Generates the quadruple END and adds the 'main' block to the function directory.
+        '''
+        main = Function('main', 'void', None) #The quadruple index is irrelevant for the main block in the dir_function
+        main.memory_required = Semantic.Era.var_counters
+        Semantic.add_function(main)
         self.Quadruples.append(Quadruple('END',None,None,None))
 
     def getObj(self):
-        return [len(self.Quadruples), self.Quadruples, VirtualAddress.constants_table, Semantic.dirFunctions, Semantic.varGlobals,VirtualAddress.memory_declaration,Semantic.Era.var_counters]
+        '''
+        Returns the OBJ in form of a dictionary needed for the virtual machine.
+        '''
+        return {'quadruples': self.Quadruples, 'constant_table': VirtualAddress.constants_table, 'dir_functions': Semantic.dirFunctions, 'memory_declaration': VirtualAddress.memory_declaration} 
 
     def isNegative(self):
         pass
@@ -266,9 +288,68 @@ class IntermediateGenerator:
             self.stack_variables.append(res)
             self.Quadruples.append(Quadruple('NEGATIVE',exp,-1,res))
 
+    def access_array_begin(self):
+        '''
+        This method is going to append a 0 to the stack dimension.
+        '''
+        var = self.stack_variables.pop()
+        Semantic.check_var_dim(var.name)
+        self.stack_dim.append(0)
+        Semantic.total_dims.append(0)
+
+    def VER(self, v_id):
+        '''
+        Generates the VER quadruple
+        '''
+        Semantic.count_dim(v_id)
+        Semantic.checkMoreDims(v_id)
+
+        t_var = self.stack_variables[-1]
+        dim_var = Semantic.look_for_variable(v_id)
+        dim_struct = dim_var.array[self.stack_dim[-1]]
+        self.Quadruples.append(Quadruple('VER',t_var,0, dim_struct.upper_limit))
+
+        if (dim_struct.m != 1):
+            aux = self.stack_variables.pop()
+            temp = Operand('t'+str(self.var_counter),'int',None)
+            temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+            self.var_counter += 1
+            m = Operand('m','int',dim_struct.m)
+            m.memory = VirtualAddress.constants_table[str(int(dim_struct.m))][1]
+            self.Quadruples.append(Quadruple('*', aux, m, temp))
+            self.stack_variables.append(temp)
         
+        if (self.stack_dim[-1] > 0):
+            aux2 = self.stack_variables.pop()
+            aux1 = self.stack_variables.pop()
+            temp = Operand('t'+str(self.var_counter),'int',None)
+            temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+            self.var_counter += 1
+            self.Quadruples.append(Quadruple('+',aux1,aux2,temp))
+            self.stack_variables.append(temp)
+
+        self.stack_dim[-1] += 1
+
+    def access_array_end(self,v_id):
+        '''
+        This method is going to pop the last item of the stack dimension.
+        '''
+        aux = self.stack_variables.pop()
+        v_type = Semantic.look_for_variable(v_id)
+        temp = Operand('t'+str(self.var_counter),v_type.v_type,None)
+        temp.memory = VirtualAddress.getAddress('Temp '+str(temp.v_type))
+        temp.pointer = True
+        self.Quadruples.append(Quadruple('+BASE',aux, Semantic.look_for_variable(v_id), temp))
+        self.stack_variables.append(temp)
+        self.stack_dim.pop()
+    
+    def q_basics(self,param_name:str,Operator:str):
+        self.Quadruples.append(Quadruple(Operator, None, None, None))
+        param = Semantic.look_for_variable(param_name)
+        self.Quadruples.append(Quadruple('ARR',param.memory,param.array[0].upper_limit,None))
+        pass
+    
     def test_final(self):
-        
         i=1
         print("Quadruples length: ",len(self.Quadruples))
         print('=======')
@@ -285,8 +366,12 @@ class IntermediateGenerator:
                         print(i,'[',item.operator,item.left,item.right,'(',item.resultado.name,item.resultado.v_type,item.resultado.value,item.resultado.memory,")]")
                         i+=1
                     except:
-                        print(i,'[',item.operator,item.left,item.right,item.resultado,']')
-                        i+=1
+                        try:
+                            print(i,'[',item.operator,'(',item.left.name, item.left.v_type, item.left.value,item.left.memory,')',item.right,item.resultado,"]")
+                            i+=1
+                        except:
+                            print(i,'[',item.operator,item.left,item.right,item.resultado,']')
+                            i+=1
         print('=======')
 
         print("STACK DE VARIABLES")
@@ -299,5 +384,4 @@ class IntermediateGenerator:
         print("DIR DE FUNCIONES")
         for x,y in Semantic.dirFunctions.items():
             print(x, y.name, y.f_type, len(y.params), y.memory_required)
-            
-            
+        

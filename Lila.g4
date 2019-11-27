@@ -8,7 +8,7 @@ gen = IntermediateGenerator()
 }
 
 programa
-    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {gen.test_final()} {return gen.getObj()}
+    : LILA ID {gen.goTo()} (data)? (funciones)*  {gen.conditionEnd()} main {gen.end()} {Semantic.display_test()}{gen.test_final()} {return gen.getObj()}
     ;
 
 data
@@ -16,15 +16,19 @@ data
     ;
 
 data2
-    : tipo ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* SEMICOLON
+    : (tipo | tipo array) ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))} (COMMA ID {Semantic.add_var(Operand($ID.text,$tipo.text,None))})* {Semantic.reset_array_setup()} SEMICOLON
     ;
 
 main
     : MAIN {gen.contextChange()} bloque
     ;
 
+array
+    : {Semantic.array_declaration()} (OPEN_BRACKET CTE_INT {Semantic.array_dimension($CTE_INT.text)} CLOSE_BRACKET {Semantic.array_next_dim()})* {Semantic.arr_second_round()}
+    ;
+
 tipo
-    : (INT | NUM | TEXT | BOOL) (OPEN_BRACKET CTE_INT CLOSE_BRACKET)*
+    : (INT | NUM | TEXT | BOOL) 
     ;
 
 funciones
@@ -59,7 +63,7 @@ display
     ;
     
 asignacion
-    : ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)* EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}| arr) SEMICOLON 
+    : (ID {gen.addVar(Semantic.look_for_variable($ID.text))} | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} {gen.access_array_begin()} (OPEN_BRACKET {Semantic.check_var_dim($ID.text)} exp {gen.VER($ID.text)} CLOSE_BRACKET)+ {Semantic.check_dims($ID.text)}{gen.access_array_end($ID.text)} {gen.finParentesis()}) EQUAL {gen.addOperator($EQUAL.text)} (expresion {gen.assign()}) SEMICOLON 
     ;
 
 sreturn
@@ -67,8 +71,7 @@ sreturn
     ;
 
 arr
-    : var_cte (COMMA var_cte)*
-    | OPEN_BRACKET arr CLOSE_BRACKET (COMMA OPEN_BRACKET arr CLOSE_BRACKET)*
+    : OPEN_BRACKET var_cte (COMMA var_cte)* CLOSE_BRACKET (COMMA OPEN_BRACKET var_cte (COMMA var_cte)* CLOSE_BRACKET)*
     ;
 
 expresion
@@ -95,7 +98,8 @@ factor
 
 var_cte
     : ID OPEN_PARENTHESIS {gen.incoming_Params()} {Semantic.look_for_function($ID.text)} {Semantic.isVoid($ID.text, False)} {gen.era($ID.text)} {gen.addOperator('(')} (expresion {gen.params()} (COMMA expresion {gen.params()})*)? {gen.goSub($ID.text)} CLOSE_PARENTHESIS {gen.check_params($ID.text)} {gen.finParentesis()} {gen.addFunct(Semantic.look_for_function($ID.text))}
-    | ID {gen.addVar(Semantic.look_for_variable($ID.text))} (OPEN_BRACKET exp CLOSE_BRACKET)*
+    | ID {gen.addVar(Semantic.look_for_variable($ID.text))}
+    | ID {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.addOperator('(')} {gen.access_array_begin()} ( OPEN_BRACKET exp  {gen.VER($ID.text)}  CLOSE_BRACKET)+  {Semantic.check_dims($ID.text)}{gen.access_array_end($ID.text)} {gen.finParentesis()}  
     | CTE_INT {gen.addConst(Operand(None,'int',$CTE_INT.text))}
     | CTE_F {gen.addConst(Operand(None,'num',$CTE_F.text))}
     | CTE_STRING {gen.addConst(Operand(None,'text',$CTE_STRING.text))}
@@ -115,18 +119,19 @@ getinput
     ;
 
 especiales
-    :   (GETOUTLIERS 
+    :   MEAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MEAN')} CLOSE_PARENTHESIS SEMICOLON
+    |   MEDIAN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MEDIAN')} CLOSE_PARENTHESIS SEMICOLON
+    |   MODE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MODE')} CLOSE_PARENTHESIS SEMICOLON
+    |   MIN OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MIN')} CLOSE_PARENTHESIS SEMICOLON
+    |   MAX OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'MAX')} CLOSE_PARENTHESIS SEMICOLON
+    |   RANGE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'RANGE')} CLOSE_PARENTHESIS SEMICOLON
+    |   DESESTANDAR OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'DESESTANDAR')} CLOSE_PARENTHESIS SEMICOLON
+    |   PRINTMEASURES OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'PRINTMEASURES')} CLOSE_PARENTHESIS SEMICOLON
+    |   (
+        | GETOUTLIERS 
         | REMOVEOUTLIERS 
-        | TELLMEWHATTOUSE 
-        | PRINTMEASURES 
-        | MEAN 
-        | MEDIAN 
-        | MODE 
-        | RANGE 
-        | MIN 
-        | MAX 
-        | DESESTANDAR
-            ) OPEN_PARENTHESIS ID CLOSE_PARENTHESIS SEMICOLON
+        | TELLMEWHATTOUSE      
+        ) OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} CLOSE_PARENTHESIS SEMICOLON
     | QUICKSHOW OPEN_PARENTHESIS ID (COMMA ID)? CLOSE_PARENTHESIS SEMICOLON
     | PEARSONCORRELATION OPEN_PARENTHESIS ID COMMA ID CLOSE_PARENTHESIS SEMICOLON
     | NORMALDISTRIBUTION OPEN_PARENTHESIS CTE_F COMMA CTE_F COMMA CTE_INT CLOSE_PARENTHESIS SEMICOLON
@@ -194,6 +199,6 @@ NORMALDISTRIBUTION  : 'normalDistribution';
 FILLVALUE   : 'fillValue';
 REMOVEVALUE : 'removeValue';
 
-ID : [a-x]+[a-zA-Z0-9]* ;
+ID : [a-z]+[a-zA-Z0-9]* ;
 WS : [ \t\r\n]+ -> skip ; 
 Comment : '//' ~[\r\n]* -> skip ;

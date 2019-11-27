@@ -1,3 +1,7 @@
+import numpy as np
+import statistics as stat
+import matplotlib.pyplot as plt
+
 class Memory:
     def __init__(self,mem_declaration):
         self.memory_declaration = dict((v, k) for k, v in mem_declaration.items())
@@ -93,8 +97,7 @@ class Memory:
             return self.memory[address_type][actual_location]
         else:
             raise MemoryError("Value not declared.")
-                
-        
+                     
     def write(self, address, input):
         '''
         Method that writes a given input inside an specified memory address
@@ -127,7 +130,6 @@ class Memory:
         self.next_base_address['Temp text'].append(memory_required['Temp text'] + self.next_base_address['Temp text'][-1])
         self.next_base_address['Temp bool'].append(memory_required['Temp bool'] + self.next_base_address['Temp bool'][-1])
         
-
     def dump_memory_stack(self):
         '''
         Method to pop the last base addreses and next base address of each type.
@@ -138,28 +140,23 @@ class Memory:
             self.next_base_address[key].pop()
             self.base_address[key].pop()
         
-        
-
 class VirtualMachine:
     def __init__(self, obj : list ):
         '''
         Virtual machine to execute the Lila programming language code.
         It takes as a parameter an obj containing the quadruples, function directory, global variables and constant table. 
         '''
-        self.total_quadruples = obj[0]
-        self.quadruples = obj[1]
-        self.constants_table = obj[2]
-        self.dir_functions = obj[3]
-        self.global_vars = obj[4]
-        memory_declaration = obj[5]
+        self.quadruples = obj['quadruples']
+        self.constants_table = obj['constant_table']
+        self.dir_functions = obj['dir_functions']
+        memory_declaration = obj['memory_declaration']
         self.memory = Memory(memory_declaration)
-        main_memory_required = obj[6] # Useful for setting the point in which the next call to a function wil be based on memory
+        main_memory_required = obj['dir_functions']['main'].memory_required # Setting the point in which the next call to a function wil be based on memory
         
         self.pointer_stack = [0] # This will point to the quadruple to execute
         self.call_stack = [] # This saves all the function calls
-        self.params_stack=[]
+        self.params_stack = []
         self.write_const()
-        self.write_globals()
         self.memory.era_statement(main_memory_required)
         self.prepare_memory = {}
 
@@ -177,15 +174,11 @@ class VirtualMachine:
                 else:
                     self.memory.write(value[1],False)
 
-    def write_globals(self):
-        for key,var in self.global_vars.items():
-            self.memory.write(var.memory,None)
-
     def quadruples_handler(self):
         '''
         Calls the proper method according to the operand/code in the first position of each quadruple.
         '''
-        while(self.pointer_stack[-1] < self.total_quadruples):
+        while(self.pointer_stack[-1] < len(self.quadruples)):
             quadruple = self.quadruples[self.pointer_stack[-1]]
             
             if (quadruple.operator == '+' or quadruple.operator == '-'  or quadruple.operator == '*' or quadruple.operator == '/' or quadruple.operator == '<' or quadruple.operator == '>'  or quadruple.operator == '<=' or quadruple.operator == '>=' or quadruple.operator == '!=' or quadruple.operator == '==' or quadruple.operator == 'AND' or quadruple.operator == 'OR'):
@@ -214,16 +207,53 @@ class VirtualMachine:
                 self.end_procedure()
             elif (quadruple.operator == 'NEGATIVE'):
                 self.makeNegative()
+            elif (quadruple.operator == '+BASE'):
+                self.sum_base()
+            elif (quadruple.operator == 'VER'):
+                self.verify()
             elif (quadruple.operator == 'END'):
+                print('SE ACABO')
                 pass
+            elif (quadruple.operator == 'MEAN'):
+                self.q_mean()
+            elif (quadruple.operator == 'MEDIAN'):
+                self.q_median()
+            elif (quadruple.operator == 'MODE'):
+                self.q_mode()
+            elif (quadruple.operator == 'MIN'):
+                self.q_min()
+            elif (quadruple.operator == 'MAX'):
+                self.q_max()
+            elif (quadruple.operator == 'RANGE'):
+                self.q_range()
+            elif (quadruple.operator == 'DESESTANDAR'):
+                self.q_desestandar()
+            elif (quadruple.operator == 'PRINTMEASURES'):
+                self.q_measures()
             else:
                 pass
             
             self.pointer_stack[-1] += 1
         
+    def sum_base(self):
+        left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        right = self.quadruples[self.pointer_stack[-1]].right.memory
+        
+        resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
+        resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+        result = left + right
+        self.memory.write(resultAddress,result)
 
+    def verify(self):
+        if (self.quadruples[self.pointer_stack[-1]].left.pointer):
+            size = self.memory.read(self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory))
+        else:
+            size = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
+        lowerLimit = self.quadruples[self.pointer_stack[-1]].right
+        upperLimit = self.quadruples[self.pointer_stack[-1]].resultado
+        if (size < lowerLimit or size > upperLimit):
+            raise IndexError("Index out of bounds.")
 
-    # MATH
     def makeNegative(self):
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
@@ -236,16 +266,31 @@ class VirtualMachine:
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+
+        if (self.quadruples[self.pointer_stack[-1]].left.pointer):
+            left = self.memory.read(left)
+        if (self.quadruples[self.pointer_stack[-1]].resultado.pointer):
+            resultAddress =  self.memory.read(resultAddress)
+
         casting = {"int": (lambda x: int(x)),"num": (lambda x: float(x)),"text": (lambda x: str(x)),"bool": (lambda x: make_bool(x))}
         result = casting[resultType](left)
         self.memory.write(resultAddress,result)
 
     def arithmetic(self):
+
         op = self.quadruples[self.pointer_stack[-1]].operator
         left = self.memory.read(self.quadruples[self.pointer_stack[-1]].left.memory)
         right = self.memory.read(self.quadruples[self.pointer_stack[-1]].right.memory)
         resultAddress = self.quadruples[self.pointer_stack[-1]].resultado.memory
         resultType = self.quadruples[self.pointer_stack[-1]].resultado.v_type
+        
+        if (self.quadruples[self.pointer_stack[-1]].left.pointer):
+            left = self.memory.read(left)
+        if (self.quadruples[self.pointer_stack[-1]].right.pointer):
+            right = self.memory.read(right)
+        if (self.quadruples[self.pointer_stack[-1]].resultado.pointer):
+            resultAddress =  self.memory.read(resultAddress)
+        
         operations = { 
                 "+": (lambda x,y: x+y), 
                 "-": (lambda x,y: x-y),
@@ -291,7 +336,10 @@ class VirtualMachine:
 
     def display(self):
         index = self.pointer_stack[-1]
-        print(self.memory.read(self.quadruples[index].resultado.memory))
+        resultAddress = self.memory.read(self.quadruples[index].resultado.memory)
+        if (self.quadruples[index].resultado.pointer):
+            resultAddress =  self.memory.read(resultAddress)
+        print(resultAddress)
 
     def op_input(self):
         index = self.pointer_stack[-1]
@@ -318,7 +366,6 @@ class VirtualMachine:
         
         self.memory.write(address,value)
     
-
     def era(self):
         '''
         Requests space for execution when a function is called.
@@ -351,11 +398,13 @@ class VirtualMachine:
         The current function must not be a void one since the return statement is not valid in void functions.
         '''
         index = self.pointer_stack[-1]
-        address = self.quadruples[index].resultado.memory
+        address = self.quadruples[index].left.memory
         value = self.memory.read(address)
 
-        func_var = self.global_vars[self.call_stack[-1]]
-        self.memory.write(func_var.memory,value)
+        assign_address = self.quadruples[index].resultado
+        self.memory.write(assign_address,value)
+
+        self.end_procedure()
         
     def end_procedure(self):
         self.pointer_stack.pop()
@@ -369,4 +418,86 @@ class VirtualMachine:
         index = self.pointer_stack[-1]
         paramValue = self.memory.read(self.quadruples[index].left.memory)
         self.params_stack.append(paramValue)
+
+    def read_array(self):
+        '''
+        Read the array specified in the next quadruple.
+        '''
+        array_temp = []
+        self.pointer_stack[-1] += 1
+        quadruple = self.quadruples[self.pointer_stack[-1]]
+        base_address = quadruple.left
+        size = quadruple.left + quadruple.right
+
+        for x in range(base_address,size+1):
+            array_temp.append(self.memory.read(x))
+
+        return array_temp
+
+    def q_mean(self):
+        '''
+        Print the mean of an array. 
+        '''
+        array_temp = self.read_array()
+        print(np.mean(array_temp))
         
+    def q_median(self):
+        '''
+        Print the median of an array. 
+        '''
+        array_temp = self.read_array()
+        print(np.median(array_temp))
+
+    def q_mode(self):
+        '''
+        Print the mode of an array. 
+        '''
+        array_temp = self.read_array()
+        try:
+            print(stat.mode(array_temp))
+        except:
+            print("There is no mode.")
+    
+    def q_min(self):
+        '''
+        Print the min value of an array. 
+        '''
+        array_temp = self.read_array()
+        print(min(array_temp))
+    
+    def q_max(self):
+        '''
+        Print the max value of an array. 
+        '''
+        array_temp = self.read_array()
+        print(max(array_temp))
+    
+    def q_range(self):
+        '''
+        Print the range of an array. 
+        '''
+        array_temp = self.read_array()
+        rango = max(array_temp) - min(array_temp)
+        print(rango)
+
+    def q_desestandar(self):
+        '''
+        Print the standard deviation of an array. 
+        '''
+        array_temp = self.read_array()
+        print(stat.stdev(array_temp))
+    
+    def q_measures(self):
+        '''
+        Print the measures of an array. 
+        '''
+        array_temp = self.read_array()
+        print("Measures of data: /n")
+        print("Mean: ", np.mean(array_temp))
+        print("Median: ", np.median(array_temp))
+        print("Mode: ", stat.mode(array_temp))
+        rango = max(array_temp) - min(array_temp)
+        print("Minimum: ", min(array_temp))
+        print("Minimum: ", max(array_temp))
+        print("Range: ", rango)
+        print("Standard deviation: ", stat.stdev(array_temp))

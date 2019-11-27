@@ -49,6 +49,15 @@ class LilaListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LilaParser#array.
+    def enterArray(self, ctx:LilaParser.ArrayContext):
+        pass
+
+    # Exit a parse tree produced by LilaParser#array.
+    def exitArray(self, ctx:LilaParser.ArrayContext):
+        pass
+
+
     # Enter a parse tree produced by LilaParser#tipo.
     def enterTipo(self, ctx:LilaParser.TipoContext):
         pass

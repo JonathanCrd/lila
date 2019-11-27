@@ -1,0 +1,27 @@
+lila fibonacci
+
+var int number;
+
+func void fibo(int n)
+{
+    var int x, y, z, aux;
+    x=0;
+    y=1;
+    z=0;
+    aux=0;
+    while(aux<n){
+        display(x, " ");
+        z = x + y;
+        x = y;
+        y = z;
+
+        aux= aux+1;
+    }
+}
+
+main
+{        
+    getinput(number, "Give a number: ");
+    display("Fibonacci: ");
+    fibo(number);
+}
