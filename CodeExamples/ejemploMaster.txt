@@ -1,0 +1,30 @@
+//Primero se declara el programa
+lila program
+
+//Despues se declaran las variables. No se les puede dar valor al declarar
+//Los tipos son: int, num, text y bool
+var int i;
+
+//Los arreglos se declaran tipo[dim1][dim2] nombreArreglo
+int[2] arregloA;
+
+//Despues toca declarar funciones
+//Pueden ser void o tipadas
+
+func void miFun(){
+    display("Fui a void");
+}
+
+func int miInt(int n){
+    return n;
+}
+
+//Hay que poner un main
+main{
+    
+    miFun();
+    i = miInt(10);
+    display(i);
+
+}
+

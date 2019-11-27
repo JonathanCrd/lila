@@ -101,6 +101,7 @@ python main.py <yourfile>.li
 ## Extra info:
 To run antlr4: `g4 antlr4 -Dlanguage=Python3 Lila.g4`
 
+On CodeExamples folder check exampleMaster
 If you are using windows, run the next commands in cmd:
 ```
 doskey antlr4=java org.antlr.v4.Tool $*
