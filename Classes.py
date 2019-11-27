@@ -360,6 +360,10 @@ class Semantic:
 
         if 1 != len(var_temp.array):
             raise TypeError("This function expects an array of only 1 dimension")
+
+        if var_temp.v_type != 'int' and var_temp.v_type != 'num':
+            raise TypeError("This function expects an array of type int or num")
+
     
     @staticmethod
     def display_test():
