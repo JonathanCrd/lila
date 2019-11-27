@@ -2,6 +2,7 @@ import numpy as np
 import statistics as stat
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy.stats import pearsonr
 
 class Memory:
     def __init__(self,mem_declaration):
@@ -242,6 +243,8 @@ class VirtualMachine:
                 self.q_quickShowOne()
             elif (quadruple.operator == 'QUICKSHOWTWO'):
                 self.q_quickShowTwo()
+            elif (quadruple.operator == 'PEARSONCORRELATION'):
+                self.q_correlation()
             elif (quadruple.operator == 'END'):
                 pass
             else:
@@ -652,8 +655,12 @@ class VirtualMachine:
         else:
             raise NotImplementedError("This combination doesn't create a graph")
 
-        
-        
+    def q_correlation(self):        
+        array_left = self.read_array()
+        array_right = self.read_array()
+        #Calculate pearson correlation
+        corr,_ = pearsonr(array_left,array_right)
+        print("Pearsons correlation: ", corr)
             
 
 

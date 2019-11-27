@@ -24,6 +24,6 @@ main
     a[3] = "Perl";
     a[4] = "Scala";
 
-    quickShow(e,a);
+    pearsoneCorrelation(e,e);
 }
 

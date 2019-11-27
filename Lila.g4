@@ -132,9 +132,9 @@ especiales
     | FILLVALUE OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} COMMA var_cte COMMA var_cte {gen.q_fill_value($ID.text,'FILLVALUE')} CLOSE_PARENTHESIS SEMICOLON
     | REMOVEVALUE OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} COMMA var_cte {gen.q_remove_value($ID.text,'REMOVEVALUE')} CLOSE_PARENTHESIS SEMICOLON
     | TELLMEWHATTOUSE OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.q_basics($ID.text,'TELLMEWHATTOUSE')} CLOSE_PARENTHESIS SEMICOLON
-    | QUICKSHOW OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} {gen.addVar(Semantic.look_for_variable($ID.text))} COMMA ID {Semantic.checkIsOneDim($ID.text)} {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.q_quickShow($ID.text,'QUICKSHOWTWO')} CLOSE_PARENTHESIS SEMICOLON
+    | QUICKSHOW OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} {gen.addVar(Semantic.look_for_variable($ID.text))} COMMA ID {Semantic.checkIsOneDim($ID.text)} {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.q_twoParams($ID.text,'QUICKSHOWTWO')} CLOSE_PARENTHESIS SEMICOLON
     | QUICKSHOW OPEN_PARENTHESIS ID {Semantic.checkIsOneDim($ID.text)} {gen.q_basics($ID.text,'QUICKSHOWONE')} CLOSE_PARENTHESIS SEMICOLON
-    | PEARSONCORRELATION OPEN_PARENTHESIS ID COMMA ID CLOSE_PARENTHESIS SEMICOLON
+    | PEARSONCORRELATION OPEN_PARENTHESIS ID {Semantic.checkSpecialParam($ID.text)} {gen.addVar(Semantic.look_for_variable($ID.text))} COMMA ID {Semantic.checkSpecialParam($ID.text)} {gen.addVar(Semantic.look_for_variable($ID.text))} {gen.q_twoParams($ID.text,'PEARSONCORRELATION')} CLOSE_PARENTHESIS SEMICOLON
     | NORMALDISTRIBUTION OPEN_PARENTHESIS CTE_F COMMA CTE_F COMMA CTE_INT CLOSE_PARENTHESIS SEMICOLON
     ;
 
