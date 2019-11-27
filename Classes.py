@@ -58,20 +58,13 @@ class VirtualAddress:
         'Const bool'    : 0
     }
     constants_table = {}
-    var_counters = {
-        'int'     : 0,
-        'num'     : 0,
-        'text'    : 0,
-        'bool'    : 0,
-        'Temp int'      : 0,
-        'Temp num'      : 0,
-        'Temp text'     : 0,
-        'Temp bool'     : 0
-    }
 
     aux = 1
     @staticmethod
     def getAddress(a_type):
+        '''
+        Return the next available address for an specific type.
+        '''
         tempAdress = VirtualAddress.memory_declaration[a_type] + VirtualAddress.counters[a_type]
         VirtualAddress.counters[a_type] += VirtualAddress.aux
         return tempAdress
@@ -212,7 +205,10 @@ class Semantic:
     
     @staticmethod
     def look_for_function(function_name:str):
-        #validate that the function exists
+        '''
+        Validates that a function exists (function name is given as parameter) exists in the directory of Functions.
+        If it exists, it returns the function object, if not it raises an error.
+        '''
         if function_name in Semantic.dirFunctions.keys():
             return Semantic.dirFunctions[function_name]
         else:
@@ -220,6 +216,10 @@ class Semantic:
 
     @staticmethod
     def look_for_variable(var_name:str):
+        '''
+        Checks if a variables (given as parameter) exists either in Table of Globals or Table of locals
+        If it exists, it returns the variable, if not it raises an error.
+        '''
         if var_name in Semantic.varGlobals.keys():
             return Semantic.varGlobals[var_name]
         else:
@@ -355,6 +355,10 @@ class Semantic:
 
     @staticmethod   
     def checkSpecialParam(var_name):
+        '''
+        Checks that ID given as parameter for special function is of only one dimension
+        Also checks that it's of type int or num
+        '''
         var_temp = Semantic.look_for_variable(var_name)
         Semantic.check_var_dim(var_temp.name)
 
@@ -364,6 +368,17 @@ class Semantic:
         if var_temp.v_type != 'int' and var_temp.v_type != 'num':
             raise TypeError("This function expects an array of type int or num")
 
+    
+    @staticmethod  
+    def checkIsOneDim(var_name):
+        '''
+        Checks that ID given as parameter for special function is of only one dimension
+        '''
+        var_temp = Semantic.look_for_variable(var_name)
+        Semantic.check_var_dim(var_temp.name)
+
+        if 1 != len(var_temp.array):
+            raise TypeError("This function expects an array of only 1 dimension")
     
     @staticmethod
     def display_test():

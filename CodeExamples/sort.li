@@ -34,7 +34,7 @@ main
                 temp = values[i];
                 values[i] = values[j];
                 values[j] = temp;
-            };
+            }
             j = j + 1;
         }
         i = i +1;

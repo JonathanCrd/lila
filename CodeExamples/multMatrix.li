@@ -1,0 +1,48 @@
+lila busqueda
+
+var int[4][4] matrixA,matrixB, result;
+int i,j,k, size;
+
+main{
+
+    matrixA[0][0]=1;
+    matrixA[0][1]=2;
+    matrixA[1][0]=3;
+    matrixA[1][1]=4;
+
+    matrixB[0][0]=2;
+    matrixB[0][1]=0;
+    matrixB[1][0]=1;
+    matrixB[1][1]=2;
+
+    i=0; j=0; k=0;
+    size = 2;
+    
+
+    while(i<size){
+        j=0;
+        while(j<size){
+            result[i][j] = 0;
+            k=0;
+            while(k<size){
+                result[i][j] = result[i][j] + matrixA[i][k]*matrixB[k][j];
+                k=k+1;
+            }
+            j=j+1;
+        }
+        i = i+1;
+    }
+
+    display("Resultado: ");
+    i=0;
+    j=0;
+    while(i<size){
+        j=0;
+        while(j<size){
+            display(result[i][j]);
+            j=j+1;
+        }
+        i=i+1;
+    }
+
+}
