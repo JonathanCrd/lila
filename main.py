@@ -18,8 +18,8 @@ class CustomErrorListener(ErrorListener):
 
 def main():
     #sys.tracebacklimit = 0
-    
-    input_stream = FileStream('CodeExamples/busqueda.li')
+    filepath = str(sys.argv[1])
+    input_stream = FileStream(filepath)
     lexer = LilaLexer(input_stream)
     lexer._listeners = [CustomErrorListener()]
     stream = CommonTokenStream(lexer)
