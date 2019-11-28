@@ -1,0 +1,17 @@
+lila vectoresridiculos
+
+var int[2] a;
+text[2][2] b;
+
+main{
+    a[0] = 0;
+    a[1] = 1;
+     
+    b[0][0] = "Cero cero";
+    b[0][1] = "Cero Uno";
+    b[1][0] = "Uno cero";
+    b[1][1] = "Uno Uno";
+
+    display(b[a[0 + (18 * a[0])]][a[a[0] + a[1]]]);
+
+}

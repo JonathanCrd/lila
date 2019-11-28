@@ -17,7 +17,7 @@ class CustomErrorListener(ErrorListener):
         raise SyntaxError(message)
 
 def main():
-    #sys.tracebacklimit = 0
+    sys.tracebacklimit = 0
     filepath = str(sys.argv[1])
     input_stream = FileStream(filepath)
     lexer = LilaLexer(input_stream)
@@ -28,11 +28,6 @@ def main():
     obj = parser.programa()
     vm = VirtualMachine(obj)
     vm.quadruples_handler()
-
-    #printer = LilaLangListener()
-    #walker = ParseTreeWalker()
-    #walker.walk(printer, tree)
-    #print(tree.toStringTree(recog=parser))
 
 if __name__ == '__main__':
     main()

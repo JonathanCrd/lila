@@ -543,7 +543,6 @@ class VirtualMachine:
                 outliers.append(y)
         return outliers
 
-    
     def q_getOutliers(self):
         '''
         Prints an array of the outliers of a given dataset
