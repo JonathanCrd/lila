@@ -17,7 +17,7 @@ matplotlib==3.1.1
 mccabe==0.6.1
 numpy==1.17.2
 pandas==0.25.3
-Pillow==6.2.1
+Pillow==8.2.0
 pylint==2.4.4
 pyodbc==4.0.27
 pyparsing==2.4.2
